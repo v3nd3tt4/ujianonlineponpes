@@ -622,7 +622,8 @@
     <script src="<?=base_url()?>assets_miminium/js/jquery.min.js"></script>
     <script src="<?=base_url()?>assets_miminium/js/jquery.ui.min.js"></script>
     <script src="<?=base_url()?>assets_miminium/js/bootstrap.min.js"></script>
-   
+    <script src="<?=base_url()?>assets_miminium/js/plugins/jquery.datatables.min.js"></script>
+    <script src="<?=base_url()?>assets_miminium/js/plugins/datatables.bootstrap.min.js"></script>
     
     <!-- plugins -->
     <script src="<?=base_url()?>assets_miminium/js/plugins/moment.min.js"></script>
@@ -910,6 +911,12 @@
 
       })(jQuery);
      </script>
+     <script>
+      $(document).ready(function() {
+        $('.dt-table').DataTable();
+      });
+     </script>
+     <?php if (isset($script)) $this->load->view($script); ?>
   <!-- end: Javascript -->
   </body>
 </html>

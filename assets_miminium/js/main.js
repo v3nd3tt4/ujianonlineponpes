@@ -61,7 +61,7 @@
 
     this.hide = function()
     {
-        $(".tree").hide();
+        $(".tree").not(".open").hide();
         $(".sub-tree").hide();
     };
 
