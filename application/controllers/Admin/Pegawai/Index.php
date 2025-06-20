@@ -74,7 +74,13 @@ class Index extends CI_Controller {
         $this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'required');
         $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
         $this->form_validation->set_rules('alamat', 'Alamat', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email' . ($id ? '|is_unique[tb_pegawai.email.id.' . $id . ']' : '|is_unique[tb_pegawai.email]'));
+        $email_rule = 'required|valid_email';
+        if (!$id) {
+            $email_rule .= '|is_unique[tb_pegawai.email]';
+        } else {
+            $email_rule .= '|callback_email_unique['.$id.']';
+        }
+        $this->form_validation->set_rules('email', 'Email', $email_rule);
         $this->form_validation->set_rules('role', 'Role', 'required');
         if (!$id) {
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
@@ -93,5 +99,16 @@ class Index extends CI_Controller {
             'password' => $this->input->post('password', TRUE),
             'role' => $this->input->post('role', TRUE),
         ];
+    }
+
+    public function email_unique($email, $id) {
+        $this->db->where('email', $email);
+        $this->db->where('id !=', $id);
+        $query = $this->db->get('tb_pegawai');
+        if ($query->num_rows() > 0) {
+            $this->form_validation->set_message('email_unique', 'Email sudah digunakan oleh pegawai lain.');
+            return FALSE;
+        }
+        return TRUE;
     }
 }

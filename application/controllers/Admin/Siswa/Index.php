@@ -29,6 +29,7 @@ class Index extends CI_Controller {
             );
             $this->load->view('template_miminium/wrapper', $data);
         } else {
+
             $data = $this->_get_posted_data();
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
             $this->Siswa_model->insert($data);
@@ -41,7 +42,8 @@ class Index extends CI_Controller {
         $siswa = $this->Siswa_model->get_by_id($id);
         if (!$siswa) show_404();
         $this->_rules($id);
-        if ($this->form_validation->run() == FALSE) {
+        // var_dump($this->form_validation->run());exit();
+        if ($this->form_validation->run() == false) {
             $data = array(
                 'page' => 'admin/master/siswa/form',
                 'script' => 'admin/master/siswa/script',
@@ -70,7 +72,13 @@ class Index extends CI_Controller {
 
     private function _rules($id = null) {
         $this->form_validation->set_rules('nama', 'Nama', 'required');
-        $this->form_validation->set_rules('nis', 'NIS', 'required|is_unique[tb_siswa.nis' . ($id ? '.id.' . $id : '') . ']');
+        $nis_rule = 'required';
+        if (!$id) {
+            $nis_rule .= '|is_unique[tb_siswa.nis]';
+        } else {
+            $nis_rule .= '|callback_nis_unique['.$id.']';
+        }
+        $this->form_validation->set_rules('nis', 'NIS', $nis_rule);
         $this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required');
         $this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'required');
         $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
@@ -84,6 +92,7 @@ class Index extends CI_Controller {
         $this->form_validation->set_rules('nama_ayah', 'Nama Ayah', 'required');
         $this->form_validation->set_rules('pekerjaan_ibu', 'Pekerjaan Ibu', 'required');
         $this->form_validation->set_rules('pekerjaan_ayah', 'Pekerjaan Ayah', 'required');
+        $this->form_validation->set_rules('tahun_masuk', 'Tahun Masuk', 'required');
     }
 
     private function _get_posted_data() {
@@ -101,6 +110,18 @@ class Index extends CI_Controller {
             'nama_ayah' => $this->input->post('nama_ayah', TRUE),
             'pekerjaan_ibu' => $this->input->post('pekerjaan_ibu', TRUE),
             'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah', TRUE),
+            'tahun_masuk' => $this->input->post('tahun_masuk', TRUE),
         ];
+    }
+
+    public function nis_unique($nis, $id) {
+        $this->db->where('nis', $nis);
+        $this->db->where('id !=', $id);
+        $query = $this->db->get('tb_siswa');
+        if ($query->num_rows() > 0) {
+            $this->form_validation->set_message('nis_unique', 'NIS sudah digunakan oleh siswa lain.');
+            return FALSE;
+        }
+        return TRUE;
     }
 } 

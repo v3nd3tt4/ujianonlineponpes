@@ -31,6 +31,7 @@
                             <th>Nama Ayah</th>
                             <th>Pekerjaan Ibu</th>
                             <th>Pekerjaan Ayah</th>
+                            <th>Tahun Masuk</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -50,6 +51,7 @@
                                 <td><?= htmlspecialchars($row->nama_ayah); ?></td>
                                 <td><?= htmlspecialchars($row->pekerjaan_ibu); ?></td>
                                 <td><?= htmlspecialchars($row->pekerjaan_ayah); ?></td>
+                                <td><?= htmlspecialchars($row->tahun_masuk); ?></td>
                                 <td>
                                     <a href="<?= site_url('Admin/Siswa/Index/edit/' . $row->id) ?>" class="btn btn-warning btn-sm">Edit</a>
                                     <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="<?= $row->id ?>">Hapus</a>

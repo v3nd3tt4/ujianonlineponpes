@@ -66,6 +66,10 @@
                         <label>Pekerjaan Ayah</label>
                         <input type="text" name="pekerjaan_ayah" class="form-control" value="<?= set_value('pekerjaan_ayah', isset($siswa) ? $siswa->pekerjaan_ayah : '') ?>" required>
                     </div>
+                    <div class="form-group">
+                        <label>Tahun Masuk</label>
+                        <input type="text" name="tahun_masuk" class="form-control" value="<?= set_value('tahun_masuk', isset($siswa) ? $siswa->tahun_masuk : '') ?>" required>
+                    </div>
                     <button type="submit" class="btn btn-success">Simpan</button>
                     <a href="<?= site_url('Admin/Siswa/Index') ?>" class="btn btn-secondary">Kembali</a>
                 </form>
