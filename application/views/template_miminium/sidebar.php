@@ -13,23 +13,25 @@
                 <h1 class="animated fadeInLeft">21:00</h1>
                 <p class="animated fadeInRight">Sat,October 1st 2029</p>
               </li> -->
-              <!-- <li class="active ripple">
-                <a class="tree-toggle nav-header"><span class="fa-home fa"></span> Dashboard 
-                  <span class="fa-angle-right fa right-arrow text-right"></span>
+              <li class="<?php if(isset($link) && ($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index' || $link=='Admin/Tahunakademik/Index' || $link=='Admin/Ruangan/Index' || $link=='Admin/Matapelajaran/Index')){?> active <?php }?> ripple">
+                <a class="tree-toggle nav-header"><i class="fa fa-database" aria-hidden="true"></i> Master Data 
+                  <span class="<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index' || $link=='Admin/Tahunakademik/Index' || $link=='Admin/Ruangan/Index' || $link=='Admin/Matapelajaran/Index'){?> fa-angle-down <?php }else{?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
                 </a>
-                <ul class="nav nav-list tree">
-                    <li><a href="dashboard-v1.html">Dashboard v.1</a></li>
-                    <li><a href="dashboard-v2.html">Dashboard v.2</a></li>
-                </ul>
-              </li> -->
-              <li class="<?php if(isset($link) && ($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index')){?> active <?php }?> ripple">
-                <a class="tree-toggle nav-header"><i class="fa fa-cogs" aria-hidden="true"></i> Master Data 
-                  <span class="<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index'){?> fa-angle-down <?php }else{?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
-                </a>
-                <ul class="nav nav-list tree<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index'){?> open<?php }?>">
+                <ul class="nav nav-list tree<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index' || $link=='Admin/Tahunakademik/Index' || $link=='Admin/Ruangan/Index' || $link=='Admin/Matapelajaran/Index'){?> open<?php }?>">
                     <li><a href="<?=base_url()?>admin/pegawai/index" style="color:<?php if($link=='Admin/Pegawai/Index'){?> #2196F3 <?php }?>;">Pegawai </a></li>
                     <li><a href="<?=base_url()?>admin/siswa/index" style="color:<?php if($link=='Admin/Siswa/Index'){?> #2196F3 <?php }?>;">Siswa</a></li>
                     <li><a href="<?=base_url()?>admin/kelas/index" style="color:<?php if($link=='Admin/Kelas/Index'){?> #2196F3 <?php }?>;">Kelas</a></li>
+                    <li><a href="<?=base_url()?>admin/tahunakademik/index" style="color:<?php if($link=='Admin/Tahunakademik/Index'){?> #2196F3 <?php }?>;">Tahun Akademik</a></li>
+                    <li><a href="<?=base_url()?>admin/ruangan/index" style="color:<?php if($link=='Admin/Ruangan/Index'){?> #2196F3 <?php }?>;">Ruangan</a></li>
+                    <li><a href="<?=base_url()?>admin/matapelajaran/index" style="color:<?php if($link=='Admin/Matapelajaran/Index'){?> #2196F3 <?php }?>;">Mata Pelajaran</a></li>
+                </ul>
+              </li>
+              <li class="active ripple">
+                <a class="tree-toggle nav-header"><span class="fa-cogs fa"></span> Setting 
+                  <span class="fa-angle-right fa right-arrow text-right"></span>
+                </a>
+                <ul class="nav nav-list tree">
+                    <li><a href="dashboard-v1.html">Jadwal</a></li>
                 </ul>
               </li>
             </ul>
