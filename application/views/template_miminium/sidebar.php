@@ -22,18 +22,16 @@
                     <li><a href="dashboard-v2.html">Dashboard v.2</a></li>
                 </ul>
               </li> -->
-
-              <li class="<?php if(isset($link) && ($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index')){?> active <?php }?> ripple">
+              <li class="<?php if(isset($link) && ($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index')){?> active <?php }?> ripple">
                 <a class="tree-toggle nav-header"><i class="fa fa-cogs" aria-hidden="true"></i> Master Data 
-                  <span class="<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index'){?> fa-angle-down <?php }else{?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
+                  <span class="<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index'){?> fa-angle-down <?php }else{?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
                 </a>
-                <ul class="nav nav-list tree<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index'){?> open<?php }?>">
+                <ul class="nav nav-list tree<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index'){?> open<?php }?>">
                     <li><a href="<?=base_url()?>admin/pegawai/index" style="color:<?php if($link=='Admin/Pegawai/Index'){?> #2196F3 <?php }?>;">Pegawai </a></li>
-                    <li><a href="dashboard-v2.html">Siswa</a></li>
+                    <li><a href="<?=base_url()?>admin/siswa/index" style="color:<?php if($link=='Admin/Siswa/Index'){?> #2196F3 <?php }?>;">Siswa</a></li>
                     <li><a href="<?=base_url()?>admin/kelas/index" style="color:<?php if($link=='Admin/Kelas/Index'){?> #2196F3 <?php }?>;">Kelas</a></li>
                 </ul>
               </li>
-              
             </ul>
           </div>
       </div>
