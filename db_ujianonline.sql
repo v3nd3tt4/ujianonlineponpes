@@ -14,6 +14,21 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- Dumping structure for table db_ujianonlineponpes.tb_gurumatapelajaran
+CREATE TABLE IF NOT EXISTS `tb_gurumatapelajaran` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pegawai_id` int NOT NULL,
+  `matapelajaran_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pegawai_id` (`pegawai_id`),
+  KEY `matapelajaran_id` (`matapelajaran_id`),
+  CONSTRAINT `tb_gurumatapelajaran_ibfk_1` FOREIGN KEY (`pegawai_id`) REFERENCES `tb_pegawai` (`id`),
+  CONSTRAINT `tb_gurumatapelajaran_ibfk_2` FOREIGN KEY (`matapelajaran_id`) REFERENCES `tb_matapelajaran` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table db_ujianonlineponpes.tb_gurumatapelajaran: ~0 rows (approximately)
+DELETE FROM `tb_gurumatapelajaran`;
+
 -- Dumping structure for table db_ujianonlineponpes.tb_kelas
 CREATE TABLE IF NOT EXISTS `tb_kelas` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -22,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `tb_kelas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_kelas: ~6 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_kelas: ~0 rows (approximately)
 DELETE FROM `tb_kelas`;
 INSERT INTO `tb_kelas` (`id`, `nama_kelas`, `keterangan`) VALUES
 	(1, 'VII A', '-'),
@@ -49,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `tb_kelasrombel` (
   CONSTRAINT `fk_kelasrombel_tahunakademik` FOREIGN KEY (`tahunakademik_id`) REFERENCES `tb_tahunakademik` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_kelasrombel: ~1 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_kelasrombel: ~0 rows (approximately)
 DELETE FROM `tb_kelasrombel`;
 INSERT INTO `tb_kelasrombel` (`id`, `kelas_id`, `tahunakademik_id`, `walikelas_id`, `created_at`, `updated_at`) VALUES
 	(2, 1, 1, 2, '2025-06-21 02:21:23', '2025-06-21 02:21:23');
@@ -64,9 +79,9 @@ CREATE TABLE IF NOT EXISTS `tb_kelassiswa` (
   KEY `kelasrombel_id` (`kelasrombel_id`) USING BTREE,
   CONSTRAINT `tb_kelassiswa_ibfk_1` FOREIGN KEY (`siswa_id`) REFERENCES `tb_siswa` (`id`),
   CONSTRAINT `tb_kelassiswa_ibfk_2` FOREIGN KEY (`kelasrombel_id`) REFERENCES `tb_kelas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_kelassiswa: ~1 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_kelassiswa: ~0 rows (approximately)
 DELETE FROM `tb_kelassiswa`;
 INSERT INTO `tb_kelassiswa` (`id`, `siswa_id`, `kelasrombel_id`) VALUES
 	(2, 3, 2),
@@ -81,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `tb_matapelajaran` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_matapelajaran: ~4 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_matapelajaran: ~0 rows (approximately)
 DELETE FROM `tb_matapelajaran`;
 INSERT INTO `tb_matapelajaran` (`id`, `kode_matapelajaran`, `nama_matapelajaran`, `keterangan`) VALUES
 	(1, 'MP001-VII', 'Matematika', '-'),
@@ -121,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `tb_ruangan` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_ruangan: ~2 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_ruangan: ~0 rows (approximately)
 DELETE FROM `tb_ruangan`;
 INSERT INTO `tb_ruangan` (`id`, `nama_ruangan`, `keterangan`) VALUES
 	(1, 'Soekarno', '-'),
@@ -148,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `tb_siswa` (
   UNIQUE KEY `nis` (`nis`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_siswa: ~3 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_siswa: ~0 rows (approximately)
 DELETE FROM `tb_siswa`;
 INSERT INTO `tb_siswa` (`id`, `nama`, `nis`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `email`, `password`, `no_hp`, `nama_ibu`, `nama_ayah`, `pekerjaan_ibu`, `pekerjaan_ayah`, `tahun_masuk`) VALUES
 	(2, 'Ut sit iusto proiden edit', '1011111', 'Consectetur consect', '2005-06-07', 'P', 'Quia voluptas non ap', 'bavi@mailinator.com', '$2y$10$vrHi4FRAzbzy/89F4W10Ie6opp9BJhfWIRTo9PwQbwSBtthWKfjXK', 'Voluptate earum quis', 'Dolore ullam in quo ', 'Non commodo ea sint', 'Laboriosam numquam ', 'Porro cupiditate vol', '2025'),
@@ -164,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `tb_tahunakademik` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_tahunakademik: ~2 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_tahunakademik: ~1 rows (approximately)
 DELETE FROM `tb_tahunakademik`;
 INSERT INTO `tb_tahunakademik` (`id`, `tahun`, `semester`, `status`) VALUES
 	(1, '2025/2026', 'Ganjil', 'Aktif'),
