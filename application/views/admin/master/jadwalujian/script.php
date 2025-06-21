@@ -18,7 +18,15 @@ $(document).ready(function() {
             "dataSrc": ""
         },
         "columns": [
-            { "data": "id" },
+            {
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "render": function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { "data": "kode_matapelajaran" },
             { "data": "nama_matapelajaran" },
             { 
                 "data": null,
@@ -41,7 +49,7 @@ $(document).ready(function() {
         ]
     });
 
-    function loadDropdowns() {
+    function loadDropdowns(callback) {
         $.ajax({
             url: "<?= site_url('Admin/Jadwalujian/get_data_for_form') ?>",
             type: 'GET',
@@ -56,6 +64,11 @@ $(document).ready(function() {
                 $.each(data.kelasrombel, function(key, value) {
                     $('#kelasrombel_id').append('<option value="' + value.id + '">' + value.nama_kelas_rombel + ' - ' + value.tahun + ' - ' + value.nama+ '</option>');
                 });
+
+                // If a callback function was provided, execute it now
+                if (typeof callback === 'function') {
+                    callback();
+                }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 Swal.fire({
@@ -71,6 +84,8 @@ $(document).ready(function() {
         $('#jadwal-form')[0].reset();
         $('#id').val('');
         $('.modal-title').text('Tambah Jadwal Ujian');
+        $('#matapelajaran_id').val(null).trigger('change');
+        $('#kelasrombel_id').val(null).trigger('change');
         loadDropdowns();
         $('#jadwal-modal').modal('show');
     });
@@ -83,21 +98,28 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(data) {
                 $('#jadwal-form')[0].reset();
-                 $('.modal-title').text('Edit Jadwal Ujian');
-                loadDropdowns();
+                $('.modal-title').text('Edit Jadwal Ujian');
                 
-                // A little delay to allow dropdowns to load
-                setTimeout(function() {
+                // Load dropdowns and then set the values in the callback
+                loadDropdowns(function() {
                     $('#id').val(data.id);
-                    $('#matapelajaran_id').val(data.matapelajaran_id);
-                    $('#kelasrombel_id').val(data.kelasrombel_id);
+                    $('#matapelajaran_id').val(data.matapelajaran_id).trigger('change');
+                    $('#kelasrombel_id').val(data.kelasrombel_id).trigger('change');
                     $('#tanggal_ujian').val(data.tanggal_ujian);
                     $('#jam_mulai').val(data.jam_mulai);
                     $('#jam_selesai').val(data.jam_selesai);
                     $('#lama_ujian').val(data.lama_ujian);
                     $('#jenis_ujian').val(data.jenis_ujian);
+                    
                     $('#jadwal-modal').modal('show');
-                }, 500);
+                });
+            },
+            error: function() {
+                 Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Gagal mengambil data untuk diedit.'
+                });
             }
         });
     });

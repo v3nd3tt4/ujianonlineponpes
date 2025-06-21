@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `tb_banksoal` (
   CONSTRAINT `tb_banksoal_ibfk_2` FOREIGN KEY (`pegawai_id`) REFERENCES `tb_pegawai` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_banksoal: ~0 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_banksoal: ~2 rows (approximately)
 DELETE FROM `tb_banksoal`;
 INSERT INTO `tb_banksoal` (`id`, `keterangan`, `matapelajaran_id`, `pegawai_id`, `created_at`, `updated_at`) VALUES
 	(4, 'Nihil quaerat facere', 1, 2, '2025-06-21 07:12:53', '2025-06-21 07:12:53'),
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `tb_gurumatapelajaran` (
   CONSTRAINT `tb_gurumatapelajaran_ibfk_2` FOREIGN KEY (`matapelajaran_id`) REFERENCES `tb_matapelajaran` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_gurumatapelajaran: ~0 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_gurumatapelajaran: ~1 rows (approximately)
 DELETE FROM `tb_gurumatapelajaran`;
 INSERT INTO `tb_gurumatapelajaran` (`id`, `pegawai_id`, `matapelajaran_id`) VALUES
 	(2, 2, 1);
@@ -65,11 +65,11 @@ CREATE TABLE IF NOT EXISTS `tb_jadwal_ujian` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_jadwal_ujian: ~1 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_jadwal_ujian: ~2 rows (approximately)
 DELETE FROM `tb_jadwal_ujian`;
 INSERT INTO `tb_jadwal_ujian` (`id`, `matapelajaran_id`, `kelasrombel_id`, `tanggal_ujian`, `jam_mulai`, `jam_selesai`, `lama_ujian`, `jenis_ujian`) VALUES
 	(2, 1, 2, '2000-10-10', '11:46:00', '03:12:00', 100, 'UAS'),
-	(3, 3, 2, '2025-06-23', '20:36:00', '02:40:00', 60, 'UAS');
+	(3, 3, 2, '2025-06-23', '20:36:00', '02:40:00', 65, 'UTS');
 
 -- Dumping structure for table db_ujianonlineponpes.tb_kelas
 CREATE TABLE IF NOT EXISTS `tb_kelas` (
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `tb_kelassiswa` (
   CONSTRAINT `tb_kelassiswa_ibfk_2` FOREIGN KEY (`kelasrombel_id`) REFERENCES `tb_kelas` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_kelassiswa: ~0 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_kelassiswa: ~2 rows (approximately)
 DELETE FROM `tb_kelassiswa`;
 INSERT INTO `tb_kelassiswa` (`id`, `siswa_id`, `kelasrombel_id`) VALUES
 	(2, 3, 2),
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `tb_soal` (
   CONSTRAINT `tb_soal_ibfk_1` FOREIGN KEY (`banksoal_id`) REFERENCES `tb_banksoal` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_soal: ~2 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_soal: ~8 rows (approximately)
 DELETE FROM `tb_soal`;
 INSERT INTO `tb_soal` (`id`, `banksoal_id`, `soal`, `pilihan_a`, `pilihan_b`, `pilihan_c`, `pilihan_d`, `kunci_jawaban`, `created_at`, `updated_at`) VALUES
 	(1, 5, 'Aut architecto eum d', 'Cupiditate nostrud e', 'Veritatis est volup', 'Ipsum consequat Do', 'Mollitia cupiditate ', 'A', '2025-06-21 07:27:20', '2025-06-21 07:27:20'),

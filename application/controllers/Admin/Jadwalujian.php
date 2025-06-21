@@ -22,7 +22,7 @@ class Jadwalujian extends CI_Controller {
     }
 
     public function get_all_data() {
-        $this->db->select('a.id, b.nama_matapelajaran, c.nama_kelas, ta.tahun, p.nama as nama_walikelas, a.tanggal_ujian, a.jam_mulai, a.jenis_ujian');
+        $this->db->select('a.id, b.kode_matapelajaran, b.nama_matapelajaran, c.nama_kelas, ta.tahun, p.nama as nama_walikelas, a.tanggal_ujian, a.jam_mulai, a.jenis_ujian');
         $this->db->from('tb_jadwal_ujian a');
         $this->db->join('tb_matapelajaran b', 'a.matapelajaran_id = b.id');
         $this->db->join('tb_kelasrombel kr', 'a.kelasrombel_id = kr.id');

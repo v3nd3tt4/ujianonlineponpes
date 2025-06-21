@@ -15,9 +15,10 @@
                 <table id="jadwal-table" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
+                            <th>Kode Mapel</th>
                             <th>Mata Pelajaran</th>
-                            <th>Kelas</th>
+                            <th>Kelas Rombel</th>
                             <th>Tanggal Ujian</th>
                             <th>Jam Mulai</th>
                             <th>Jenis Ujian</th>
