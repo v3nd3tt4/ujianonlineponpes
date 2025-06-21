@@ -4,10 +4,10 @@
             <div class="panel-heading bg-white border-none" style="padding:20px;">
                 <div class="row">
                     <div class="col-md-6 text-left">
-                        <h2>Data Tahun Akademik</h2>
+                        <h2>Data Kelas Rombel</h2>
                     </div>
                     <div class="col-md-6 text-right">
-                        <a href="<?= site_url('Admin/Tahunakademik/Index/create') ?>" class="btn btn-primary mb-3"> <i class="fa fa-plus"></i> Tambah Tahun Akademik</a>
+                        <a href="<?= site_url('Admin/Kelasrombel/Index/create') ?>" class="btn btn-primary mb-3"> <i class="fa fa-plus"></i> Tambah Kelas Rombel</a>
                     </div>
                 </div>
             </div>
@@ -19,21 +19,24 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Tahun</th>
-                            <!-- <th>Semester</th> -->
-                            <th>Status</th>
+                            <th>Kelas</th>
+                            <th>Tahun Akademik</th>
+                            <th>Wali Kelas</th>
+                            <th>Jumlah Siswa</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1; foreach ($tahunakademik as $row): ?>
+                        <?php $no = 1; foreach ($kelasrombel as $row): ?>
                             <tr>
                                 <td><?= $no++; ?></td>
+                                <td><?= htmlspecialchars($row->nama_kelas); ?></td>
                                 <td><?= htmlspecialchars($row->tahun); ?></td>
-                                <!-- <td><?= htmlspecialchars($row->semester); ?></td> -->
-                                <td><?= htmlspecialchars($row->status); ?></td>
+                                <td><?= htmlspecialchars($row->nama); ?></td>
+                                <td><?= $row->jumlah_siswa; ?> siswa</td>
                                 <td>
-                                    <a href="<?= site_url('Admin/Tahunakademik/Index/edit/' . $row->id) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="<?= site_url('Admin/Kelasrombel/Index/siswa/' . $row->id) ?>" class="btn btn-info btn-sm">Lihat Siswa</a>
+                                    <a href="<?= site_url('Admin/Kelasrombel/Index/edit/' . $row->id) ?>" class="btn btn-warning btn-sm">Edit</a>
                                     <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="<?= $row->id ?>">Hapus</a>
                                 </td>
                             </tr>

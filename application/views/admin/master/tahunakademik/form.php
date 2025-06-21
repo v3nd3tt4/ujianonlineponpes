@@ -14,14 +14,14 @@
                         <label>Tahun</label>
                         <input type="text" name="tahun" class="form-control" value="<?= set_value('tahun', isset($tahunakademik) ? $tahunakademik->tahun : '') ?>" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Semester</label>
                         <select name="semester" class="form-control" required>
                             <option value="">Pilih</option>
                             <option value="Ganjil" <?= set_select('semester', 'Ganjil', isset($tahunakademik) && $tahunakademik->semester == 'Ganjil') ?>>Ganjil</option>
                             <option value="Genap" <?= set_select('semester', 'Genap', isset($tahunakademik) && $tahunakademik->semester == 'Genap') ?>>Genap</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>Status</label>
                         <select name="status" class="form-control" required>

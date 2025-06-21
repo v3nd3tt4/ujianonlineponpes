@@ -64,7 +64,7 @@ class Index extends CI_Controller {
 
     private function _rules() {
         $this->form_validation->set_rules('tahun', 'Tahun', 'required');
-        $this->form_validation->set_rules('semester', 'Semester', 'required');
+        // $this->form_validation->set_rules('semester', 'Semester', 'required');
         $this->form_validation->set_rules('status', 'Status', 'required');
     }
 

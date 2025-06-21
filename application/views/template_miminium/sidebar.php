@@ -26,12 +26,13 @@
                     <li><a href="<?=base_url()?>admin/matapelajaran/index" style="color:<?php if($link=='Admin/Matapelajaran/Index'){?> #2196F3 <?php }?>;">Mata Pelajaran</a></li>
                 </ul>
               </li>
-              <li class="<?php if(isset($link) && ($link=='Admin/Kelassiswa/Index')){ ?> active <?php } ?> ripple">
+              <li class="<?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index')){ ?> active <?php } ?> ripple">
                 <a class="tree-toggle nav-header"><span class="fa-cogs fa"></span> Setting 
-                  <span class="<?php if(isset($link) && ($link=='Admin/Kelassiswa/Index')){ ?> fa-angle-down <?php }else{ ?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
+                  <span class="<?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index')){ ?> fa-angle-down <?php }else{ ?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
                 </a>
-                <ul class="nav nav-list tree <?php if(isset($link) && ($link=='Admin/Kelassiswa/Index')){ ?> open <?php } ?>">
-                  <li><a href="<?=base_url()?>admin/kelassiswa/index" style="color:<?php if($link=='Admin/Kelassiswa/Index'){?> #2196F3 <?php }?>;">Kelas Siswa</a></li>
+                <ul class="nav nav-list tree <?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index')){ ?> open <?php } ?>">
+                  <li><a href="<?=base_url()?>admin/kelasrombel/index" style="color:<?php if($link=='Admin/Kelasrombel/Index'){?> #2196F3 <?php }?>;">Kelas Rombel</a></li>
+                  <!-- <li><a href="<?=base_url()?>admin/kelassiswa/index" style="color:<?php if($link=='Admin/Kelassiswa/Index'){?> #2196F3 <?php }?>;">Kelas Siswa</a></li> -->
                 </ul>
               </li>
             </ul>
