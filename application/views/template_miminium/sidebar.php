@@ -24,15 +24,17 @@
                     <li><a href="<?=base_url()?>admin/tahunakademik/index" style="color:<?php if($link=='Admin/Tahunakademik/Index'){?> #2196F3 <?php }?>;">Tahun Akademik</a></li>
                     <li><a href="<?=base_url()?>admin/ruangan/index" style="color:<?php if($link=='Admin/Ruangan/Index'){?> #2196F3 <?php }?>;">Ruangan</a></li>
                     <li><a href="<?=base_url()?>admin/matapelajaran/index" style="color:<?php if($link=='Admin/Matapelajaran/Index'){?> #2196F3 <?php }?>;">Mata Pelajaran</a></li>
+                    
                 </ul>
               </li>
-              <li class="<?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index' || $link=='Admin/Gurumatapelajaran/Index')){ ?> active <?php } ?> ripple">
+              <li class="<?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index' || $link=='Admin/Gurumatapelajaran/Index' || $link =='Admin/Jadwalujian')){ ?> active <?php } ?> ripple">
                 <a class="tree-toggle nav-header"><span class="fa-cogs fa"></span> Setting 
-                  <span class="<?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index' || $link=='Admin/Gurumatapelajaran/Index')){ ?> fa-angle-down <?php }else{ ?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
+                  <span class="<?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index' || $link=='Admin/Gurumatapelajaran/Index' || $link =='Admin/Jadwalujian')){ ?> fa-angle-down <?php }else{ ?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
                 </a>
-                <ul class="nav nav-list tree <?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index' || $link=='Admin/Gurumatapelajaran/Index')){ ?> open <?php } ?>">
+                <ul class="nav nav-list tree <?php if(isset($link) && ($link=='Admin/Kelassiswa/Index' || $link=='Admin/Kelasrombel/Index' || $link=='Admin/Gurumatapelajaran/Index' || $link =='Admin/Jadwalujian')){ ?> open <?php } ?>">
                   <li><a href="<?=base_url()?>admin/kelasrombel/index" style="color:<?php if($link=='Admin/Kelasrombel/Index'){?> #2196F3 <?php }?>;">Kelas Rombel</a></li>
                   <li><a href="<?=base_url()?>admin/gurumatapelajaran/index" style="color:<?php if($link=='Admin/Gurumatapelajaran/Index'){?> #2196F3 <?php }?>;">Guru Mata Pelajaran</a></li>
+                  <li><a href="<?=base_url()?>admin/jadwalujian" style="color:<?php if($link=='Admin/Jadwalujian'){?> #2196F3 <?php }?>;">Jadwal Ujian</a></li>
                   <!-- <li><a href="<?=base_url()?>admin/kelassiswa/index" style="color:<?php if($link=='Admin/Kelassiswa/Index'){?> #2196F3 <?php }?>;">Kelas Siswa</a></li> -->
                 </ul>
               </li>
