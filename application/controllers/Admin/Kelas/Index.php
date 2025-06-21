@@ -14,7 +14,7 @@ class Index extends CI_Controller {
         $data = array(
             'page' => 'admin/master/kelas/index',
             'script' => 'admin/master/kelas/script',
-            'kelas' => $this->Kelas_model->get_all_with_siswa_count(),
+            'kelas' => $this->Kelas_model->get_all(),
             'link' => 'Admin/Kelas/Index'
         );
         $this->load->view('template_miminium/wrapper', $data);

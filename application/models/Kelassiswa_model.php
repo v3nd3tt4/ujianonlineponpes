@@ -22,11 +22,11 @@ class Kelassiswa_model extends CI_Model {
 
     // get data by id
     function get_by_id($id) {
-        $this->db->select('tb_kelassiswa.*, tb_siswa.nama, tb_siswa.nis, tb_kelas.nama_kelas');
+        $this->db->select('tb_kelassiswa.*, tb_siswa.nama, tb_siswa.nis');
         $this->db->from($this->table);
         $this->db->join('tb_siswa', 'tb_siswa.id = tb_kelassiswa.siswa_id');
-        $this->db->join('tb_kelas', 'tb_kelas.id = tb_kelassiswa.kelas_id');
-        $this->db->where($this->id, $id);
+        // $this->db->join('tb_kelas', 'tb_kelas.id = tb_kelassiswa.kelas_id');
+        $this->db->where('tb_kelassiswa.id', $id);
         return $this->db->get()->row();
     }
 
@@ -48,6 +48,14 @@ class Kelassiswa_model extends CI_Model {
         return $result->num_rows() > 0;
     }
 
+    // cek apakah siswa sudah ada di kelas rombel
+    function cek_siswa_di_kelasrombel($siswa_id, $kelasrombel_id) {
+        $this->db->where('siswa_id', $siswa_id);
+        $this->db->where('kelasrombel_id', $kelasrombel_id);
+        $result = $this->db->get($this->table);
+        return $result->num_rows() > 0;
+    }
+
     // cek apakah siswa sudah ada di kelas (untuk edit, exclude current record)
     function cek_siswa_di_kelas_edit($siswa_id, $kelas_id, $exclude_id = null) {
         $this->db->where('siswa_id', $siswa_id);
@@ -61,19 +69,19 @@ class Kelassiswa_model extends CI_Model {
 
     // insert data
     function insert($data) {
-        $this->db->insert($this->table, $data);
+        return $this->db->insert($this->table, $data);
     }
 
     // update data
     function update($id, $data) {
         $this->db->where($this->id, $id);
-        $this->db->update($this->table, $data);
+        return $this->db->update($this->table, $data);
     }
 
     // delete data
     function delete($id) {
         $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        return $this->db->delete($this->table);
     }
 
     public function get_all_with_siswa_count() {

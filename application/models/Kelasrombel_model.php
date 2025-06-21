@@ -22,7 +22,7 @@ class Kelasrombel_model extends CI_Model {
 
     // get siswa by kelas
     function get_siswa_by_kelas($kelas_id) {
-        $this->db->select('tb_kelasrombel.id, tb_siswa.nama, tb_siswa.nis, tb_siswa.email, tb_siswa.no_hp');
+        $this->db->select('tb_kelassiswa.id, tb_siswa.nama, tb_siswa.nis, tb_siswa.email, tb_siswa.no_hp');
         $this->db->from($this->table);
         $this->db->join('tb_kelassiswa', 'tb_kelassiswa.kelasrombel_id = tb_kelasrombel.id');
         $this->db->join('tb_siswa', 'tb_siswa.id = tb_kelassiswa.siswa_id');
@@ -32,6 +32,7 @@ class Kelasrombel_model extends CI_Model {
     }
 
     public function get_by_id($id) {
+        $this->db->select('tb_kelasrombel.*, tb_pegawai.nama, tb_kelas.nama_kelas, tb_tahunakademik.tahun');
         $this->db->from($this->table);
         $this->db->join('tb_pegawai', 'tb_pegawai.id = tb_kelasrombel.walikelas_id', 'left');
         $this->db->join('tb_kelas', 'tb_kelas.id = tb_kelasrombel.kelas_id');
