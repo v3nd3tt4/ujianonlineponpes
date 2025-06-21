@@ -14,6 +14,27 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- Dumping structure for table db_ujianonlineponpes.tb_banksoal
+CREATE TABLE IF NOT EXISTS `tb_banksoal` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `keterangan` varchar(255) NOT NULL,
+  `matapelajaran_id` int NOT NULL,
+  `pegawai_id` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `matapelajaran_id` (`matapelajaran_id`),
+  KEY `pegawai_id` (`pegawai_id`),
+  CONSTRAINT `tb_banksoal_ibfk_1` FOREIGN KEY (`matapelajaran_id`) REFERENCES `tb_matapelajaran` (`id`),
+  CONSTRAINT `tb_banksoal_ibfk_2` FOREIGN KEY (`pegawai_id`) REFERENCES `tb_pegawai` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table db_ujianonlineponpes.tb_banksoal: ~0 rows (approximately)
+DELETE FROM `tb_banksoal`;
+INSERT INTO `tb_banksoal` (`id`, `keterangan`, `matapelajaran_id`, `pegawai_id`, `created_at`, `updated_at`) VALUES
+	(4, 'Nihil quaerat facere', 1, 2, '2025-06-21 07:12:53', '2025-06-21 07:12:53'),
+	(5, 'Quasi est asperiores', 1, 2, '2025-06-21 07:13:12', '2025-06-21 07:13:12');
+
 -- Dumping structure for table db_ujianonlineponpes.tb_gurumatapelajaran
 CREATE TABLE IF NOT EXISTS `tb_gurumatapelajaran` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -24,10 +45,12 @@ CREATE TABLE IF NOT EXISTS `tb_gurumatapelajaran` (
   KEY `matapelajaran_id` (`matapelajaran_id`),
   CONSTRAINT `tb_gurumatapelajaran_ibfk_1` FOREIGN KEY (`pegawai_id`) REFERENCES `tb_pegawai` (`id`),
   CONSTRAINT `tb_gurumatapelajaran_ibfk_2` FOREIGN KEY (`matapelajaran_id`) REFERENCES `tb_matapelajaran` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table db_ujianonlineponpes.tb_gurumatapelajaran: ~0 rows (approximately)
 DELETE FROM `tb_gurumatapelajaran`;
+INSERT INTO `tb_gurumatapelajaran` (`id`, `pegawai_id`, `matapelajaran_id`) VALUES
+	(2, 2, 1);
 
 -- Dumping structure for table db_ujianonlineponpes.tb_kelas
 CREATE TABLE IF NOT EXISTS `tb_kelas` (
@@ -37,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `tb_kelas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_kelas: ~0 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_kelas: ~6 rows (approximately)
 DELETE FROM `tb_kelas`;
 INSERT INTO `tb_kelas` (`id`, `nama_kelas`, `keterangan`) VALUES
 	(1, 'VII A', '-'),
@@ -163,45 +186,12 @@ CREATE TABLE IF NOT EXISTS `tb_siswa` (
   UNIQUE KEY `nis` (`nis`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_siswa: ~0 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_siswa: ~3 rows (approximately)
 DELETE FROM `tb_siswa`;
 INSERT INTO `tb_siswa` (`id`, `nama`, `nis`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `email`, `password`, `no_hp`, `nama_ibu`, `nama_ayah`, `pekerjaan_ibu`, `pekerjaan_ayah`, `tahun_masuk`) VALUES
 	(2, 'Ut sit iusto proiden edit', '1011111', 'Consectetur consect', '2005-06-07', 'P', 'Quia voluptas non ap', 'bavi@mailinator.com', '$2y$10$vrHi4FRAzbzy/89F4W10Ie6opp9BJhfWIRTo9PwQbwSBtthWKfjXK', 'Voluptate earum quis', 'Dolore ullam in quo ', 'Non commodo ea sint', 'Laboriosam numquam ', 'Porro cupiditate vol', '2025'),
 	(3, 'Sunt nisi ut possimu edit', '1011112', 'Ipsum officia eum d', '1971-05-06', 'L', 'Ex est laboriosam q', 'vevedu@mailinator.com', '$2y$10$r6VYdUGV58fLfVy8GXVeWu0szuRgc8j4HOJK3zuL2OwZJcQH4SHjq', 'Dolorem maiores beat', 'Elit aut blanditiis', 'In laboriosam et si', 'Totam tempora cumque', 'Accusamus corrupti ', '2025'),
 	(4, 'Labore at dolorem re', 'Amet hic incidunt ', 'Aut irure illo conse', '1971-09-08', 'P', 'Iure non qui molliti', 'qixovomuf@mailinator.com', '$2y$10$btP.Yk3NepE5o4rJIhZawOB/JQPH8XPgDsikbPMKBww5kHXkVr.uq', 'Irure aperiam dolore', 'Similique ducimus e', 'Vel perferendis nece', 'Rerum officiis earum', 'Est et accusamus si', '2024');
-
--- Dumping structure for table db_ujianonlineponpes.tb_tahunakademik
-CREATE TABLE IF NOT EXISTS `tb_tahunakademik` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tahun` varchar(9) NOT NULL,
-  `semester` enum('Ganjil','Genap') NOT NULL,
-  `status` enum('Aktif','Nonaktif') NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Dumping data for table db_ujianonlineponpes.tb_tahunakademik: ~1 rows (approximately)
-DELETE FROM `tb_tahunakademik`;
-INSERT INTO `tb_tahunakademik` (`id`, `tahun`, `semester`, `status`) VALUES
-	(1, '2025/2026', 'Ganjil', 'Aktif'),
-	(2, '2026/2027', '', 'Aktif');
-
--- Dumping structure for table db_ujianonlineponpes.tb_banksoal
-CREATE TABLE IF NOT EXISTS `tb_banksoal` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `keterangan` varchar(255) NOT NULL,
-  `matapelajaran_id` int NOT NULL,
-  `pegawai_id` int NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `matapelajaran_id` (`matapelajaran_id`),
-  KEY `pegawai_id` (`pegawai_id`),
-  CONSTRAINT `tb_banksoal_ibfk_1` FOREIGN KEY (`matapelajaran_id`) REFERENCES `tb_matapelajaran` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `tb_banksoal_ibfk_2` FOREIGN KEY (`pegawai_id`) REFERENCES `tb_pegawai` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Dumping data for table db_ujianonlineponpes.tb_banksoal: ~0 rows (approximately)
-DELETE FROM `tb_banksoal`;
 
 -- Dumping structure for table db_ujianonlineponpes.tb_soal
 CREATE TABLE IF NOT EXISTS `tb_soal` (
@@ -218,10 +208,28 @@ CREATE TABLE IF NOT EXISTS `tb_soal` (
   PRIMARY KEY (`id`),
   KEY `banksoal_id` (`banksoal_id`),
   CONSTRAINT `tb_soal_ibfk_1` FOREIGN KEY (`banksoal_id`) REFERENCES `tb_banksoal` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_soal: ~0 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_soal: ~2 rows (approximately)
 DELETE FROM `tb_soal`;
+INSERT INTO `tb_soal` (`id`, `banksoal_id`, `soal`, `pilihan_a`, `pilihan_b`, `pilihan_c`, `pilihan_d`, `kunci_jawaban`, `created_at`, `updated_at`) VALUES
+	(1, 5, 'Aut architecto eum d', 'Cupiditate nostrud e', 'Veritatis est volup', 'Ipsum consequat Do', 'Mollitia cupiditate ', 'A', '2025-06-21 07:27:20', '2025-06-21 07:27:20'),
+	(2, 5, 'Sit mollit debitis  edit', 'Mollit assumenda et ', 'Nulla mollit modi au', 'Officiis quas quia q', 'Nisi dolor cumque qu', 'D', '2025-06-21 07:27:49', '2025-06-21 07:30:44');
+
+-- Dumping structure for table db_ujianonlineponpes.tb_tahunakademik
+CREATE TABLE IF NOT EXISTS `tb_tahunakademik` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tahun` varchar(9) NOT NULL,
+  `semester` enum('Ganjil','Genap') NOT NULL,
+  `status` enum('Aktif','Nonaktif') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table db_ujianonlineponpes.tb_tahunakademik: ~1 rows (approximately)
+DELETE FROM `tb_tahunakademik`;
+INSERT INTO `tb_tahunakademik` (`id`, `tahun`, `semester`, `status`) VALUES
+	(1, '2025/2026', 'Ganjil', 'Aktif'),
+	(2, '2026/2027', '', 'Aktif');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
