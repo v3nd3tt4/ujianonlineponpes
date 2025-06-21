@@ -5,6 +5,7 @@ class Index extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Kelas_model');
+        $this->load->model('Kelassiswa_model');
         $this->load->library('form_validation');
         $this->load->library('session');
     }
@@ -13,7 +14,21 @@ class Index extends CI_Controller {
         $data = array(
             'page' => 'admin/master/kelas/index',
             'script' => 'admin/master/kelas/script',
-            'kelas' => $this->Kelas_model->get_all(),
+            'kelas' => $this->Kelas_model->get_all_with_siswa_count(),
+            'link' => 'Admin/Kelas/Index'
+        );
+        $this->load->view('template_miminium/wrapper', $data);
+    }
+
+    public function siswa($kelas_id) {
+        $kelas = $this->Kelas_model->get_by_id($kelas_id);
+        if (!$kelas) show_404();
+        
+        $data = array(
+            'page' => 'admin/master/kelas/siswa',
+            'script' => 'admin/master/kelas/script',
+            'kelas' => $kelas,
+            'siswa_kelas' => $this->Kelassiswa_model->get_siswa_by_kelas($kelas_id),
             'link' => 'Admin/Kelas/Index'
         );
         $this->load->view('template_miminium/wrapper', $data);
@@ -44,8 +59,8 @@ class Index extends CI_Controller {
             $data = array(
                 'page' => 'admin/master/kelas/form',
                 'script' => 'admin/master/kelas/script',
-                'link' => 'Admin/Kelas/Index',
-                'kelas' => $kelas
+                'kelas' => $kelas,
+                'link' => 'Admin/Kelas/Index'
             );
             $this->load->view('template_miminium/wrapper', $data);
         } else {

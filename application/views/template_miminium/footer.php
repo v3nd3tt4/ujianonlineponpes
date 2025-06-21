@@ -624,6 +624,7 @@
     <script src="<?=base_url()?>assets_miminium/js/bootstrap.min.js"></script>
     <script src="<?=base_url()?>assets_miminium/js/plugins/jquery.datatables.min.js"></script>
     <script src="<?=base_url()?>assets_miminium/js/plugins/datatables.bootstrap.min.js"></script>
+    <script src="<?=base_url()?>assets_miminium/js/plugins/select2.full.min.js"></script>
     
     <!-- plugins -->
     <script src="<?=base_url()?>assets_miminium/js/plugins/moment.min.js"></script>

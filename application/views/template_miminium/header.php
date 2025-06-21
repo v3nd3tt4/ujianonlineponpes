@@ -18,6 +18,7 @@
       <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets_miminium/css/plugins/animate.min.css"/>
       <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets_miminium/css/plugins/fullcalendar.min.css"/>
       <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets_miminium/css/plugins/datatables.bootstrap.min.css"/>
+      <link rel="stylesheet" href="<?=base_url()?>assets_miminium/css/plugins/select2.min.css">
 	<link href="<?=base_url()?>assets_miminium/css/style.css" rel="stylesheet">
 	<!-- end: Css -->
 
