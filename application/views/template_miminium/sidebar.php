@@ -38,7 +38,8 @@
                   <!-- <li><a href="<?=base_url()?>admin/kelassiswa/index" style="color:<?php if($link=='Admin/Kelassiswa/Index'){?> #2196F3 <?php }?>;">Kelas Siswa</a></li> -->
                 </ul>
               </li>
-              <li class="ripple"><a href="<?=base_url()?>banksoal" style="color:<?php if($link=='banksoal'){?> #2196F3 <?php }?>;"><span class="fa fa-briefcase"></span>Bank Soal</a></li>
+              <li class="ripple"><a href="<?=base_url()?>banksoal" style="color:<?php if($link=='banksoal'){?> #2196F3 <?php }?>;"><span class="fa fa-briefcase"></span> Bank Soal</a></li>
+              <li class="ripple"><a href="<?=base_url()?>admin/assignsoal" style="color:<?php if($link=='Admin/Assignsoal'){?> #2196F3 <?php }?>;"><span class="fa fa-sticky-note-o"></span> Penetapan Soal</a></li>
             </ul>
           </div>
       </div>
