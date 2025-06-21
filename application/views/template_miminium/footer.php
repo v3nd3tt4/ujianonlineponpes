@@ -914,7 +914,10 @@
      </script>
      <script>
       $(document).ready(function() {
-        $('.dt-table').DataTable();
+        $('.dt-table').DataTable({
+          "responsive": true,
+            "autoWidth": false,
+        });
       });
      </script>
      <?php if (isset($script)) $this->load->view($script); ?>

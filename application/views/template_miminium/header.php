@@ -20,6 +20,9 @@
       <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets_miminium/css/plugins/datatables.bootstrap.min.css"/>
       <link rel="stylesheet" href="<?=base_url()?>assets_miminium/css/plugins/select2.min.css">
 	<link href="<?=base_url()?>assets_miminium/css/style.css" rel="stylesheet">
+	
+	<!-- SweetAlert2 CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 	<!-- end: Css -->
 
 	<link rel="shortcut icon" href="<?=base_url()?>assets_miminium/img/logomi.png">

@@ -185,6 +185,44 @@ INSERT INTO `tb_tahunakademik` (`id`, `tahun`, `semester`, `status`) VALUES
 	(1, '2025/2026', 'Ganjil', 'Aktif'),
 	(2, '2026/2027', '', 'Aktif');
 
+-- Dumping structure for table db_ujianonlineponpes.tb_banksoal
+CREATE TABLE IF NOT EXISTS `tb_banksoal` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `keterangan` varchar(255) NOT NULL,
+  `matapelajaran_id` int NOT NULL,
+  `pegawai_id` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `matapelajaran_id` (`matapelajaran_id`),
+  KEY `pegawai_id` (`pegawai_id`),
+  CONSTRAINT `tb_banksoal_ibfk_1` FOREIGN KEY (`matapelajaran_id`) REFERENCES `tb_matapelajaran` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tb_banksoal_ibfk_2` FOREIGN KEY (`pegawai_id`) REFERENCES `tb_pegawai` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table db_ujianonlineponpes.tb_banksoal: ~0 rows (approximately)
+DELETE FROM `tb_banksoal`;
+
+-- Dumping structure for table db_ujianonlineponpes.tb_soal
+CREATE TABLE IF NOT EXISTS `tb_soal` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `banksoal_id` int NOT NULL,
+  `soal` text NOT NULL,
+  `pilihan_a` text NOT NULL,
+  `pilihan_b` text NOT NULL,
+  `pilihan_c` text NOT NULL,
+  `pilihan_d` text NOT NULL,
+  `kunci_jawaban` enum('A','B','C','D') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `banksoal_id` (`banksoal_id`),
+  CONSTRAINT `tb_soal_ibfk_1` FOREIGN KEY (`banksoal_id`) REFERENCES `tb_banksoal` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table db_ujianonlineponpes.tb_soal: ~0 rows (approximately)
+DELETE FROM `tb_soal`;
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
