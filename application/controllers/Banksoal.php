@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once APPPATH . 'third_party/SimpleXLSX/SimpleXLSX.php';
+use Shuchkin\SimpleXLSX;
+
 class Banksoal extends CI_Controller {
 
 	public function __construct() {
@@ -260,6 +263,74 @@ class Banksoal extends CI_Controller {
 			$this->session->set_flashdata('error', 'Gagal menghapus soal!');
 		}
 	
+		redirect('banksoal/soalkuncijawaban/' . $banksoal_id);
+	}
+
+	public function preview_excel() {
+		if (isset($_FILES["file_excel"]["name"])) {
+			$path = $_FILES["file_excel"]["tmp_name"];
+
+			if ($xlsx = SimpleXLSX::parse($path)) {
+				$rows = $xlsx->rows();
+				// Hapus header
+				$header = array_shift($rows);
+
+				$html = '<table class="table table-bordered">';
+				$html .= '<thead><tr>';
+				foreach($header as $h) {
+					$html .= '<th>' . htmlspecialchars($h) . '</th>';
+				}
+				$html .= '</tr></thead>';
+				$html .= '<tbody>';
+				
+				$i = 0;
+				foreach ($rows as $row) {
+					$html .= '<tr>';
+					$html .= '<td><input type="hidden" name="soal['.$i.'][soal]" value="'.htmlspecialchars($row[0]).'">' . htmlspecialchars($row[0]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal['.$i.'][pilihan_a]" value="'.htmlspecialchars($row[1]).'">' . htmlspecialchars($row[1]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal['.$i.'][pilihan_b]" value="'.htmlspecialchars($row[2]).'">' . htmlspecialchars($row[2]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal['.$i.'][pilihan_c]" value="'.htmlspecialchars($row[3]).'">' . htmlspecialchars($row[3]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal['.$i.'][pilihan_d]" value="'.htmlspecialchars($row[4]).'">' . htmlspecialchars($row[4]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal['.$i.'][kunci_jawaban]" value="'.htmlspecialchars($row[5]).'">' . htmlspecialchars($row[5]) . '</td>';
+					$html .= '</tr>';
+					$i++;
+				}
+
+				$html .= '</tbody></table>';
+				echo $html;
+
+			} else {
+				echo '<div class="alert alert-danger">Gagal mem-parsing file Excel. Pastikan format file benar.</div>';
+			}
+		} else {
+			echo '<div class="alert alert-danger">File tidak ditemukan.</div>';
+		}
+	}
+
+	public function import_soal() {
+		$soal_data = $this->input->post('soal');
+		$banksoal_id = $this->input->post('banksoal_id');
+
+		if (!empty($soal_data)) {
+			$data_to_insert = [];
+			foreach ($soal_data as $s) {
+				$data_to_insert[] = [
+					'banksoal_id' => $banksoal_id,
+					'soal' => $s['soal'],
+					'pilihan_a' => $s['pilihan_a'],
+					'pilihan_b' => $s['pilihan_b'],
+					'pilihan_c' => $s['pilihan_c'],
+					'pilihan_d' => $s['pilihan_d'],
+					'kunci_jawaban' => $s['kunci_jawaban'],
+				];
+			}
+
+			$this->db->insert_batch('tb_soal', $data_to_insert);
+			$this->session->set_flashdata('success', count($data_to_insert) . ' soal berhasil diimport!');
+		} else {
+			$this->session->set_flashdata('error', 'Tidak ada data untuk diimport.');
+		}
+
 		redirect('banksoal/soalkuncijawaban/' . $banksoal_id);
 	}
 }

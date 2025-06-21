@@ -19,6 +19,9 @@
                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahSoal">
                             <i class="fa fa-plus"></i> Tambah Soal
                         </a>
+                        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#modalImportSoal">
+                            <i class="fa fa-file-excel-o"></i> Import Excel
+                        </a>
                     </div>
                 </div>
             </div>
@@ -170,6 +173,60 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> 
+
+<!-- Modal Import Soal -->
+<div class="modal fade" id="modalImportSoal" tabindex="-1" role="dialog" aria-labelledby="modalImportSoalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="formImportSoal" method="post" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalImportSoalLabel">Import Soal dari Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="banksoal_id" value="<?= $banksoal->id ?>">
+                    <div class="form-group">
+                        <label for="file_excel">Pilih File Excel</label>
+                        <input type="file" name="file_excel" id="file_excel" class="form-control" accept=".xls,.xlsx" required>
+                    </div>
+                    <div class="form-group">
+                        <a href="<?= base_url('templates/template_soal.xlsx') ?>" download="template_soal.csv">Download Template Excel</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Upload & Preview</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Preview Soal -->
+<div class="modal fade" id="modalPreviewSoal" tabindex="-1" role="dialog" aria-labelledby="modalPreviewSoalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form method="post" action="<?= site_url('banksoal/import_soal'); ?>">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPreviewSoalLabel">Preview Soal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="banksoal_id" value="<?= $banksoal->id ?>">
+                    <div id="preview-area"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Simpan ke Database</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
             </div>

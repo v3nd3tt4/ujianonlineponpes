@@ -75,5 +75,27 @@ $(document).ready(function(){
             }
         });
     });
+
+    // Import Soal
+    $('#formImportSoal').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '<?= site_url("banksoal/preview_excel") ?>',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $('#preview-area').html(response);
+                $('#modalImportSoal').modal('hide');
+                $('#modalPreviewSoal').modal('show');
+            },
+            error: function() {
+                Swal.fire('Error!', 'Gagal mengupload file.', 'error');
+            }
+        });
+    });
 });
 </script> 
