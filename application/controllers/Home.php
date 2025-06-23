@@ -22,7 +22,8 @@ class Home extends CI_Controller {
 	{
 		// var_dump("expression");exit();
 		$data = array(
-			'page' => 'dashboard_miminium'
+			'page' => 'dashboard_miminium',
+			'link' => 'home'
 		);
 		$this->load->view('template_miminium/wrapper', $data);
 	}

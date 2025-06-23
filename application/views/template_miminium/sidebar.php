@@ -13,6 +13,7 @@
                 <h1 class="animated fadeInLeft">21:00</h1>
                 <p class="animated fadeInRight">Sat,October 1st 2029</p>
               </li> -->
+              <?php if($this->session->userdata('rule') == 'admin'){?>
               <li class="<?php if(isset($link) && ($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index' || $link=='Admin/Tahunakademik/Index' || $link=='Admin/Ruangan/Index' || $link=='Admin/Matapelajaran/Index')){?> active <?php }?> ripple">
                 <a class="tree-toggle nav-header"><i class="fa fa-database" aria-hidden="true"></i> Master Data 
                   <span class="<?php if($link=='Admin/Pegawai/Index' || $link=='Admin/Kelas/Index' || $link=='Admin/Siswa/Index' || $link=='Admin/Tahunakademik/Index' || $link=='Admin/Ruangan/Index' || $link=='Admin/Matapelajaran/Index'){?> fa-angle-down <?php }else{?> fa-angle-right <?php }?> fa right-arrow text-right"></span>
@@ -40,6 +41,12 @@
               </li>
               <li class="ripple"><a href="<?=base_url()?>banksoal" style="color:<?php if($link=='banksoal'){?> #2196F3 <?php }?>;"><span class="fa fa-briefcase"></span> Bank Soal</a></li>
               <li class="ripple"><a href="<?=base_url()?>admin/assignsoal" style="color:<?php if($link=='Admin/Assignsoal'){?> #2196F3 <?php }?>;"><span class="fa fa-sticky-note-o"></span> Penetapan Soal</a></li>
+              <li class="ripple"><a href="<?=base_url()?>ujianonline" style="color:<?php if($link=='ujianonline'){?> #2196F3 <?php }?>;"><span class="fa fa-pencil"></span> Presensi Ujian Online</a></li>
+              <?php }?>
+              <?php if($this->session->userdata('rule') == 'siswa'){?>
+                <li class="ripple"><a href="<?=base_url()?>user/ujianonline" style="color:<?php if($link=='siswa/ujianonline'){?> #2196F3 <?php }?>;"><span class="fa fa-pencil"></span> Ujian Online</a></li>
+              <?php }?>
+
             </ul>
           </div>
       </div>
