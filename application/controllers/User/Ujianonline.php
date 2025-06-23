@@ -61,8 +61,14 @@ class Ujianonline extends CI_Controller {
 
     public function kerjakan($jadwal_ujian_id) {
         $siswa_id = $this->session->userdata('id_user');
-        // Ambil jadwal ujian dan soal
-        $jadwal = $this->db->get_where('tb_jadwal_ujian', ['id' => $jadwal_ujian_id])->row();
+        // Ambil detail jadwal ujian dengan join ke matapelajaran dan kelas
+        $this->db->select('tb_jadwal_ujian.*, tb_matapelajaran.nama_matapelajaran, tb_kelasrombel.id as kelasrombel_id, tb_kelas.nama_kelas');
+        $this->db->from('tb_jadwal_ujian');
+        $this->db->join('tb_matapelajaran', 'tb_matapelajaran.id = tb_jadwal_ujian.matapelajaran_id');
+        $this->db->join('tb_kelasrombel', 'tb_kelasrombel.id = tb_jadwal_ujian.kelasrombel_id');
+        $this->db->join('tb_kelas', 'tb_kelas.id = tb_kelasrombel.kelas_id');
+        $this->db->where('tb_jadwal_ujian.id', $jadwal_ujian_id);
+        $jadwal = $this->db->get()->row();
         $soal = [];
         if ($jadwal && $jadwal->banksoal_id) {
             $soal = $this->db->get_where('tb_soal', ['banksoal_id' => $jadwal->banksoal_id])->result();

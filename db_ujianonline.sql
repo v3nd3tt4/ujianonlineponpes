@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `tb_banksoal` (
 DELETE FROM `tb_banksoal`;
 INSERT INTO `tb_banksoal` (`id`, `keterangan`, `matapelajaran_id`, `pegawai_id`, `created_at`, `updated_at`) VALUES
 	(4, 'Nihil quaerat facere', 1, 2, '2025-06-21 07:12:53', '2025-06-21 07:12:53'),
-	(5, 'Quasi est asperiores', 1, 2, '2025-06-21 07:13:12', '2025-06-21 07:13:12');
+	(5, 'Quasi est asperiores', 3, 2, '2025-06-21 07:13:12', '2025-06-23 12:04:12');
 
 -- Dumping structure for table db_ujianonlineponpes.tb_gurumatapelajaran
 CREATE TABLE IF NOT EXISTS `tb_gurumatapelajaran` (
@@ -69,9 +69,28 @@ CREATE TABLE IF NOT EXISTS `tb_jadwal_ujian` (
 -- Dumping data for table db_ujianonlineponpes.tb_jadwal_ujian: ~3 rows (approximately)
 DELETE FROM `tb_jadwal_ujian`;
 INSERT INTO `tb_jadwal_ujian` (`id`, `matapelajaran_id`, `kelasrombel_id`, `tanggal_ujian`, `jam_mulai`, `jam_selesai`, `lama_ujian`, `jenis_ujian`, `banksoal_id`) VALUES
-	(2, 1, 2, '2000-10-10', '11:46:00', '03:12:00', 100, 'UAS', 5),
-	(3, 3, 2, '2025-06-23', '20:36:00', '02:40:00', 65, 'UTS', NULL),
-	(4, 4, 2, '1983-12-27', '18:21:00', '03:15:00', 8, 'Lainnya', NULL);
+	(2, 1, 2, '2000-10-10', '11:46:00', '03:12:00', 100, 'UAS', 5);
+
+-- Dumping structure for table db_ujianonlineponpes.tb_jawaban_ujian
+CREATE TABLE IF NOT EXISTS `tb_jawaban_ujian` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `jadwal_ujian_id` int NOT NULL,
+  `siswa_id` int NOT NULL,
+  `waktu_mulai` datetime DEFAULT NULL,
+  `waktu_selesai` datetime DEFAULT NULL,
+  `status` enum('belum','sedang','selesai') NOT NULL DEFAULT 'belum',
+  `nilai_akhir` float DEFAULT NULL,
+  `jawaban` text,
+  PRIMARY KEY (`id`),
+  KEY `jadwal_ujian_id` (`jadwal_ujian_id`),
+  KEY `siswa_id` (`siswa_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table db_ujianonlineponpes.tb_jawaban_ujian: ~1 rows (approximately)
+DELETE FROM `tb_jawaban_ujian`;
+INSERT INTO `tb_jawaban_ujian` (`id`, `jadwal_ujian_id`, `siswa_id`, `waktu_mulai`, `waktu_selesai`, `status`, `nilai_akhir`, `jawaban`) VALUES
+	(1, 3, 3, '2025-06-23 11:55:08', NULL, 'sedang', NULL, NULL),
+	(4, 2, 3, '2025-06-23 12:30:55', NULL, 'sedang', NULL, NULL);
 
 -- Dumping structure for table db_ujianonlineponpes.tb_kelas
 CREATE TABLE IF NOT EXISTS `tb_kelas` (
@@ -108,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `tb_kelasrombel` (
   CONSTRAINT `fk_kelasrombel_tahunakademik` FOREIGN KEY (`tahunakademik_id`) REFERENCES `tb_tahunakademik` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_kelasrombel: ~1 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_kelasrombel: ~0 rows (approximately)
 DELETE FROM `tb_kelasrombel`;
 INSERT INTO `tb_kelasrombel` (`id`, `kelas_id`, `tahunakademik_id`, `walikelas_id`, `created_at`, `updated_at`) VALUES
 	(2, 1, 1, 2, '2025-06-21 02:21:23', '2025-06-21 02:21:23');
@@ -170,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `tb_pegawai` (
 DELETE FROM `tb_pegawai`;
 INSERT INTO `tb_pegawai` (`id`, `nama`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
 	(2, 'Mollit aliquid fuga', 'Adipisci minim magni', '2000-06-04', 'L', 'Dolore dolore cumque', 'Consequatur iste mag', 'tysy@mailinator.com', '$2y$10$W7PSt.VCsOm4XmXu0AM2C.NH0t/ncUYhYKQDvZKtOTE/6DmjueaAK', 'guru', '2025-06-20 02:44:07', '2025-06-20 12:10:17'),
-	(3, 'Rerum cumque ab sunt', 'Ad magna dolorem ab ', '1998-10-26', 'P', 'Nihil sint ut eiusmo', 'Ipsam aliquam quae f', 'jywuqod@mailinator.com', '$2y$10$c7vn9MYu5.5bhsEl5Bxsmuhvg/Z35Vgh8dg9c1AKTSsiyswpO7R5W', 'operator', '2025-06-20 06:33:09', '2025-06-20 06:33:09');
+	(3, 'Rerum cumque ab sunt', 'Ad magna dolorem ab ', '1998-10-26', 'P', 'Nihil sint ut eiusmo', 'Ipsam aliquam quae f', 'jywuqod@mailinator.com', '$2y$10$koLYJiOv6/Dhr0RdrMk6D.Qlky1j.EmOjFz0BF88RCkclkObn9BaG', 'admin', '2025-06-20 06:33:09', '2025-06-23 12:15:51');
 
 -- Dumping structure for table db_ujianonlineponpes.tb_presensi_ujian
 CREATE TABLE IF NOT EXISTS `tb_presensi_ujian` (
@@ -183,14 +202,12 @@ CREATE TABLE IF NOT EXISTS `tb_presensi_ujian` (
   KEY `siswa_id` (`siswa_id`),
   CONSTRAINT `tb_presensi_ujian_ibfk_1` FOREIGN KEY (`jadwal_ujian_id`) REFERENCES `tb_jadwal_ujian` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tb_presensi_ujian_ibfk_2` FOREIGN KEY (`siswa_id`) REFERENCES `tb_siswa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_presensi_ujian: ~3 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_presensi_ujian: ~0 rows (approximately)
 DELETE FROM `tb_presensi_ujian`;
 INSERT INTO `tb_presensi_ujian` (`id`, `jadwal_ujian_id`, `siswa_id`, `waktu_hadir`) VALUES
-	(1, 4, 2, '2025-06-23 10:31:01'),
-	(2, 3, 2, '2025-06-23 10:35:17'),
-	(3, 3, 3, '2025-06-23 10:37:26');
+	(4, 2, 3, '2025-06-23 12:18:34');
 
 -- Dumping structure for table db_ujianonlineponpes.tb_ruangan
 CREATE TABLE IF NOT EXISTS `tb_ruangan` (
