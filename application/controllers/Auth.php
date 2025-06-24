@@ -35,6 +35,12 @@ class Auth extends CI_Controller {
                 'rule' => $role,
                 'logged_in' => true
             ];
+            
+            // Add NIS for students
+            if ($role == 'siswa') {
+                $userdata['nis'] = $user->nis;
+            }
+            
             $this->session->set_userdata($userdata);
             redirect('home');
         } else {

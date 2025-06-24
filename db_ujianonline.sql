@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `tb_jawaban_ujian` (
   KEY `siswa_id` (`siswa_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_jawaban_ujian: ~1 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_jawaban_ujian: ~2 rows (approximately)
 DELETE FROM `tb_jawaban_ujian`;
 INSERT INTO `tb_jawaban_ujian` (`id`, `jadwal_ujian_id`, `siswa_id`, `waktu_mulai`, `waktu_selesai`, `status`, `nilai_akhir`, `jawaban`) VALUES
 	(1, 3, 3, '2025-06-23 11:55:08', NULL, 'sedang', NULL, NULL),
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `tb_kelasrombel` (
   CONSTRAINT `fk_kelasrombel_tahunakademik` FOREIGN KEY (`tahunakademik_id`) REFERENCES `tb_tahunakademik` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table db_ujianonlineponpes.tb_kelasrombel: ~0 rows (approximately)
+-- Dumping data for table db_ujianonlineponpes.tb_kelasrombel: ~1 rows (approximately)
 DELETE FROM `tb_kelasrombel`;
 INSERT INTO `tb_kelasrombel` (`id`, `kelas_id`, `tahunakademik_id`, `walikelas_id`, `created_at`, `updated_at`) VALUES
 	(2, 1, 1, 2, '2025-06-21 02:21:23', '2025-06-21 02:21:23');
@@ -183,13 +183,14 @@ CREATE TABLE IF NOT EXISTS `tb_pegawai` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table db_ujianonlineponpes.tb_pegawai: ~2 rows (approximately)
 DELETE FROM `tb_pegawai`;
 INSERT INTO `tb_pegawai` (`id`, `nama`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
 	(2, 'Mollit aliquid fuga', 'Adipisci minim magni', '2000-06-04', 'L', 'Dolore dolore cumque', 'Consequatur iste mag', 'tysy@mailinator.com', '$2y$10$W7PSt.VCsOm4XmXu0AM2C.NH0t/ncUYhYKQDvZKtOTE/6DmjueaAK', 'guru', '2025-06-20 02:44:07', '2025-06-20 12:10:17'),
-	(3, 'Rerum cumque ab sunt', 'Ad magna dolorem ab ', '1998-10-26', 'P', 'Nihil sint ut eiusmo', 'Ipsam aliquam quae f', 'jywuqod@mailinator.com', '$2y$10$koLYJiOv6/Dhr0RdrMk6D.Qlky1j.EmOjFz0BF88RCkclkObn9BaG', 'admin', '2025-06-20 06:33:09', '2025-06-23 12:15:51');
+	(3, 'Rerum cumque ab sunt', 'Ad magna dolorem ab ', '1998-10-26', 'P', 'Nihil sint ut eiusmo', 'Ipsam aliquam quae f', 'jywuqod@mailinator.com', '$2y$10$koLYJiOv6/Dhr0RdrMk6D.Qlky1j.EmOjFz0BF88RCkclkObn9BaG', 'admin', '2025-06-20 06:33:09', '2025-06-23 12:15:51'),
+	(4, 'Okta PIlopa', 'Bandar Lampung', '1992-10-27', 'L', 'Banjarbaru', '0816564142', 'pilopaokta@gmail.com', '$2y$10$h//8nBbYNth0Ur2xO8/sqOQMWzlcnH4RNHzYL2bLMWSj0tG2H3vIy', 'admin', '2025-06-24 01:25:28', '2025-06-24 01:25:28');
 
 -- Dumping structure for table db_ujianonlineponpes.tb_presensi_ujian
 CREATE TABLE IF NOT EXISTS `tb_presensi_ujian` (

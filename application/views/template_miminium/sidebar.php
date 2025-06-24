@@ -44,7 +44,9 @@
               <li class="ripple"><a href="<?=base_url()?>ujianonline" style="color:<?php if($link=='ujianonline'){?> #2196F3 <?php }?>;"><span class="fa fa-pencil"></span> Presensi Ujian Online</a></li>
               <?php }?>
               <?php if($this->session->userdata('rule') == 'siswa'){?>
+                <li class="ripple"><a href="<?=base_url()?>user/kelas" style="color:<?php if($link=='siswa/kelas'){?> #2196F3 <?php }?>;"><span class="fa fa-users"></span> Kelas Anda</a></li>
                 <li class="ripple"><a href="<?=base_url()?>user/ujianonline" style="color:<?php if($link=='siswa/ujianonline'){?> #2196F3 <?php }?>;"><span class="fa fa-pencil"></span> Ujian Online</a></li>
+                
               <?php }?>
 
             </ul>
