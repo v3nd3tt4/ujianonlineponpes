@@ -14,7 +14,7 @@ class Ujianonline extends CI_Controller {
 
     public function index() {
         $siswa_id = $this->session->userdata('id_user');
-        $this->db->select('tb_jadwal_ujian.*, tb_matapelajaran.nama_matapelajaran, tb_kelasrombel.id as kelasrombel_id, tb_kelas.nama_kelas, tb_presensi_ujian.waktu_hadir, j.status as status_ujian');
+        $this->db->select('tb_jadwal_ujian.*, tb_matapelajaran.nama_matapelajaran, tb_kelasrombel.id as kelasrombel_id, tb_kelas.nama_kelas, tb_presensi_ujian.waktu_hadir, j.status as status_ujian, j.nilai_akhir, j.jawaban');
         $this->db->from('tb_presensi_ujian');
         $this->db->join('tb_jadwal_ujian', 'tb_jadwal_ujian.id = tb_presensi_ujian.jadwal_ujian_id');
         $this->db->join('tb_matapelajaran', 'tb_matapelajaran.id = tb_jadwal_ujian.matapelajaran_id');

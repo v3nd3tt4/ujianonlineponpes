@@ -21,6 +21,9 @@
                                     <th>Jenis Ujian</th>
                                     <th>Waktu Presensi</th>
                                     <th>Status Ujian</th>
+                                    <th>Nilai</th>
+                                    <th>Benar</th>
+                                    <th>Salah</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -44,6 +47,45 @@
                                                 echo '<span class="label label-default">Belum</span>';
                                             }
                                         ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($j->status_ujian == 'selesai'): ?>
+                                            <?= is_null($j->nilai_akhir) ? '-' : $j->nilai_akhir ?>
+                                        <?php else: ?>
+                                            -
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($j->status_ujian == 'selesai' && $j->jawaban): 
+                                            // Ambil kunci jawaban dari database
+                                            $soal = [];
+                                            if (!empty($j->banksoal_id)) {
+                                                $CI =& get_instance();
+                                                $CI->load->database();
+                                                $soal = $CI->db->get_where('tb_soal', ['banksoal_id' => $j->banksoal_id])->result();
+                                            }
+                                            $jawaban = json_decode($j->jawaban, true);
+                                            $benar = 0;
+                                            foreach ($soal as $s) {
+                                                if (isset($jawaban[$s->id]) && $jawaban[$s->id] == $s->kunci_jawaban) {
+                                                    $benar++;
+                                                }
+                                            }
+                                            echo $benar;
+                                        else:
+                                            echo '-';
+                                        endif; ?>
+                                    </td>
+                                    <td>
+                                        <?php if ($j->status_ujian == 'selesai' && $j->jawaban): 
+                                            $salah = 0;
+                                            if (!empty($soal)) {
+                                                $salah = count($soal) - $benar;
+                                            }
+                                            echo $salah;
+                                        else:
+                                            echo '-';
+                                        endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($j->status_ujian == 'sedang'): ?>
