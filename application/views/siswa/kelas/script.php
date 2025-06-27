@@ -1,4 +1,5 @@
-<script src="<?= base_url() ?>assets_miminium/js/plugins/qrcode.min.js"></script>
+<script src="<?= base_url() ?>assets/qrcode.min.js"></script>
+
 <script>
 	$(document).ready(function() {
 		// Initialize DataTable
