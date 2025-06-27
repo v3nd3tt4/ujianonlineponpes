@@ -118,6 +118,10 @@
 
 			<?php } ?>
 
+			<?php if($this->session->userdata('rule') == 'guru'){?>
+				<li class="<?= $link == 'guru/kelas' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>guru/kelas"><i class="fas fa-archway"></i> <span>Wali Kelas</span></a></li>
+			<?php }?>
+
 			<?php if ($this->session->userdata('rule') == 'siswa') { ?>
 				<li class="menu-header">Siswa</li>
 				<li class="<?= $link == 'siswa/profile' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>User/profile"><i class="fas fa-user"></i> <span>Profile</span></a></li>
