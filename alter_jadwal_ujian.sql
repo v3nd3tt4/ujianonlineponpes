@@ -1,1 +1,0 @@
-ALTER TABLE `tb_jadwal_ujian` ADD `banksoal_id` INT(11) NULL DEFAULT NULL AFTER `jenis_ujian`; 
