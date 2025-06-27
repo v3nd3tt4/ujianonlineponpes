@@ -102,6 +102,7 @@
 					$rule == 'kepala sekolah' ||
 					$rule == 'guru'
 				) { ?>
+					<li class="menu-header">Data Ujian</li>
 					<li class="<?= $link == 'banksoal' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>banksoal"><i class="fas fa-book"></i> <span>Bank Soal</span></a></li>
 					<li class="<?= $link == 'Admin/Assignsoal' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>Admin/Assignsoal"><i class="fas fa-tasks"></i> <span>Assign Soal</span></a></li>
 				<?php } ?>
@@ -114,13 +115,12 @@
 					$rule == 'guru'
 				) { ?>
 					<li class="<?= $link == 'ujianonline' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>Ujianonline"><i class="fas fa-pencil-alt"></i> <span>Ujian Online</span></a></li>
+
+					<li class="menu-header">Data Guru</li>
+					<li class="<?= $link == 'guru/kelas' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>guru/kelas"><i class="fas fa-archway"></i> <span>Wali Kelas</span></a></li>
 				<?php } ?>
 
 			<?php } ?>
-
-			<?php if($this->session->userdata('rule') == 'guru'){?>
-				<li class="<?= $link == 'guru/kelas' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>guru/kelas"><i class="fas fa-archway"></i> <span>Wali Kelas</span></a></li>
-			<?php }?>
 
 			<?php if ($this->session->userdata('rule') == 'siswa') { ?>
 				<li class="menu-header">Siswa</li>
