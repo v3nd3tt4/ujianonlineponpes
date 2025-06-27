@@ -75,10 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+	
 	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => '',
+	'password' => 'lupaLagi',
 	'database' => 'db_ujianonlineponpes',
+
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

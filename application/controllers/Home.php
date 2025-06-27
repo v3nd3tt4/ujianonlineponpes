@@ -1,30 +1,58 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Home extends CI_Controller
+{
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		$roles = $this->session->userdata('rule');
+
+		// Cek apakah sudah login atau belum
+		if (empty($roles)) {
+			echo '<script>
+				alert("Maaf, anda harus login terlebih dahulu");
+				window.location.href = "' . base_url() . '";
+			</script>';
+			exit;
+		}
+
+		$allow = ['admin', 'operator', 'guru', 'kepala sekolah', 'siswa'];
+		if (!in_array($roles, $allow)) {
+			echo '<script>alert("Maaf, anda tidak diizinkan mengakses halaman ini")</script>';
+			echo '<script>window.location.href="' . base_url() . '";</script>';
+		}
+	}
+
 	public function index()
 	{
-		// var_dump("expression");exit();
+		$total_guru = $this->db->where('role', 'guru')->count_all_results('tb_pegawai');
+		$total_siswa = $this->db->count_all('tb_siswa');
+		$tahun_ajaran = $this->db->select('tahun')
+			->from('tb_tahunakademik')
+			->where('status', 'aktif')
+			->order_by('tahun', 'DESC')
+			->limit(1)
+			->get()
+			->row('tahun');
+
 		$data = array(
-			'page' => 'dashboard_miminium',
-			'link' => 'home'
+			'page' => 'home/index',
+			'link' => 'home',
+			'script' => 'home/script',
+			'total_guru' => $total_guru,
+			'total_siswa' => $total_siswa,
+			'tahun_ajaran' => $tahun_ajaran,
 		);
-		$this->load->view('template_miminium/wrapper', $data);
+		$this->load->view('template_stisla/wrapper', $data);
+	}
+
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		echo '<script>alert("Berhasil Logout...");window.location.href = "' . base_url() . 'auth";</script>';
 	}
 }

@@ -1,62 +1,58 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once APPPATH . 'third_party/SimpleXLSX/SimpleXLSX.php';
+
 use Shuchkin\SimpleXLSX;
 
-class Banksoal extends CI_Controller {
+class Banksoal extends CI_Controller
+{
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->database();
 		$this->load->library('form_validation');
 		$this->load->library('session');
+
+		$roles = $this->session->userdata('rule');
+		$allow = ['admin'];
+		if (!in_array($roles, $allow)) {
+			echo '<script>alert("Maaf, anda tidak diizinkan mengakses halaman ini")</script>';
+			echo '<script>window.location.href="' . base_url() . '";</script>';
+		}
 	}
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
-        // Ambil data mata pelajaran
-        $this->db->from('tb_gurumatapelajaran');
-        $this->db->join('tb_matapelajaran', 'tb_matapelajaran.id = tb_gurumatapelajaran.matapelajaran_id');
-        if(!$this->session->userdata('rule') && $this->session->userdata('rule') == 'guru'){
-        $this->db->where(['tb_gurumatapelajaran.pegawai_id' => $this->session->userdata('id_user')]);
-        }
-        $mapel = $this->db->get();
+		// Ambil data mata pelajaran
+		$this->db->from('tb_gurumatapelajaran');
+		$this->db->join('tb_matapelajaran', 'tb_matapelajaran.id = tb_gurumatapelajaran.matapelajaran_id');
+		if (!$this->session->userdata('rule') && $this->session->userdata('rule') == 'guru') {
+			$this->db->where(['tb_gurumatapelajaran.pegawai_id' => $this->session->userdata('id_user')]);
+		}
+		$mapel = $this->db->get();
 
-        // Ambil data bank soal dengan join mata pelajaran dan pegawai
-        $this->db->select('tb_banksoal.*, tb_matapelajaran.kode_matapelajaran, tb_matapelajaran.nama_matapelajaran, tb_pegawai.nama as nama_pegawai');
-        $this->db->from('tb_banksoal');
-        $this->db->join('tb_matapelajaran', 'tb_matapelajaran.id = tb_banksoal.matapelajaran_id');
-        $this->db->join('tb_pegawai', 'tb_pegawai.id = tb_banksoal.pegawai_id');
-        $this->db->order_by('tb_banksoal.created_at', 'DESC');
-        $banksoal = $this->db->get();
+		// Ambil data bank soal dengan join mata pelajaran dan pegawai
+		$this->db->select('tb_banksoal.*, tb_matapelajaran.kode_matapelajaran, tb_matapelajaran.nama_matapelajaran, tb_pegawai.nama as nama_pegawai');
+		$this->db->from('tb_banksoal');
+		$this->db->join('tb_matapelajaran', 'tb_matapelajaran.id = tb_banksoal.matapelajaran_id');
+		$this->db->join('tb_pegawai', 'tb_pegawai.id = tb_banksoal.pegawai_id');
+		$this->db->order_by('tb_banksoal.created_at', 'DESC');
+		$banksoal = $this->db->get();
 
 		$data = array(
 			'page' => 'banksoal/index',
-            'script' => 'banksoal/script',
-            'link' => 'banksoal',
-            'mapel' => $mapel,
-            'banksoal' => $banksoal
+			'script' => 'banksoal/script',
+			'link' => 'banksoal',
+			'mapel' => $mapel,
+			'banksoal' => $banksoal
 		);
-		$this->load->view('template_miminium/wrapper', $data);
+		$this->load->view('template_stisla/wrapper', $data);
 	}
 
-	public function create() {
+	public function create()
+	{
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 		$this->form_validation->set_rules('matapelajaran_id', 'Mata Pelajaran', 'required|numeric');
 
@@ -69,7 +65,7 @@ class Banksoal extends CI_Controller {
 		$data = array(
 			'keterangan' => $this->input->post('keterangan', TRUE),
 			'matapelajaran_id' => $this->input->post('matapelajaran_id', TRUE),
-			'pegawai_id' => empty($this->session->userdata('id_user')) ? 2:$this->session->userdata('id_user')
+			'pegawai_id' => empty($this->session->userdata('id_user')) ? 2 : $this->session->userdata('id_user')
 		);
 
 		if ($this->db->insert('tb_banksoal', $data)) {
@@ -81,13 +77,14 @@ class Banksoal extends CI_Controller {
 		redirect('banksoal');
 	}
 
-	public function get_by_id($id) {
+	public function get_by_id($id)
+	{
 		$this->db->select('tb_banksoal.*, tb_matapelajaran.kode_matapelajaran, tb_matapelajaran.nama_matapelajaran');
 		$this->db->from('tb_banksoal');
 		$this->db->join('tb_matapelajaran', 'tb_matapelajaran.id = tb_banksoal.matapelajaran_id');
 		$this->db->where('tb_banksoal.id', $id);
 		$banksoal = $this->db->get()->row();
-		
+
 		if ($banksoal) {
 			echo json_encode($banksoal);
 		} else {
@@ -95,7 +92,8 @@ class Banksoal extends CI_Controller {
 		}
 	}
 
-	public function update() {
+	public function update()
+	{
 		$this->form_validation->set_rules('id', 'ID', 'required|numeric');
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 		$this->form_validation->set_rules('matapelajaran_id', 'Mata Pelajaran', 'required|numeric');
@@ -122,7 +120,8 @@ class Banksoal extends CI_Controller {
 		redirect('banksoal');
 	}
 
-	public function delete($id) {
+	public function delete($id)
+	{
 		$banksoal = $this->db->get_where('tb_banksoal', ['id' => $id])->row();
 		if (!$banksoal) {
 			$this->session->set_flashdata('error', 'Data bank soal tidak ditemukan!');
@@ -140,14 +139,15 @@ class Banksoal extends CI_Controller {
 		redirect('banksoal');
 	}
 
-	public function soalkuncijawaban($banksoal_id){
+	public function soalkuncijawaban($banksoal_id)
+	{
 		$this->db->select('tb_banksoal.*, tb_matapelajaran.kode_matapelajaran, tb_matapelajaran.nama_matapelajaran, tb_pegawai.nama as nama_pegawai');
 		$this->db->from('tb_banksoal');
 		$this->db->join('tb_matapelajaran', 'tb_matapelajaran.id = tb_banksoal.matapelajaran_id');
 		$this->db->join('tb_pegawai', 'tb_pegawai.id = tb_banksoal.pegawai_id');
 		$this->db->where('tb_banksoal.id', $banksoal_id);
 		$banksoal = $this->db->get()->row();
-		
+
 		if (!$banksoal) {
 			show_404();
 		}
@@ -162,10 +162,11 @@ class Banksoal extends CI_Controller {
 			'soal' => $soal
 		);
 
-		$this->load->view('template_miminium/wrapper', $data);
+		$this->load->view('template_stisla/wrapper', $data);
 	}
 
-	public function create_soal() {
+	public function create_soal()
+	{
 		$this->form_validation->set_rules('banksoal_id', 'Bank Soal ID', 'required|numeric');
 		$this->form_validation->set_rules('soal', 'Soal', 'required');
 		$this->form_validation->set_rules('pilihan_a', 'Pilihan A', 'required');
@@ -201,7 +202,8 @@ class Banksoal extends CI_Controller {
 		redirect('banksoal/soalkuncijawaban/' . $banksoal_id);
 	}
 
-	public function get_soal_by_id($soal_id) {
+	public function get_soal_by_id($soal_id)
+	{
 		$soal = $this->db->get_where('tb_soal', ['id' => $soal_id])->row();
 		if ($soal) {
 			echo json_encode($soal);
@@ -209,8 +211,9 @@ class Banksoal extends CI_Controller {
 			echo json_encode(['error' => 'Data soal tidak ditemukan']);
 		}
 	}
-	
-	public function update_soal() {
+
+	public function update_soal()
+	{
 		$this->form_validation->set_rules('id', 'Soal ID', 'required|numeric');
 		$this->form_validation->set_rules('soal', 'Soal', 'required');
 		$this->form_validation->set_rules('pilihan_a', 'Pilihan A', 'required');
@@ -218,15 +221,15 @@ class Banksoal extends CI_Controller {
 		$this->form_validation->set_rules('pilihan_c', 'Pilihan C', 'required');
 		$this->form_validation->set_rules('pilihan_d', 'Pilihan D', 'required');
 		$this->form_validation->set_rules('kunci_jawaban', 'Kunci Jawaban', 'required');
-	
+
 		$banksoal_id = $this->input->post('banksoal_id', TRUE);
-	
+
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('error', 'Data tidak valid! ' . validation_errors());
 			redirect('banksoal/soalkuncijawaban/' . $banksoal_id);
 			return;
 		}
-	
+
 		$id = $this->input->post('id', TRUE);
 		$data = array(
 			'soal' => $this->input->post('soal', TRUE),
@@ -236,25 +239,26 @@ class Banksoal extends CI_Controller {
 			'pilihan_d' => $this->input->post('pilihan_d', TRUE),
 			'kunci_jawaban' => $this->input->post('kunci_jawaban', TRUE)
 		);
-	
+
 		$this->db->where('id', $id);
 		if ($this->db->update('tb_soal', $data)) {
 			$this->session->set_flashdata('success', 'Soal berhasil diupdate!');
 		} else {
 			$this->session->set_flashdata('error', 'Gagal mengupdate soal!');
 		}
-	
+
 		redirect('banksoal/soalkuncijawaban/' . $banksoal_id);
 	}
-	
-	public function delete_soal($soal_id) {
+
+	public function delete_soal($soal_id)
+	{
 		$soal = $this->db->get_where('tb_soal', ['id' => $soal_id])->row();
 		if (!$soal) {
 			$this->session->set_flashdata('error', 'Data soal tidak ditemukan!');
 			redirect('banksoal'); // Fallback
 			return;
 		}
-	
+
 		$banksoal_id = $soal->banksoal_id;
 		$this->db->where('id', $soal_id);
 		if ($this->db->delete('tb_soal')) {
@@ -262,11 +266,12 @@ class Banksoal extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('error', 'Gagal menghapus soal!');
 		}
-	
+
 		redirect('banksoal/soalkuncijawaban/' . $banksoal_id);
 	}
 
-	public function preview_excel() {
+	public function preview_excel()
+	{
 		if (isset($_FILES["file_excel"]["name"])) {
 			$path = $_FILES["file_excel"]["tmp_name"];
 
@@ -275,30 +280,32 @@ class Banksoal extends CI_Controller {
 				// Hapus header
 				$header = array_shift($rows);
 
-				$html = '<table class="table table-bordered">';
+				// table responsive
+				$html = '<div class="table-responsive">';
+				$html .= '<table id="previewTable" class="table table-striped table-bordered table-hover">';
 				$html .= '<thead><tr>';
-				foreach($header as $h) {
+				$html .= '<th>No</th>'; // Tambahkan kolom nomor urut
+				foreach ($header as $h) {
 					$html .= '<th>' . htmlspecialchars($h) . '</th>';
 				}
 				$html .= '</tr></thead>';
 				$html .= '<tbody>';
-				
+
 				$i = 0;
 				foreach ($rows as $row) {
 					$html .= '<tr>';
-					$html .= '<td><input type="hidden" name="soal['.$i.'][soal]" value="'.htmlspecialchars($row[0]).'">' . htmlspecialchars($row[0]) . '</td>';
-					$html .= '<td><input type="hidden" name="soal['.$i.'][pilihan_a]" value="'.htmlspecialchars($row[1]).'">' . htmlspecialchars($row[1]) . '</td>';
-					$html .= '<td><input type="hidden" name="soal['.$i.'][pilihan_b]" value="'.htmlspecialchars($row[2]).'">' . htmlspecialchars($row[2]) . '</td>';
-					$html .= '<td><input type="hidden" name="soal['.$i.'][pilihan_c]" value="'.htmlspecialchars($row[3]).'">' . htmlspecialchars($row[3]) . '</td>';
-					$html .= '<td><input type="hidden" name="soal['.$i.'][pilihan_d]" value="'.htmlspecialchars($row[4]).'">' . htmlspecialchars($row[4]) . '</td>';
-					$html .= '<td><input type="hidden" name="soal['.$i.'][kunci_jawaban]" value="'.htmlspecialchars($row[5]).'">' . htmlspecialchars($row[5]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal[' . $i . '][soal]" value="' . htmlspecialchars($row[0]) . '">' . htmlspecialchars($row[0]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal[' . $i . '][pilihan_a]" value="' . htmlspecialchars($row[1]) . '">' . htmlspecialchars($row[1]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal[' . $i . '][pilihan_b]" value="' . htmlspecialchars($row[2]) . '">' . htmlspecialchars($row[2]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal[' . $i . '][pilihan_c]" value="' . htmlspecialchars($row[3]) . '">' . htmlspecialchars($row[3]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal[' . $i . '][pilihan_d]" value="' . htmlspecialchars($row[4]) . '">' . htmlspecialchars($row[4]) . '</td>';
+					$html .= '<td><input type="hidden" name="soal[' . $i . '][kunci_jawaban]" value="' . htmlspecialchars($row[5]) . '">' . htmlspecialchars($row[5]) . '</td>';
 					$html .= '</tr>';
 					$i++;
 				}
 
-				$html .= '</tbody></table>';
+				$html .= '</tbody></table></div>';
 				echo $html;
-
 			} else {
 				echo '<div class="alert alert-danger">Gagal mem-parsing file Excel. Pastikan format file benar.</div>';
 			}
@@ -307,7 +314,8 @@ class Banksoal extends CI_Controller {
 		}
 	}
 
-	public function import_soal() {
+	public function import_soal()
+	{
 		$soal_data = $this->input->post('soal');
 		$banksoal_id = $this->input->post('banksoal_id');
 
