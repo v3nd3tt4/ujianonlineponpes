@@ -7,7 +7,10 @@
 				<div class="card-wrap">
 					<div class="card-header d-flex justify-content-between">
 						<h4>Data Pegawai</h4>
-						<a href="<?= site_url('Admin/Pegawai/Index/create') ?>" class="btn btn-primary mb-3"> <i class="fa fa-plus"></i> Tambah Pegawai</a>
+						<div>
+							<a href="<?= site_url('Admin/Pegawai/Index/create') ?>" class="btn btn-primary mb-3"> <i class="fa fa-plus"></i> Tambah Pegawai</a>
+							<a href="<?= site_url('Admin/Pegawai/Index/cetak_pdf' . (isset($filter_role) && $filter_role ? '/' . str_replace(' ', '-', $filter_role) : '')) ?>" target="_blank" class="btn btn-danger mb-3"><i class="fa fa-file-pdf"></i> Cetak PDF</a>
+						</div>
 					</div>
 
 					<div class="card-body">

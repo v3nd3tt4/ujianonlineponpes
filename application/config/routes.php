@@ -53,6 +53,11 @@ $route['default_controller'] = 'Auth';
 
 // Route untuk filter pegawai berdasarkan role
 $route['Admin/Pegawai/Index'] = 'Admin/Pegawai/Index/index';
+
+// Route untuk cetak PDF pegawai
+$route['Admin/Pegawai/Index/cetak_pdf'] = 'Admin/Pegawai/Index/cetak_pdf';
+$route['Admin/Pegawai/Index/cetak_pdf/(:any)'] = 'Admin/Pegawai/Index/cetak_pdf/$1';
+
 // Route untuk create pegawai
 $route['Admin/Pegawai/Index/create'] = 'Admin/Pegawai/Index/create';
 $route['Admin/Pegawai/Index/(:any)'] = 'Admin/Pegawai/Index/index/$1';

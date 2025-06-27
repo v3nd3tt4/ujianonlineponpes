@@ -7,7 +7,12 @@
 				<div class="card-wrap">
 					<div class="card-header d-flex justify-content-between">
 						<h4>Data Siswa</h4>
-						<a href="<?= site_url('Admin/Siswa/Index/create') ?>" class="btn btn-primary mb-3"> <i class="fa fa-plus"></i> Tambah Siswa</a>
+						<div>
+							<a href="<?= site_url('Admin/Siswa/Index/create') ?>" class="btn btn-primary mb-3"> <i class="fa fa-plus"></i> Tambah Siswa</a>
+							<a href="<?= site_url('Admin/Siswa/Index/cetak_pdf') ?>" class="btn btn-success mb-3" target="_blank">
+								<i class="fa fa-file-pdf"></i> Cetak PDF
+							</a>
+						</div>
 					</div>
 
 					<div class="card-body">

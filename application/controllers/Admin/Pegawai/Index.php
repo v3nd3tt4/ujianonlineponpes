@@ -136,4 +136,64 @@ class Index extends CI_Controller
 		}
 		return TRUE;
 	}
+
+	public function cetak_pdf($role = null)
+	{
+		// Ambil data pegawai
+		$allowed_roles = ['admin', 'pegawai', 'kepala sekolah', 'operator'];
+		$filter_role = null;
+		if ($role) {
+			$role = str_replace('-', ' ', urldecode($role));
+			if (in_array($role, $allowed_roles)) {
+				$filter_role = $role;
+			}
+		}
+		$pegawai = $this->Pegawai_model->get_by_role($filter_role);
+
+		$data['judul'] = 'Laporan Data Pegawai' . ($filter_role ? ' - ' . ucfirst($filter_role) : '');
+		$data['deskripsi'] = 'Laporan ini berisi data pegawai yang terdaftar di sistem.';
+		$data['waktu_cetak'] = date('d-m-Y H:i');
+		$data['total_data'] = count($pegawai);
+		$data['header'] = [
+			'No',
+			'Nama',
+			'Tempat Lahir',
+			'Tanggal Lahir',
+			'Jenis Kelamin',
+			'Email',
+			'Role',
+			'No Telepon',
+			'Alamat'
+		];
+		$data['data'] = array_map(function ($row, $i) {
+			return [
+				$i + 1,
+				$row->nama,
+				$row->tempat_lahir,
+				date('d-m-Y', strtotime($row->tanggal_lahir)),
+				$row->jenis_kelamin,
+				$row->email,
+				$row->role,
+				$row->no_telepon,
+				$row->alamat
+			];
+		}, $pegawai, array_keys($pegawai));
+
+		// Render HTML
+		$html = $this->load->view('admin/master/pegawai/laporan_pegawai', $data, true);
+
+		// Pastikan mPDF sudah diinstall via composer
+		require_once FCPATH . 'vendor/autoload.php';
+		$mpdf = new \Mpdf\Mpdf([
+			'format' => 'A4-L', // A4 Landscape
+			'margin_left' => 10,
+			'margin_right' => 10,
+			'margin_top' => 10,
+			'margin_bottom' => 10,
+		]);
+		$mpdf->WriteHTML($html);
+		$mpdf->SetDisplayMode('fullpage');
+		$filename = 'laporan_pegawai_' . date('Ymd_His') . '.pdf';
+		$mpdf->Output($filename, 'I'); // Inline view dengan nama file datetime
+	}
 }

@@ -143,4 +143,60 @@ class Index extends CI_Controller
 		}
 		return TRUE;
 	}
+
+	public function cetak_pdf()
+	{
+		// Ambil data siswa
+		$siswa = $this->Siswa_model->get_all();
+
+		$data['judul'] = 'Laporan Data Siswa';
+		$data['deskripsi'] = 'Laporan ini berisi data siswa yang terdaftar di sekolah.';
+		$data['waktu_cetak'] = date('d-m-Y H:i');
+		$data['total_data'] = count($siswa);
+		$data['header'] = [
+			'No',
+			'Nama',
+			'NIS',
+			'Kelas',
+			'Tempat Lahir',
+			'Tanggal Lahir',
+			'Jenis Kelamin',
+			'Alamat',
+			'Email',
+			'No HP',
+			'Tahun Masuk'
+		];
+		$data['data'] = array_map(function ($row, $i) {
+			return [
+				$i + 1,
+				$row->nama,
+				$row->nis,
+				isset($row->kelas) ? $row->kelas : '-',
+				$row->tempat_lahir,
+				$row->tanggal_lahir,
+				$row->jenis_kelamin,
+				$row->alamat,
+				$row->email,
+				$row->no_hp,
+				$row->tahun_masuk
+			];
+		}, $siswa, array_keys($siswa));
+
+		// Render HTML
+		$html = $this->load->view('admin/master/siswa/laporan_siswa', $data, true);
+
+		// Pastikan mPDF sudah diinstall via composer
+		require_once FCPATH . 'vendor/autoload.php';
+		$mpdf = new \Mpdf\Mpdf([
+			'format' => 'A4-L', // A4 Landscape
+			'margin_left' => 10,
+			'margin_right' => 10,
+			'margin_top' => 10,
+			'margin_bottom' => 10,
+		]);
+		$mpdf->WriteHTML($html);
+		$mpdf->SetDisplayMode('fullpage');
+		$filename = 'laporan_siswa_' . date('Ymd_His') . '.pdf';
+		$mpdf->Output($filename, 'I'); // Inline view dengan nama file datetime
+	}
 }
