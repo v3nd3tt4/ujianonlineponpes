@@ -78,7 +78,7 @@ $db['default'] = array(
 	
 	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => 'lupaLagi',
+	'password' => '',
 	'database' => 'db_ujianonlineponpes',
 
 	'dbdriver' => 'mysqli',
