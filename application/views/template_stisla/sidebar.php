@@ -14,6 +14,7 @@
 		<ul class="sidebar-menu">
 			<li class="<?php if ($link == 'home') { ?>active<?php } ?>"><a class="nav-link" href="<?= base_url() ?>home"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
 
+
 			<?php
 			$rule = $this->session->userdata('rule');
 			if (
@@ -24,6 +25,7 @@
 			) { ?>
 
 				<li class="menu-header">Master Data</li>
+				<li class="<?= $link == 'admin/profile' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>Admin/Profile"><i class="fas fa-user"></i> <span>Profile</span></a></li>
 
 				<?php
 				if (
