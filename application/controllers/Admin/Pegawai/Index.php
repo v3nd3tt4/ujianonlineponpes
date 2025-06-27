@@ -11,20 +11,29 @@ class Index extends CI_Controller
 		$this->load->library('session');
 
 		$roles = $this->session->userdata('rule');
-		$allow = ['admin'];
+		$allow = ['admin', 'pegawai', 'kepala sekolah', 'operator'];
 		if (!in_array($roles, $allow)) {
 			echo '<script>alert("Maaf, anda tidak diizinkan mengakses halaman ini")</script>';
 			echo '<script>window.location.href="' . base_url() . '";</script>';
 		}
 	}
 
-	public function index()
+	public function index($role = null)
 	{
+		$allowed_roles = ['admin', 'pegawai', 'kepala sekolah', 'operator'];
+		$filter_role = null;
+		if ($role) {
+			$role = str_replace('-', ' ', urldecode($role));
+			if (in_array($role, $allowed_roles)) {
+				$filter_role = $role;
+			}
+		}
 		$data = array(
 			'page' => 'admin/master/pegawai/index',
 			'script' => 'admin/master/pegawai/script',
-			'pegawai' => $this->Pegawai_model->get_all(),
-			'link' => 'Admin/Pegawai/Index'
+			'pegawai' => $this->Pegawai_model->get_by_role($filter_role),
+			'link' => $filter_role ? 'Admin/Pegawai/Index/' . str_replace(' ', '-', $filter_role) : 'Admin/Pegawai/Index',
+			'filter_role' => $filter_role
 		);
 		$this->load->view('template_stisla/wrapper', $data);
 	}

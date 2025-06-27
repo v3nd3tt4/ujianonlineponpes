@@ -16,6 +16,30 @@
 							<div id="flash-success" data-message="<?= $this->session->flashdata('success'); ?>"></div>
 						<?php endif; ?>
 
+						<!-- Filter Role -->
+						<form method="get" id="filterRoleForm" class="form-inline mb-3">
+							<label for="role" class="mr-2">Filter Role:</label>
+							<select name="role" id="role" class="form-control mr-2" onchange="filterRole()">
+								<option value="" <?= empty($filter_role) ? 'selected' : '' ?>>Semua</option>
+								<option value="admin" <?= (isset($filter_role) && $filter_role == 'admin') ? 'selected' : '' ?>>Admin</option>
+								<option value="pegawai" <?= (isset($filter_role) && $filter_role == 'pegawai') ? 'selected' : '' ?>>Pegawai</option>
+								<option value="kepala-sekolah" <?= (isset($filter_role) && $filter_role == 'kepala sekolah') ? 'selected' : '' ?>>Kepala Sekolah</option>
+								<option value="operator" <?= (isset($filter_role) && $filter_role == 'operator') ? 'selected' : '' ?>>Operator</option>
+							</select>
+						</form>
+						<script>
+							function filterRole() {
+								var role = document.getElementById('role').value;
+								var baseUrl = '<?= site_url('Admin/Pegawai/Index') ?>';
+								if(role) {
+									window.location.href = baseUrl + '/' + role;
+								} else {
+									window.location.href = baseUrl;
+								}
+							}
+						</script>
+						<!-- End Filter Role -->
+
 						<div class="table-responsive">
 							<table class="table-striped table table-bordered dataTables table-hover">
 								<thead>

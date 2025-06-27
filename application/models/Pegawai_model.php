@@ -25,4 +25,11 @@ class Pegawai_model extends CI_Model {
         $this->db->where('id', $id);
         return $this->db->delete($this->table);
     }
-} 
+
+    public function get_by_role($role = null) {
+        if ($role) {
+            $this->db->where('role', $role);
+        }
+        return $this->db->get($this->table)->result();
+    }
+}

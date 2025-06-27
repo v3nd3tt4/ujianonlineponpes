@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -50,5 +50,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'Auth';
+
+// Route untuk filter pegawai berdasarkan role
+$route['Admin/Pegawai/Index'] = 'Admin/Pegawai/Index/index';
+// Route untuk create pegawai
+$route['Admin/Pegawai/Index/create'] = 'Admin/Pegawai/Index/create';
+$route['Admin/Pegawai/Index/(:any)'] = 'Admin/Pegawai/Index/index/$1';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

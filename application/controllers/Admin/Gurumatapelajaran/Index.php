@@ -14,7 +14,7 @@ class Index extends CI_Controller
 
 
 		$roles = $this->session->userdata('rule');
-		$allow = ['admin'];
+		$allow = ['admin', 'kepala sekolah'];
 		if (!in_array($roles, $allow)) {
 			echo '<script>alert("Maaf, anda tidak diizinkan mengakses halaman ini")</script>';
 			echo '<script>window.location.href="' . base_url() . '";</script>';
