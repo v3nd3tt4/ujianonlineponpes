@@ -347,11 +347,11 @@ class Banksoal extends CI_Controller
 				// Hapus header
 				$header = array_shift($rows);
 
-				// table responsive
+				// table responsive dengan struktur yang sederhana
 				$html = '<div class="table-responsive">';
 				$html .= '<table id="previewTable" class="table table-striped table-bordered table-hover">';
 				$html .= '<thead><tr>';
-				$html .= '<th>No</th>'; // Tambahkan kolom nomor urut
+				$html .= '<th>No</th>';
 				foreach ($header as $h) {
 					$html .= '<th>' . htmlspecialchars($h) . '</th>';
 				}
@@ -361,6 +361,7 @@ class Banksoal extends CI_Controller
 				$i = 0;
 				foreach ($rows as $row) {
 					$html .= '<tr>';
+					$html .= '<td>' . ($i + 1) . '</td>';
 					$html .= '<td><input type="hidden" name="soal[' . $i . '][soal]" value="' . htmlspecialchars($row[0]) . '">' . htmlspecialchars($row[0]) . '</td>';
 					$html .= '<td><input type="hidden" name="soal[' . $i . '][pilihan_a]" value="' . htmlspecialchars($row[1]) . '">' . htmlspecialchars($row[1]) . '</td>';
 					$html .= '<td><input type="hidden" name="soal[' . $i . '][pilihan_b]" value="' . htmlspecialchars($row[2]) . '">' . htmlspecialchars($row[2]) . '</td>';
@@ -372,6 +373,7 @@ class Banksoal extends CI_Controller
 				}
 
 				$html .= '</tbody></table></div>';
+				$html .= '<div class="alert alert-info">Total data yang akan diimport: ' . $i . ' soal</div>';
 				echo $html;
 			} else {
 				echo '<div class="alert alert-danger">Gagal mem-parsing file Excel. Pastikan format file benar.</div>';

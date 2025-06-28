@@ -99,23 +99,25 @@
 				success: function(response) {
 					$('#preview-area').html(response);
 
-					if ($.fn.DataTable.isDataTable('#previewTable')) {
-						$('#previewTable').DataTable().destroy();
-					}
-
-					// Inisialisasi DataTables setelah tabel ditambahkan
-					$('#previewTable').DataTable({
-						paging: true,
-						searching: true,
-						info: true,
-						lengthChange: true,
-						pageLength: 10
-					});
-					$('#modalImportSoal').modal('hide');
-					$('#modalPreviewSoal').modal('show');
+					// Tunggu sebentar untuk memastikan DOM sudah ter-render
+					setTimeout(function() {
+						// Cek apakah tabel ada
+						if ($('#previewTable').length > 0) {
+							// Gunakan tabel biasa tanpa DataTables untuk menghindari error
+							$('#previewTable').addClass('table table-striped table-bordered table-hover');
+							$('#previewTable').css('width', '100%');
+							
+							$('#modalImportSoal').modal('hide');
+							$('#modalPreviewSoal').modal('show');
+						} else {
+							console.error('Tabel preview tidak ditemukan');
+							$('#preview-area').html('<div class="alert alert-warning">Tabel preview tidak ditemukan dalam response.</div>');
+						}
+					}, 100); // Delay 100ms
 				},
-				error: function() {
-					Swal.fire('Error!', 'Gagal mengupload file.', 'error');
+				error: function(xhr, status, error) {
+					console.error('AJAX Error:', xhr.responseText);
+					Swal.fire('Error!', 'Gagal mengupload file. Error: ' + error, 'error');
 				}
 			});
 		});
