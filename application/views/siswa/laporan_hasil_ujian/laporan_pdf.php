@@ -125,7 +125,7 @@
 				<td>Tempat, Tanggal Lahir</td>
 				<td>: <?= $detail_siswa->tempat_lahir ?>, <?= date('d-m-Y', strtotime($detail_siswa->tanggal_lahir)) ?></td>
 				<td>Tahun Akademik</td>
-				<td>: <?= $detail_kelas->tahun ?> (<?= $detail_kelas->semester ?>)</td>
+				<td>: <?= $detail_kelas->tahun ?> <!--(<?= $detail_kelas->semester ?>)--></td>
 			</tr>
 			<tr>
 				<td>Jenis Kelamin</td>
