@@ -12,7 +12,7 @@ class Kelas extends CI_Controller
 		$this->load->library('session');
 
 		$roles = $this->session->userdata('rule');
-		$allow = ['guru', 'kepala sekolah', 'admin'];
+		$allow = ['guru'];
 		if (!in_array($roles, $allow)) {
 			echo '<script>alert("Maaf, anda tidak diizinkan mengakses halaman ini")</script>';
 			echo '<script>window.location.href="' . base_url() . '";</script>';
