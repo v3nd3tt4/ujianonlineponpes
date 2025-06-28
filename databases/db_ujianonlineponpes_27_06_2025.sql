@@ -221,6 +221,7 @@ CREATE TABLE `tb_soal` (
   `id` int NOT NULL AUTO_INCREMENT,
   `banksoal_id` int NOT NULL,
   `soal` text NOT NULL,
+  `gambar_soal` varchar(255) DEFAULT NULL,
   `pilihan_a` text NOT NULL,
   `pilihan_b` text NOT NULL,
   `pilihan_c` text NOT NULL,

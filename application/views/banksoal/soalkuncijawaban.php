@@ -68,7 +68,15 @@
 									<?php foreach ($soal as $s): ?>
 										<tr>
 											<td><?= $no++ ?></td>
-											<td><?= $s->soal ?></td>
+											<td>
+												<?= $s->soal ?>
+												<?php if ($s->gambar_soal): ?>
+													<br><br>
+													<img src="<?= base_url('assets/uploads/soal/' . $s->gambar_soal) ?>" 
+														 alt="Gambar Soal" 
+														 style="max-width: 300px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;">
+												<?php endif; ?>
+											</td>
 											<td><?= htmlspecialchars($s->kunci_jawaban) ?></td>
 											<td>
 												<a href="#" class="btn btn-xs btn-warning btn-edit-soal" data-id="<?= $s->id ?>">
@@ -94,7 +102,7 @@
 <!-- Modal Tambah Soal -->
 <div class="modal fade" id="modalTambahSoal" tabindex="-1" role="dialog" aria-labelledby="modalTambahSoalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
-		<form method="post" action="<?= site_url('banksoal/create_soal'); ?>">
+		<form method="post" action="<?= site_url('banksoal/create_soal'); ?>" enctype="multipart/form-data">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalTambahSoalLabel">Tambah Soal</h5>
@@ -107,6 +115,11 @@
 					<div class="form-group">
 						<label for="soal">Soal</label>
 						<textarea name="soal" id="soal" class="form-control" rows="3" required></textarea>
+					</div>
+					<div class="form-group">
+						<label for="gambar_soal">Gambar Soal (Opsional)</label>
+						<input type="file" name="gambar_soal" id="gambar_soal" class="form-control" accept="image/*">
+						<small class="form-text text-muted">Format: JPG, JPEG, PNG, GIF. Maksimal 2MB.</small>
 					</div>
 					<div class="form-group">
 						<label for="pilihan_a">Pilihan A</label>
@@ -147,7 +160,7 @@
 <!-- Modal Edit Soal -->
 <div class="modal fade" id="modalEditSoal" tabindex="-1" role="dialog" aria-labelledby="modalEditSoalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
-		<form method="post" action="<?= site_url('banksoal/update_soal'); ?>">
+		<form method="post" action="<?= site_url('banksoal/update_soal'); ?>" enctype="multipart/form-data">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalEditSoalLabel">Edit Soal</h5>
@@ -161,6 +174,12 @@
 					<div class="form-group">
 						<label for="edit_soal">Soal</label>
 						<textarea name="soal" id="edit_soal" class="form-control" rows="3" required></textarea>
+					</div>
+					<div class="form-group">
+						<label for="edit_gambar_soal">Gambar Soal (Opsional)</label>
+						<input type="file" name="gambar_soal" id="edit_gambar_soal" class="form-control" accept="image/*">
+						<small class="form-text text-muted">Format: JPG, JPEG, PNG, GIF. Maksimal 2MB. Biarkan kosong jika tidak ingin mengubah gambar.</small>
+						<div id="current_image_preview" style="margin-top: 10px;"></div>
 					</div>
 					<div class="form-group">
 						<label for="edit_pilihan_a">Pilihan A</label>

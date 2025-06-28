@@ -103,6 +103,13 @@
 										<?php foreach ($soal as $idx => $s): ?>
 											<div class="form-group soal-item" id="soal-<?= $idx ?>" style="display:<?= $idx == 0 ? 'block' : 'none' ?>;">
 												<label><b><?= ($idx + 1) ?>. <?= htmlspecialchars($s->soal) ?></b></label>
+												<?php if ($s->gambar_soal): ?>
+													<div style="margin: 10px 0;">
+														<img src="<?= base_url('assets/uploads/soal/' . $s->gambar_soal) ?>" 
+															 alt="Gambar Soal" 
+															 style="max-width: 100%; max-height: 300px; border: 1px solid #ddd; border-radius: 4px;">
+													</div>
+												<?php endif; ?>
 												<div>
 													<?php foreach (['A', 'B', 'C', 'D'] as $opt): ?>
 														<div class="radio">

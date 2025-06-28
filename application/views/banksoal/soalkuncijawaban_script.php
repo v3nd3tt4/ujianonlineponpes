@@ -46,6 +46,15 @@
 						$('#edit_pilihan_c').val(response.pilihan_c);
 						$('#edit_pilihan_d').val(response.pilihan_d);
 						$('#edit_kunci_jawaban').val(response.kunci_jawaban);
+						
+						// Handle image preview
+						var imagePreview = $('#current_image_preview');
+						if (response.gambar_soal) {
+							imagePreview.html('<img src="<?= base_url("assets/uploads/soal/") ?>' + response.gambar_soal + '" alt="Gambar Soal" style="max-width: 200px; max-height: 150px; border: 1px solid #ddd; border-radius: 4px;"><br><small class="text-muted">Gambar saat ini</small>');
+						} else {
+							imagePreview.html('<small class="text-muted">Tidak ada gambar</small>');
+						}
+						
 						$('#modalEditSoal').modal('show');
 					}
 				},
@@ -90,23 +99,25 @@
 				success: function(response) {
 					$('#preview-area').html(response);
 
-					if ($.fn.DataTable.isDataTable('#previewTable')) {
-						$('#previewTable').DataTable().destroy();
-					}
-
-					// Inisialisasi DataTables setelah tabel ditambahkan
-					$('#previewTable').DataTable({
-						paging: true,
-						searching: true,
-						info: true,
-						lengthChange: true,
-						pageLength: 10
-					});
-					$('#modalImportSoal').modal('hide');
-					$('#modalPreviewSoal').modal('show');
+					// Tunggu sebentar untuk memastikan DOM sudah ter-render
+					setTimeout(function() {
+						// Cek apakah tabel ada
+						if ($('#previewTable').length > 0) {
+							// Gunakan tabel biasa tanpa DataTables untuk menghindari error
+							$('#previewTable').addClass('table table-striped table-bordered table-hover');
+							$('#previewTable').css('width', '100%');
+							
+							$('#modalImportSoal').modal('hide');
+							$('#modalPreviewSoal').modal('show');
+						} else {
+							console.error('Tabel preview tidak ditemukan');
+							$('#preview-area').html('<div class="alert alert-warning">Tabel preview tidak ditemukan dalam response.</div>');
+						}
+					}, 100); // Delay 100ms
 				},
-				error: function() {
-					Swal.fire('Error!', 'Gagal mengupload file.', 'error');
+				error: function(xhr, status, error) {
+					console.error('AJAX Error:', xhr.responseText);
+					Swal.fire('Error!', 'Gagal mengupload file. Error: ' + error, 'error');
 				}
 			});
 		});

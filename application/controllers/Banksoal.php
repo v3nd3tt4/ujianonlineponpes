@@ -183,9 +183,35 @@ class Banksoal extends CI_Controller
 			return;
 		}
 
+		// Handle image upload
+		$gambar_soal = null;
+		if (!empty($_FILES['gambar_soal']['name'])) {
+			$config['upload_path'] = './assets/uploads/soal/';
+			$config['allowed_types'] = 'gif|jpg|jpeg|png';
+			$config['max_size'] = 2048; // 2MB
+			$config['encrypt_name'] = TRUE;
+
+			// Create directory if not exists
+			if (!is_dir($config['upload_path'])) {
+				mkdir($config['upload_path'], 0777, true);
+			}
+
+			$this->load->library('upload', $config);
+
+			if ($this->upload->do_upload('gambar_soal')) {
+				$upload_data = $this->upload->data();
+				$gambar_soal = $upload_data['file_name'];
+			} else {
+				$this->session->set_flashdata('error', 'Gagal upload gambar: ' . $this->upload->display_errors());
+				redirect('banksoal/soalkuncijawaban/' . $banksoal_id);
+				return;
+			}
+		}
+
 		$data = array(
 			'banksoal_id' => $banksoal_id,
 			'soal' => $this->input->post('soal', TRUE),
+			'gambar_soal' => $gambar_soal,
 			'pilihan_a' => $this->input->post('pilihan_a', TRUE),
 			'pilihan_b' => $this->input->post('pilihan_b', TRUE),
 			'pilihan_c' => $this->input->post('pilihan_c', TRUE),
@@ -231,8 +257,43 @@ class Banksoal extends CI_Controller
 		}
 
 		$id = $this->input->post('id', TRUE);
+		
+		// Get current soal data
+		$current_soal = $this->db->get_where('tb_soal', ['id' => $id])->row();
+		
+		// Handle image upload
+		$gambar_soal = $current_soal->gambar_soal; // Keep existing image by default
+		if (!empty($_FILES['gambar_soal']['name'])) {
+			$config['upload_path'] = './assets/uploads/soal/';
+			$config['allowed_types'] = 'gif|jpg|jpeg|png';
+			$config['max_size'] = 2048; // 2MB
+			$config['encrypt_name'] = TRUE;
+
+			// Create directory if not exists
+			if (!is_dir($config['upload_path'])) {
+				mkdir($config['upload_path'], 0777, true);
+			}
+
+			$this->load->library('upload', $config);
+
+			if ($this->upload->do_upload('gambar_soal')) {
+				$upload_data = $this->upload->data();
+				$gambar_soal = $upload_data['file_name'];
+				
+				// Delete old image if exists
+				if ($current_soal->gambar_soal && file_exists('./assets/uploads/soal/' . $current_soal->gambar_soal)) {
+					unlink('./assets/uploads/soal/' . $current_soal->gambar_soal);
+				}
+			} else {
+				$this->session->set_flashdata('error', 'Gagal upload gambar: ' . $this->upload->display_errors());
+				redirect('banksoal/soalkuncijawaban/' . $banksoal_id);
+				return;
+			}
+		}
+
 		$data = array(
 			'soal' => $this->input->post('soal', TRUE),
+			'gambar_soal' => $gambar_soal,
 			'pilihan_a' => $this->input->post('pilihan_a', TRUE),
 			'pilihan_b' => $this->input->post('pilihan_b', TRUE),
 			'pilihan_c' => $this->input->post('pilihan_c', TRUE),
@@ -260,6 +321,12 @@ class Banksoal extends CI_Controller
 		}
 
 		$banksoal_id = $soal->banksoal_id;
+		
+		// Delete image file if exists
+		if ($soal->gambar_soal && file_exists('./assets/uploads/soal/' . $soal->gambar_soal)) {
+			unlink('./assets/uploads/soal/' . $soal->gambar_soal);
+		}
+		
 		$this->db->where('id', $soal_id);
 		if ($this->db->delete('tb_soal')) {
 			$this->session->set_flashdata('success', 'Soal berhasil dihapus!');
@@ -280,11 +347,11 @@ class Banksoal extends CI_Controller
 				// Hapus header
 				$header = array_shift($rows);
 
-				// table responsive
+				// table responsive dengan struktur yang sederhana
 				$html = '<div class="table-responsive">';
 				$html .= '<table id="previewTable" class="table table-striped table-bordered table-hover">';
 				$html .= '<thead><tr>';
-				$html .= '<th>No</th>'; // Tambahkan kolom nomor urut
+				$html .= '<th>No</th>';
 				foreach ($header as $h) {
 					$html .= '<th>' . htmlspecialchars($h) . '</th>';
 				}
@@ -294,6 +361,7 @@ class Banksoal extends CI_Controller
 				$i = 0;
 				foreach ($rows as $row) {
 					$html .= '<tr>';
+					$html .= '<td>' . ($i + 1) . '</td>';
 					$html .= '<td><input type="hidden" name="soal[' . $i . '][soal]" value="' . htmlspecialchars($row[0]) . '">' . htmlspecialchars($row[0]) . '</td>';
 					$html .= '<td><input type="hidden" name="soal[' . $i . '][pilihan_a]" value="' . htmlspecialchars($row[1]) . '">' . htmlspecialchars($row[1]) . '</td>';
 					$html .= '<td><input type="hidden" name="soal[' . $i . '][pilihan_b]" value="' . htmlspecialchars($row[2]) . '">' . htmlspecialchars($row[2]) . '</td>';
@@ -305,6 +373,7 @@ class Banksoal extends CI_Controller
 				}
 
 				$html .= '</tbody></table></div>';
+				$html .= '<div class="alert alert-info">Total data yang akan diimport: ' . $i . ' soal</div>';
 				echo $html;
 			} else {
 				echo '<div class="alert alert-danger">Gagal mem-parsing file Excel. Pastikan format file benar.</div>';
@@ -325,6 +394,7 @@ class Banksoal extends CI_Controller
 				$data_to_insert[] = [
 					'banksoal_id' => $banksoal_id,
 					'soal' => $s['soal'],
+					'gambar_soal' => null, // Import Excel tidak mendukung gambar
 					'pilihan_a' => $s['pilihan_a'],
 					'pilihan_b' => $s['pilihan_b'],
 					'pilihan_c' => $s['pilihan_c'],
