@@ -46,6 +46,15 @@
 						$('#edit_pilihan_c').val(response.pilihan_c);
 						$('#edit_pilihan_d').val(response.pilihan_d);
 						$('#edit_kunci_jawaban').val(response.kunci_jawaban);
+						
+						// Handle image preview
+						var imagePreview = $('#current_image_preview');
+						if (response.gambar_soal) {
+							imagePreview.html('<img src="<?= base_url("assets/uploads/soal/") ?>' + response.gambar_soal + '" alt="Gambar Soal" style="max-width: 200px; max-height: 150px; border: 1px solid #ddd; border-radius: 4px;"><br><small class="text-muted">Gambar saat ini</small>');
+						} else {
+							imagePreview.html('<small class="text-muted">Tidak ada gambar</small>');
+						}
+						
 						$('#modalEditSoal').modal('show');
 					}
 				},

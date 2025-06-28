@@ -118,6 +118,7 @@
 				) { ?>
 					<li class="<?= $link == 'ujianonline' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>Ujianonline"><i class="fas fa-pencil-alt"></i> <span>Ujian Online</span></a></li>
 
+					<!-- akun guru -->
 					<li class="menu-header">Data Guru</li>
 					<li class="<?= $link == 'guru/kelas' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>guru/kelas"><i class="fas fa-archway"></i> <span>Wali Kelas</span></a></li>
 					<li class="<?= $link == 'guru/hasil_ujian' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>guru/hasil_ujian"><i class="fas fa-table"></i> <span>Hasil Ujian</span></a></li>
