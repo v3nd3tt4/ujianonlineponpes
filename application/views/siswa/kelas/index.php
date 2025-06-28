@@ -36,7 +36,7 @@
 											<tr>
 												<td><?= $no++ ?></td>
 												<td><?= htmlspecialchars($kelas->nama_kelas) ?></td>
-												<td><?= htmlspecialchars($kelas->tahun) ?> - <?= htmlspecialchars($kelas->semester) ?></td>
+												<td><?= htmlspecialchars($kelas->tahun) ?></td>
 												<td><?= htmlspecialchars($kelas->wali_kelas) ?></td>
 												<td><?= htmlspecialchars($kelas->keterangan) ?></td>
 												<td>
