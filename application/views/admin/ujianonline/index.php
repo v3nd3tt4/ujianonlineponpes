@@ -22,7 +22,7 @@
 										<th>Waktu</th>
 										<th>Durasi</th>
 										<th>Jenis Ujian</th>
-										<th width="10%">Aksi</th>
+										<th >Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -42,6 +42,9 @@
 											<td>
 												<a href="<?= base_url('ujianonline/absensi/' . $row->id) ?>" class="btn btn-primary btn-sm">
 													<i class="fa fa-users"></i> Absensi
+												</a>
+												<a href="<?= base_url('ujianonline/history_jawaban_siswa/' . $row->id) ?>" class="btn btn-dark btn-sm">
+													<i class="fa fa-history"></i> Histori Jawaban Siswa
 												</a>
 											</td>
 										</tr>

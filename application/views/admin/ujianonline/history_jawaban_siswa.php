@@ -36,14 +36,11 @@
 			<div class="card">
 				<div class="card-wrap">
 					<div class="card-header d-flex justify-content-between">
-						<h4>Data Peserta Ujian Online</h4>
+						<h4>History Jawaban Siswa</h4>
 						<div>
 							<a href="<?= base_url('UjianOnline') ?>" class="btn btn-secondary">
 								<i class="fa fa-arrow-left"></i> Kembali
 							</a>
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#scanModal">
-								<i class="fa fa-qrcode"></i> Scan QR Code
-							</button>
 						</div>
 					</div>
 
@@ -127,7 +124,7 @@
 												<?php endif; ?>
 											</td>
 											<td>
-												<a href="<?= base_url('user/histori_jawaban') ?>" class="btn btn-dark">
+												<a href="<?= base_url('ujianonline/detail_history_jawaban_siswa/'.$row->id.'/'.$jadwal->id) ?>" class="btn btn-dark">
 													<i class="fas fa-history"></i> Histori Jawaban Ujian Siswa
 												</a>
 											</td>
