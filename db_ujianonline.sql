@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `tb_jawaban_ujian` (
   PRIMARY KEY (`id`),
   KEY `jadwal_ujian_id` (`jadwal_ujian_id`),
   KEY `siswa_id` (`siswa_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Data exporting was unselected.
 
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `tb_presensi_ujian` (
   KEY `siswa_id` (`siswa_id`),
   CONSTRAINT `tb_presensi_ujian_ibfk_1` FOREIGN KEY (`jadwal_ujian_id`) REFERENCES `tb_jadwal_ujian` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tb_presensi_ujian_ibfk_2` FOREIGN KEY (`siswa_id`) REFERENCES `tb_siswa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Data exporting was unselected.
 
@@ -205,6 +205,7 @@ CREATE TABLE IF NOT EXISTS `tb_soal` (
   `id` int NOT NULL AUTO_INCREMENT,
   `banksoal_id` int NOT NULL,
   `soal` text NOT NULL,
+  `gambar_soal` varchar(255) DEFAULT NULL,
   `pilihan_a` text NOT NULL,
   `pilihan_b` text NOT NULL,
   `pilihan_c` text NOT NULL,
@@ -215,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `tb_soal` (
   PRIMARY KEY (`id`),
   KEY `banksoal_id` (`banksoal_id`),
   CONSTRAINT `tb_soal_ibfk_1` FOREIGN KEY (`banksoal_id`) REFERENCES `tb_banksoal` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Data exporting was unselected.
 
