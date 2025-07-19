@@ -109,7 +109,7 @@
 										<select class="form-control" name="role" id="role" required>
 											<option value="">-- Pilih Role --</option>
 											<option value="admin">Admin</option>
-											<option value="operator">Operator</option>
+											<option value="operator">Pengawas</option>
 											<option value="guru">Guru</option>
 											<option value="kepala sekolah">Kepala Sekolah</option>
 											<option value="siswa">Siswa</option>

@@ -47,9 +47,8 @@
 						<label for="jenis_ujian">Jenis Ujian</label>
 						<select name="jenis_ujian" id="jenis_ujian" class="form-control" required>
 							<option value="">Pilih Jenis Ujian</option>
-							<option value="UTS">UTS</option>
-							<option value="UAS">UAS</option>
-							<option value="Kuis">Kuis</option>
+							<option value="Ujian">Ujian</option>
+							<option value="Remedial">Remedial</option>
 							<option value="Lainnya">Lainnya</option>
 						</select>
 					</div>
