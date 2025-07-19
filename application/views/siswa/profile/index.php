@@ -17,8 +17,8 @@
 					</div>
 
 					<div class="card-body">
-						<!-- Flash Messages -->
-						<?php if ($this->session->flashdata('success')): ?>
+						<!-- Flash Messages - Now handled by SweetAlert -->
+						<?php /* if ($this->session->flashdata('success')): ?>
 							<div class="alert alert-success alert-dismissible show fade">
 								<div class="alert-body">
 									<button class="close" data-dismiss="alert"><span>&times;</span></button>
@@ -43,9 +43,21 @@
 									<i class="fa fa-exclamation-triangle"></i> <?= validation_errors(); ?>
 								</div>
 							</div>
-						<?php endif; ?>
+						<?php endif; */ ?>
 
-						<form id="form-profile" action="<?= site_url('user/profile/edit/' . $siswa->id) ?>" method="post">
+						<form id="form-profile" action="<?= site_url('user/profile/edit/' . $siswa->id) ?>" method="post" enctype="multipart/form-data">
+							
+							<!-- Foto Profil -->
+							<div class="text-center mb-4">
+								<img id="preview-foto" src="<?= base_url(($siswa->foto && file_exists(FCPATH . 'assets/uploads/profile_photos/' . $siswa->foto)) ? 'assets/uploads/profile_photos/' . $siswa->foto : 'assets/img/avatar/avatar-1.png') ?>" 
+									class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+								<div class="mt-2">
+									<input type="file" name="foto" id="foto" class="d-none" accept="image/*" onchange="previewImage(this)">
+									<button type="button" class="btn btn-light" onclick="document.getElementById('foto').click()" id="btn-upload-foto" style="display: none;">
+										<i class="fa fa-camera"></i> Ganti Foto
+									</button>
+								</div>
+							</div>
 							
 							<!-- Biodata Siswa -->
 							<div class="card card-primary">
