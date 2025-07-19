@@ -164,8 +164,8 @@ class Index extends CI_Controller
 		}
 		$pegawai = $this->Pegawai_model->get_by_role($filter_role);
 
-		$data['judul'] = 'Laporan Data Pegawai' . ($filter_role ? ' - ' . ucfirst($filter_role) : '');
-		$data['deskripsi'] = 'Laporan ini berisi data pegawai yang terdaftar di sistem.';
+		$data['judul'] = 'Laporan Data SDM' . ($filter_role ? ' - ' . (strtolower($filter_role) == 'operator' ? 'Pengawas' : ucfirst($filter_role)) : '');
+		$data['deskripsi'] = 'Laporan ini berisi data SDM yang terdaftar di sistem.';
 		$data['waktu_cetak'] = date('d-m-Y H:i');
 		$data['total_data'] = count($pegawai);
 		$data['header'] = [
@@ -187,7 +187,7 @@ class Index extends CI_Controller
 				date('d-m-Y', strtotime($row->tanggal_lahir)),
 				$row->jenis_kelamin,
 				$row->email,
-				$row->role,
+				$row->role == 'operator' ? 'Pengawas' : $row->role,
 				$row->no_telepon,
 				$row->alamat
 			];
