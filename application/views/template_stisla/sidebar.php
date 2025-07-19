@@ -40,10 +40,10 @@
 														$link == 'Admin/Pegawai/Index/kepala-sekolah' ||
 														$link == 'Admin/Pegawai/Index/operator'
 														? 'active' : '' ?>">
-						<a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i> <span>Pegawai</span></a>
+						<a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i> <span>SDM</span></a>
 						<ul class="dropdown-menu">
 							<li class="<?= $link == 'Admin/Pegawai/Index' ? 'active' : '' ?>">
-								<a class="nav-link" href="<?= base_url() ?>Admin/Pegawai/Index">Semua Pegawai</a>
+								<a class="nav-link" href="<?= base_url() ?>Admin/Pegawai/Index">Semua SDM</a>
 							</li>
 							<li class="<?= $link == 'Admin/Pegawai/Index/admin' ? 'active' : '' ?>">
 								<a class="nav-link" href="<?= base_url() ?>Admin/Pegawai/Index/admin">Admin</a>
@@ -55,7 +55,7 @@
 								<a class="nav-link" href="<?= base_url() ?>Admin/Pegawai/Index/kepala-sekolah">Kepala Sekolah</a>
 							</li>
 							<li class="<?= $link == 'Admin/Pegawai/Index/operator' ? 'active' : '' ?>">
-								<a class="nav-link" href="<?= base_url() ?>Admin/Pegawai/Index/operator">Operator</a>
+								<a class="nav-link" href="<?= base_url() ?>Admin/Pegawai/Index/operator">Pengawas</a>
 							</li>
 						</ul>
 					</li>

@@ -1,3 +1,6 @@
+-- Add NIK field to tb_pegawai table
+ALTER TABLE tb_pegawai ADD COLUMN nik VARCHAR(30) UNIQUE AFTER id;
+
 -- Add photo field to tb_pegawai table
 ALTER TABLE tb_pegawai
 ADD COLUMN foto VARCHAR(255) DEFAULT 'default.jpg' AFTER no_telepon;

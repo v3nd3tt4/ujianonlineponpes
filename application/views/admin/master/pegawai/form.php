@@ -17,6 +17,13 @@
 					<div class="card-body">
 						<form method="post">
 							<div class="form-group">
+								<label>NIK</label>
+								<input type="text" name="nik" class="form-control" value="<?= set_value('nik', isset($pegawai) ? $pegawai->nik : '') ?>" required maxlength="30">
+								<?php if (form_error('nik')): ?>
+									<small class="text-danger"><?= form_error('nik') ?></small>
+								<?php endif; ?>
+							</div>
+							<div class="form-group">
 								<label>Nama</label>
 								<input type="text" name="nama" class="form-control" value="<?= set_value('nama', isset($pegawai) ? $pegawai->nama : '') ?>" required>
 							</div>
@@ -57,7 +64,7 @@
 								<select name="role" class="form-control" required>
 									<option value="">Pilih</option>
 									<option value="admin" <?= set_select('role', 'admin', isset($pegawai) && $pegawai->role == 'admin') ?>>Admin</option>
-									<option value="operator" <?= set_select('role', 'operator', isset($pegawai) && $pegawai->role == 'operator') ?>>Operator</option>
+									<option value="operator" <?= set_select('role', 'operator', isset($pegawai) && $pegawai->role == 'operator') ?>>Pengawas</option>
 									<option value="guru" <?= set_select('role', 'guru', isset($pegawai) && $pegawai->role == 'guru') ?>>Guru</option>
 									<option value="kepala sekolah" <?= set_select('role', 'kepala sekolah', isset($pegawai) && $pegawai->role == 'kepala sekolah') ?>>Kepala Sekolah</option>
 								</select>

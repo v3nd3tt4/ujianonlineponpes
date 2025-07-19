@@ -92,6 +92,7 @@ class Index extends CI_Controller
 
 	private function _rules($id = null)
 	{
+		$this->form_validation->set_rules('nik', 'NIK', 'required|is_unique[tb_pegawai.nik]' . ($id ? '|callback_nik_unique['.$id.']' : ''));
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required');
 		$this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'required');
@@ -110,9 +111,22 @@ class Index extends CI_Controller
 		}
 	}
 
+	public function nik_unique($nik, $id)
+	{
+		$this->db->where('nik', $nik);
+		$this->db->where('id !=', $id);
+		$query = $this->db->get('tb_pegawai');
+		if ($query->num_rows() > 0) {
+			$this->form_validation->set_message('nik_unique', 'NIK sudah digunakan oleh pegawai lain.');
+			return FALSE;
+		}
+		return TRUE;
+	}
+
 	private function _get_posted_data()
 	{
 		return [
+			'nik' => $this->input->post('nik', TRUE),
 			'nama' => $this->input->post('nama', TRUE),
 			'tempat_lahir' => $this->input->post('tempat_lahir', TRUE),
 			'tanggal_lahir' => $this->input->post('tanggal_lahir', TRUE),
