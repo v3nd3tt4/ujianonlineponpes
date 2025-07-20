@@ -22,7 +22,7 @@
 										<th>Waktu</th>
 										<th>Durasi</th>
 										<th>Jenis Ujian</th>
-										<th >Aksi</th>
+										<th>Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -43,9 +43,11 @@
 												<a href="<?= base_url('ujianonline/absensi/' . $row->id) ?>" class="btn btn-primary btn-sm">
 													<i class="fa fa-users"></i> Absensi
 												</a>
-												<a href="<?= base_url('ujianonline/history_jawaban_siswa/' . $row->id) ?>" class="btn btn-dark btn-sm">
-													<i class="fa fa-history"></i> Histori Jawaban Siswa
-												</a>
+												<?php if ($this->session->userdata('rule') == 'guru' || $this->session->userdata('rule') == 'kepala sekolah' || $this->session->userdata('rule') == 'admin'): ?>
+													<a href="<?= base_url('ujianonline/history_jawaban_siswa/' . $row->id) ?>" class="btn btn-warning btn-sm">
+														<i class="fa fa-history"></i> Histori Jawaban Siswa
+													</a>
+												<?php endif; ?>
 											</td>
 										</tr>
 									<?php endforeach; ?>

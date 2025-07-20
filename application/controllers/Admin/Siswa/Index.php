@@ -188,11 +188,7 @@ class Index extends CI_Controller
 		// Pastikan mPDF sudah diinstall via composer
 		require_once FCPATH . 'vendor/autoload.php';
 		$mpdf = new \Mpdf\Mpdf([
-			'format' => 'A4-L', // A4 Landscape
-			'margin_left' => 10,
-			'margin_right' => 10,
-			'margin_top' => 10,
-			'margin_bottom' => 10,
+			'format' => 'A4-P'
 		]);
 		$mpdf->WriteHTML($html);
 		$mpdf->SetDisplayMode('fullpage');

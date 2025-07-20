@@ -6,7 +6,7 @@
 				<div class="card-wrap">
 					<div class="card-header d-flex justify-content-between">
 						<h4>
-							<?= isset($pegawai) ? 'Edit Pegawai' : 'Tambah Pegawai' ?>
+							<?= isset($pegawai) ? 'Edit SDM' : 'Tambah SDM' ?>
 						</h4>
 						<div class="text-right mb-3">
 							<a href="<?= base_url('Admin/Pegawai/Index') ?>" class="btn btn-secondary">

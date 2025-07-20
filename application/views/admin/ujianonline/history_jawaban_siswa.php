@@ -124,8 +124,8 @@
 												<?php endif; ?>
 											</td>
 											<td>
-												<a href="<?= base_url('ujianonline/detail_history_jawaban_siswa/'.$row->id.'/'.$jadwal->id) ?>" class="btn btn-dark">
-													<i class="fas fa-history"></i> Histori Jawaban Ujian Siswa
+												<a href="<?= base_url('ujianonline/detail_history_jawaban_siswa/' . $row->id . '/' . $jadwal->id) ?>" class="btn btn-primary btn-sm">
+													<i class="fas fa-eye"></i> Lihat Jawaban Ujian Siswa
 												</a>
 											</td>
 										</tr>
