@@ -18,33 +18,6 @@
 					</div>
 
 					<div class="card-body">
-						<!-- Flash Messages - Now handled by SweetAlert -->
-						<?php /* if ($this->session->flashdata('success')): ?>
-							<div class="alert alert-success alert-dismissible show fade">
-								<div class="alert-body">
-									<button class="close" data-dismiss="alert"><span>&times;</span></button>
-									<i class="fa fa-check-circle"></i> <?= $this->session->flashdata('success'); ?>
-								</div>
-							</div>
-						<?php endif; ?>
-
-						<?php if ($this->session->flashdata('error')): ?>
-							<div class="alert alert-danger alert-dismissible show fade">
-								<div class="alert-body">
-									<button class="close" data-dismiss="alert"><span>&times;</span></button>
-									<i class="fa fa-exclamation-circle"></i> <?= $this->session->flashdata('error'); ?>
-								</div>
-							</div>
-						<?php endif; ?>
-
-						<?php if (validation_errors()): ?>
-							<div class="alert alert-warning alert-dismissible show fade">
-								<div class="alert-body">
-									<button class="close" data-dismiss="alert"><span>&times;</span></button>
-									<i class="fa fa-exclamation-triangle"></i> <?= validation_errors(); ?>
-								</div>
-							</div>
-						<?php endif; */ ?>
 
 						<form id="form-profile" action="<?= site_url('admin/profile/edit/' . $pegawai->id) ?>" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="id" id="id" value="<?= htmlspecialchars($pegawai->id) ?>">
@@ -69,6 +42,13 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-6">
+											<!-- tambahkan nik -->
+											<div class="form-group">
+												<label>NIK <span class="text-danger">*</span></label>
+												<input type="text" class="form-control" name="nik" id="nik"
+													value="<?= htmlspecialchars($pegawai->nik) ?>" readonly>
+												<div class="invalid-feedback" id="error-nik"></div>
+											</div>
 											<div class="form-group">
 												<label>Nama Lengkap <span class="text-danger">*</span></label>
 												<input type="text" class="form-control" name="nama" id="nama"

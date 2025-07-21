@@ -8,7 +8,7 @@
 					<div class="card-header d-flex justify-content-between">
 						<h4>Data SDM</h4>
 						<div>
-							<a href="<?= site_url('Admin/Pegawai/Index/create') ?>" class="btn btn-primary mb-3"> <i class="fa fa-plus"></i> Tambah Pegawai</a>
+							<a href="<?= site_url('Admin/Pegawai/Index/create') ?>" class="btn btn-primary mb-3"> <i class="fa fa-plus"></i> Tambah SDM</a>
 							<a href="<?= site_url('Admin/Pegawai/Index/cetak_pdf' . (isset($filter_role) && $filter_role ? '/' . str_replace(' ', '-', $filter_role) : '')) ?>" target="_blank" class="btn btn-danger mb-3"><i class="fa fa-file-pdf"></i> Cetak PDF</a>
 						</div>
 					</div>
@@ -25,7 +25,7 @@
 							<select name="role" id="role" class="form-control mr-2" onchange="filterRole()">
 								<option value="" <?= empty($filter_role) ? 'selected' : '' ?>>Semua</option>
 								<option value="admin" <?= (isset($filter_role) && $filter_role == 'admin') ? 'selected' : '' ?>>Admin</option>
-								<option value="pegawai" <?= (isset($filter_role) && $filter_role == 'pegawai') ? 'selected' : '' ?>>Pegawai</option>
+								<option value="guru" <?= (isset($filter_role) && $filter_role == 'guru') ? 'selected' : '' ?>>Guru</option>
 								<option value="kepala-sekolah" <?= (isset($filter_role) && $filter_role == 'kepala sekolah') ? 'selected' : '' ?>>Kepala Sekolah</option>
 								<option value="operator" <?= (isset($filter_role) && $filter_role == 'operator') ? 'selected' : '' ?>>Pengawas</option>
 							</select>
@@ -73,7 +73,7 @@
 											<td><?= htmlspecialchars($row->alamat); ?></td>
 											<td><?= htmlspecialchars($row->no_telepon); ?></td>
 											<td><?= htmlspecialchars($row->email); ?></td>
-											<td><?= htmlspecialchars($row->role) == 'operator' ? 'Pengawas' : htmlspecialchars($row->role); ?></td>
+											<td><?= htmlspecialchars($row->role) == 'operator' ? 'pengawas' : htmlspecialchars($row->role); ?></td>
 											<td>
 												<a href="<?= site_url('Admin/Pegawai/Index/edit/' . $row->id) ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</a>
 												<a href="#" class="btn btn-danger btn-sm btn-delete" data-id="<?= $row->id ?>"><i class="fa fa-trash"></i> Hapus</a>

@@ -4,14 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Ujianonline extends CI_Controller
 {
 
-	/**
-	 * @var CI_DB_query_builder
-	 */
 	public $db;
-
-	/**
-	 * @var CI_Input
-	 */
 	public $input;
 
 	public function __construct()
@@ -203,7 +196,6 @@ class Ujianonline extends CI_Controller
 
 	public function detail_history_jawaban_siswa($siswa_id, $jadwal_ujian_id)
 	{
-		// $siswa_id = $this->session->userdata('id_user');
 
 		// Verify that this exam belongs to the logged-in student
 		$this->db->select('tb_jawaban_ujian.*, tb_siswa.nama as nama_siswa, tb_siswa.nis, tb_matapelajaran.nama_matapelajaran, tb_jadwal_ujian.jenis_ujian, tb_jadwal_ujian.tanggal_ujian, tb_jadwal_ujian.jam_mulai, tb_jadwal_ujian.jam_selesai, tb_jadwal_ujian.lama_ujian, tb_kelas.nama_kelas, tb_jadwal_ujian.banksoal_id');
@@ -275,6 +267,7 @@ class Ujianonline extends CI_Controller
 		$data = array(
 			'jawaban_ujian' => $jawaban_ujian,
 			'detail_jawaban' => $detail_jawaban,
+			'jadwal_ujian_id' => $jadwal_ujian_id,
 			'statistik' => array(
 				'benar' => $benar,
 				'salah' => $salah,

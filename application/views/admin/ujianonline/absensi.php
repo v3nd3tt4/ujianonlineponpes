@@ -99,7 +99,6 @@
 										<th width="10%">L/P</th>
 										<th width="15%">Status</th>
 										<th width="15%">Waktu Hadir</th>
-										<th>Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -126,11 +125,7 @@
 													-
 												<?php endif; ?>
 											</td>
-											<td>
-												<a href="<?= base_url('user/histori_jawaban') ?>" class="btn btn-dark">
-													<i class="fas fa-history"></i> Histori Jawaban Ujian Siswa
-												</a>
-											</td>
+
 										</tr>
 									<?php endforeach; ?>
 								</tbody>
