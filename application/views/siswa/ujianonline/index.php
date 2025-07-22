@@ -3,6 +3,34 @@
 	<section class="section">
 		<div class="section-body">
 
+			<?php if ($this->session->flashdata('hasil_ujian')): 
+				$hasil = $this->session->flashdata('hasil_ujian'); ?>
+			<div class="row justify-content-center mb-4" id="hasil-ujian-card-row">
+				<div class="col-md-6">
+					<div class="card shadow border-<?= $hasil['status'] == 'Lulus' ? 'success' : 'danger' ?> position-relative">
+						<button type="button" class="close position-absolute" style="right:18px;top:18px;font-size:2em;z-index:2;" aria-label="Close" onclick="document.getElementById('hasil-ujian-card-row').style.display='none';">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<div class="card-body text-center">
+							<h4 class="mb-3">Hasil Ujian Anda</h4>
+							<div style="font-size:2.5em; font-weight:bold; color:<?= $hasil['status'] == 'Lulus' ? '#28a745' : '#dc3545' ?>;">
+								<?= $hasil['nilai'] ?>
+							</div>
+							<div class="mb-2">Nilai KKM: <span style="font-weight:bold; color:#007bff;"><?= $hasil['kkm'] ?></span></div>
+							<div class="mb-3">
+								<?php if ($hasil['status'] == 'Lulus'): ?>
+									<span class="badge badge-success" style="font-size:1.1em; padding:10px 20px;">Lulus 🎉</span>
+								<?php else: ?>
+									<span class="badge badge-danger" style="font-size:1.1em; padding:10px 20px;">Remedial 😢</span>
+								<?php endif; ?>
+							</div>
+							<p class="text-muted mb-0">Silakan hubungi guru jika ingin melakukan remedial atau konsultasi nilai.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php endif; ?>
+
 			<div class="card">
 				<div class="card-wrap">
 					<div class="card-header d-flex justify-content-between">
@@ -34,6 +62,7 @@
 											<th>Nilai</th>
 											<th>Benar</th>
 											<th>Salah</th>
+											<th>Keterangan</th>
 											<th>Aksi</th>
 										</tr>
 									</thead>
@@ -97,6 +126,20 @@
 													else:
 														echo '-';
 													endif; ?>
+												</td>
+												<td>
+													<?php
+													if ($j->status_ujian == 'selesai' && !is_null($j->nilai_akhir)) {
+														$kkm = 60;
+														if ($j->nilai_akhir >= $kkm) {
+															echo '<span class="badge badge-success">Lulus</span>';
+														} else {
+															echo '<span class="badge badge-danger">Remedial</span>';
+														}
+													} else {
+														echo '-';
+													}
+													?>
 												</td>
 												<td>
 													<?php if ($j->status_ujian == 'sedang'): ?>
