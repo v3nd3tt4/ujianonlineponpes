@@ -12,6 +12,12 @@
 			margin-bottom: 10px;
 		}
 
+		.kop-image {
+			width: 100%;
+			max-height: 150px;
+			margin-bottom: 20px;
+		}
+
 		.header h2 {
 			margin: 0;
 			font-size: 28px;
@@ -58,6 +64,7 @@
 		}
 	</style>
     <div class="header">
+        <img src="<?= base_url('assets/kop.png') ?>" class="kop-image" alt="Kop Surat">
         <h2><?= strtoupper("Laporan Nilai Ujian Siswa") ?> <hr></h2>
     </div>
 

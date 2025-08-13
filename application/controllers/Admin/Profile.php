@@ -10,6 +10,7 @@ class Profile extends CI_Controller
 		$this->load->model('Pegawai_model');
 		$this->load->library('form_validation');
 		$this->load->library('session');
+		$this->load->helper('file');
 
 		$roles = $this->session->userdata('rule');
 		$allow = ['admin', 'operator', 'guru', 'kepala sekolah'];
@@ -42,26 +43,52 @@ class Profile extends CI_Controller
 		$this->_rules_edit($id);
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('error', 'Terjadi kesalahan dalam validasi data. Silakan periksa kembali inputan Anda.');
-			$data = array(
-				'page' => 'admin/profile/view',
-				'script' => 'admin/profile/script',
-				'pegawai' => $pegawai,
-				'link' => 'admin/profile',
-				'validation_errors' => validation_errors(),
-				'edit_mode' => true
-			);
-			$this->load->view('template_stisla/wrapper', $data);
+			redirect('admin/profile');
 		} else {
 			try {
 				$data = $this->_get_posted_data();
+				
+				// Handle foto upload
+				if (!empty($_FILES['foto']['name'])) {
+					$config['upload_path'] = './assets/uploads/profile_photos/';
+					$config['allowed_types'] = 'gif|jpg|jpeg|png';
+					$config['max_size'] = 2048; // 2MB
+					$config['file_name'] = 'profile_' . $id . '_' . time();
+
+					// Buat direktori jika belum ada
+					if (!is_dir($config['upload_path'])) {
+						mkdir($config['upload_path'], 0777, true);
+					}
+
+					$this->load->library('upload', $config);
+
+					if ($this->upload->do_upload('foto')) {
+						$upload_data = $this->upload->data();
+						$data['foto'] = $upload_data['file_name'];
+
+						// Hapus foto lama jika ada dan bukan default.jpg
+						if ($pegawai->foto && $pegawai->foto != 'default.jpg') {
+							$old_file = $config['upload_path'] . $pegawai->foto;
+							if (file_exists($old_file)) {
+								unlink($old_file);
+							}
+						}
+					} else {
+						$this->session->set_flashdata('error', 'Gagal mengupload foto: ' . $this->upload->display_errors('', ''));
+						redirect('admin/profile');
+					}
+				}
+
 				if (!empty($data['password'])) {
 					$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 				} else {
 					unset($data['password']);
 				}
+
 				// Remove fields that shouldn't be updated
 				unset($data['id'], $data['email'], $data['role'], $data['created_at'], $data['updated_at']);
 				$data['updated_at'] = date('Y-m-d H:i:s');
+
 				$update_result = $this->Pegawai_model->update($id, $data);
 				if ($update_result) {
 					$this->session->set_flashdata('success', 'Data profil berhasil diperbarui!');
@@ -90,18 +117,18 @@ class Profile extends CI_Controller
 	private function _get_posted_data()
 	{
 		return [
-			'id' => $this->input->post('id', TRUE), // Will be unset in edit method
+			'id' => $this->input->post('id', TRUE),
 			'nama' => $this->input->post('nama', TRUE),
 			'tempat_lahir' => $this->input->post('tempat_lahir', TRUE),
 			'tanggal_lahir' => $this->input->post('tanggal_lahir', TRUE),
 			'jenis_kelamin' => $this->input->post('jenis_kelamin', TRUE),
 			'alamat' => $this->input->post('alamat', TRUE),
 			'no_telepon' => $this->input->post('no_telepon', TRUE),
-			'email' => $this->input->post('email', TRUE), // Will be unset in edit method
+			'email' => $this->input->post('email', TRUE),
 			'password' => $this->input->post('password', TRUE),
-			'role' => $this->input->post('role', TRUE), // Will be unset in edit method
-			'created_at' => $this->input->post('created_at', TRUE), // Will be unset in edit method
-			'updated_at' => $this->input->post('updated_at', TRUE), // Will be set on update
+			'role' => $this->input->post('role', TRUE),
+			'created_at' => $this->input->post('created_at', TRUE),
+			'updated_at' => $this->input->post('updated_at', TRUE),
 		];
 	}
 }

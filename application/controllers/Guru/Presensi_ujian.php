@@ -11,7 +11,7 @@ class Presensi_ujian extends CI_Controller
 		$this->load->library('session');
 
 		$roles = $this->session->userdata('rule');
-		$allow = ['guru'];
+		$allow = ['guru', 'kepala sekolah'];
 		if (!in_array($roles, $allow)) {
 			echo '<script>alert("Maaf, anda tidak diizinkan mengakses halaman ini")</script>';
 			echo '<script>window.location.href="' . base_url() . '";</script>';
@@ -24,7 +24,9 @@ class Presensi_ujian extends CI_Controller
 		$this->db->select('tb_matapelajaran.*');
 		$this->db->from('tb_gurumatapelajaran');
 		$this->db->join('tb_matapelajaran', 'tb_gurumatapelajaran.matapelajaran_id = tb_matapelajaran.id');
-		$this->db->where('tb_gurumatapelajaran.pegawai_id', $guru_id);
+		if ($this->session->userdata('rule') == 'guru') {
+			$this->db->where('tb_gurumatapelajaran.pegawai_id', $guru_id);
+		}
 		$query = $this->db->get();
 
 		$data = array(

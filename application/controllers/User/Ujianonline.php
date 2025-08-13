@@ -112,6 +112,8 @@ class Ujianonline extends CI_Controller
 			}
 		}
 		$nilai = $total > 0 ? round(($benar / $total) * 100, 2) : 0;
+		$kkm = 60;
+		$status = $nilai >= $kkm ? 'Lulus' : 'Remedial';
 		// Update tb_jawaban_ujian
 		$this->db->where([
 			'jadwal_ujian_id' => $jadwal_ujian_id,
@@ -123,7 +125,12 @@ class Ujianonline extends CI_Controller
 			'waktu_selesai' => date('Y-m-d H:i:s'),
 			'status' => 'selesai'
 		]);
-		$this->session->set_flashdata('success', 'Ujian selesai! Nilai Anda: ' . $nilai);
+		// Set flashdata untuk hasil
+		$this->session->set_flashdata('hasil_ujian', [
+			'nilai' => $nilai,
+			'kkm' => $kkm,
+			'status' => $status
+		]);
 		redirect('user/ujianonline');
 	}
 }

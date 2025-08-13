@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-	<title>Sistem Pondok Pesantren - Login</title>
+	<title>SISTEM UJIAN SISWA PONDOK PESANTREN RIYADHUS SHOLIHIN</title>
 
 	<!-- General CSS Files -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/bootstrap.min.css">
@@ -71,8 +71,8 @@
 									<hr style="background-color: white; width: 50%; padding: 1px; margin-top: 5px;">
 								</div>
 								<div class="text-center">
-									<h5 class="">SISTEM PONDOK PESANTREN</h5>
-									<p>Pondok Pesantren Riyadhus Sholihin</p>
+									<h5 class="">SISTEM UJIAN SISWA</h5>
+									<p>PONDOK PESANTREN RIYADHUS SHOLIHIN</p>
 								</div>
 							</div>
 
@@ -109,7 +109,7 @@
 										<select class="form-control" name="role" id="role" required>
 											<option value="">-- Pilih Role --</option>
 											<option value="admin">Admin</option>
-											<option value="operator">Operator</option>
+											<option value="operator">Pengawas</option>
 											<option value="guru">Guru</option>
 											<option value="kepala sekolah">Kepala Sekolah</option>
 											<option value="siswa">Siswa</option>
@@ -124,7 +124,9 @@
 								<div class="text-center mt-4 mb-3">
 									Version 1.0.0
 									<br>
-									Copyright &copy; 2025 Sistem Pondok Pesantren. All Rights Reserved.
+									Copyright &copy; 2025 Sistem Ujian Siswa Pondok Pesantren Riyadhus Sholihin.
+									<br>
+									All Rights Reserved.
 								</div>
 
 							</div>

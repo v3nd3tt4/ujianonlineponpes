@@ -11,7 +11,7 @@ class Index extends CI_Controller
 		$this->load->library('session');
 
 		$roles = $this->session->userdata('rule');
-		$allow = ['admin', 'pegawai', 'kepala sekolah', 'operator'];
+		$allow = ['admin', 'guru', 'kepala sekolah', 'operator'];
 		if (!in_array($roles, $allow)) {
 			echo '<script>alert("Maaf, anda tidak diizinkan mengakses halaman ini")</script>';
 			echo '<script>window.location.href="' . base_url() . '";</script>';
@@ -20,7 +20,7 @@ class Index extends CI_Controller
 
 	public function index($role = null)
 	{
-		$allowed_roles = ['admin', 'pegawai', 'kepala sekolah', 'operator'];
+		$allowed_roles = ['admin', 'guru', 'kepala sekolah', 'operator'];
 		$filter_role = null;
 		if ($role) {
 			$role = str_replace('-', ' ', urldecode($role));
@@ -92,6 +92,7 @@ class Index extends CI_Controller
 
 	private function _rules($id = null)
 	{
+		$this->form_validation->set_rules('nik', 'NIK', 'required|is_unique[tb_pegawai.nik]' . ($id ? '|callback_nik_unique[' . $id . ']' : ''));
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required');
 		$this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'required');
@@ -110,9 +111,22 @@ class Index extends CI_Controller
 		}
 	}
 
+	public function nik_unique($nik, $id)
+	{
+		$this->db->where('nik', $nik);
+		$this->db->where('id !=', $id);
+		$query = $this->db->get('tb_pegawai');
+		if ($query->num_rows() > 0) {
+			$this->form_validation->set_message('nik_unique', 'NIK sudah digunakan oleh pegawai lain.');
+			return FALSE;
+		}
+		return TRUE;
+	}
+
 	private function _get_posted_data()
 	{
 		return [
+			'nik' => $this->input->post('nik', TRUE),
 			'nama' => $this->input->post('nama', TRUE),
 			'tempat_lahir' => $this->input->post('tempat_lahir', TRUE),
 			'tanggal_lahir' => $this->input->post('tanggal_lahir', TRUE),
@@ -140,7 +154,7 @@ class Index extends CI_Controller
 	public function cetak_pdf($role = null)
 	{
 		// Ambil data pegawai
-		$allowed_roles = ['admin', 'pegawai', 'kepala sekolah', 'operator'];
+		$allowed_roles = ['admin', 'guru', 'kepala sekolah', 'operator'];
 		$filter_role = null;
 		if ($role) {
 			$role = str_replace('-', ' ', urldecode($role));
@@ -148,14 +162,16 @@ class Index extends CI_Controller
 				$filter_role = $role;
 			}
 		}
+
 		$pegawai = $this->Pegawai_model->get_by_role($filter_role);
 
-		$data['judul'] = 'Laporan Data Pegawai' . ($filter_role ? ' - ' . ucfirst($filter_role) : '');
-		$data['deskripsi'] = 'Laporan ini berisi data pegawai yang terdaftar di sistem.';
+		$data['judul'] = 'Laporan Data SDM' . ($filter_role ? ' - ' . (strtolower($filter_role) == 'operator' ? 'pengawas' : ucfirst($filter_role)) : '');
+		$data['deskripsi'] = 'Laporan ini berisi data SDM yang terdaftar di sistem.';
 		$data['waktu_cetak'] = date('d-m-Y H:i');
 		$data['total_data'] = count($pegawai);
 		$data['header'] = [
 			'No',
+			'NIK',
 			'Nama',
 			'Tempat Lahir',
 			'Tanggal Lahir',
@@ -168,12 +184,13 @@ class Index extends CI_Controller
 		$data['data'] = array_map(function ($row, $i) {
 			return [
 				$i + 1,
+				$row->nik,
 				$row->nama,
 				$row->tempat_lahir,
 				date('d-m-Y', strtotime($row->tanggal_lahir)),
 				$row->jenis_kelamin,
 				$row->email,
-				$row->role,
+				$row->role == 'operator' ? 'pengawas' : $row->role,
 				$row->no_telepon,
 				$row->alamat
 			];
@@ -184,13 +201,7 @@ class Index extends CI_Controller
 
 		// Pastikan mPDF sudah diinstall via composer
 		require_once FCPATH . 'vendor/autoload.php';
-		$mpdf = new \Mpdf\Mpdf([
-			'format' => 'A4-L', // A4 Landscape
-			'margin_left' => 10,
-			'margin_right' => 10,
-			'margin_top' => 10,
-			'margin_bottom' => 10,
-		]);
+		$mpdf = new \Mpdf\Mpdf(['format' => 'A4-P']);
 		$mpdf->WriteHTML($html);
 		$mpdf->SetDisplayMode('fullpage');
 		$filename = 'laporan_pegawai_' . date('Ymd_His') . '.pdf';

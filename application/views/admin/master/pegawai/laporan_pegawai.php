@@ -15,6 +15,12 @@
 			margin-bottom: 10px;
 		}
 
+		.kop-image {
+			width: 100%;
+			max-height: 150px;
+			margin-bottom: 20px;
+		}
+
 		.header h2 {
 			margin: 0;
 			font-size: 28px;
@@ -64,13 +70,14 @@
 
 <body>
 	<div class="header">
+		<img src="<?= base_url('assets/kop.png') ?>" class="kop-image" alt="Kop Surat">
 		<h2><?= strtoupper($judul) ?></h2>
 	</div>
 	<div class="desc">
 		<?= $deskripsi ?>
 	</div>
 	<div class="info">
-		<strong>Waktu Cetak:</strong> <?= $waktu_cetak ?> &nbsp; | &nbsp; <strong>Total Data:</strong> <?= $total_data ?>
+		<strong>Total Data:</strong> <?= $total_data ?>
 	</div>
 	<table>
 		<thead>
@@ -97,7 +104,7 @@
 		</tbody>
 	</table>
 	<div class="footer">
-		Dicetak pada: <?= $waktu_cetak ?>
+		<strong>Waktu Cetak:</strong> <?= $waktu_cetak ?>
 	</div>
 </body>
 

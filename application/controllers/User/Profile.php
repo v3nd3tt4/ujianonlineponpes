@@ -9,6 +9,7 @@ class Profile extends CI_Controller
 		$this->load->model('Siswa_model');
 		$this->load->library('form_validation');
 		$this->load->library('session');
+		$this->load->helper('file');
 
 		$roles = $this->session->userdata('rule');
 		$allow = ['siswa'];
@@ -40,22 +41,42 @@ class Profile extends CI_Controller
 
 		$this->_rules_edit($id);
 		if ($this->form_validation->run() == FALSE) {
-			// Set error flash message
 			$this->session->set_flashdata('error', 'Terjadi kesalahan dalam validasi data. Silakan periksa kembali inputan Anda.');
-			
-			// Return to view page with validation errors
-			$data = array(
-				'page' => 'siswa/profile/view',
-				'script' => 'siswa/profile/script',
-				'siswa' => $siswa,
-				'link' => 'siswa/profile',
-				'validation_errors' => validation_errors(),
-				'edit_mode' => true
-			);
-			$this->load->view('template_stisla/wrapper', $data);
+			redirect('user/profile');
 		} else {
 			try {
 				$data = $this->_get_posted_data();
+				
+				// Handle foto upload
+				if (!empty($_FILES['foto']['name'])) {
+					$config['upload_path'] = './assets/uploads/profile_photos/';
+					$config['allowed_types'] = 'gif|jpg|jpeg|png';
+					$config['max_size'] = 2048; // 2MB
+					$config['file_name'] = 'profile_siswa_' . $id . '_' . time();
+
+					// Buat direktori jika belum ada
+					if (!is_dir($config['upload_path'])) {
+						mkdir($config['upload_path'], 0777, true);
+					}
+
+					$this->load->library('upload', $config);
+
+					if ($this->upload->do_upload('foto')) {
+						$upload_data = $this->upload->data();
+						$data['foto'] = $upload_data['file_name'];
+
+						// Hapus foto lama jika ada dan bukan default.jpg
+						if ($siswa->foto && $siswa->foto != 'default.jpg') {
+							$old_file = $config['upload_path'] . $siswa->foto;
+							if (file_exists($old_file)) {
+								unlink($old_file);
+							}
+						}
+					} else {
+						$this->session->set_flashdata('error', 'Gagal mengupload foto: ' . $this->upload->display_errors('', ''));
+						redirect('user/profile');
+					}
+				}
 				
 				// Only hash password if it's provided
 				if (!empty($data['password'])) {

@@ -1,4 +1,13 @@
 <?php if (isset($detail->nama_matapelajaran)): ?>
+    <style>
+        .kop-image {
+            width: 100%;
+            max-height: 150px;
+            margin-bottom: 20px;
+        }
+    </style>
+    
+    <img src="<?= base_url('assets/kop.png') ?>" class="kop-image" alt="Kop Surat">
     <h2 style="text-align:center;">Laporan Presensi Ujian Siswa</h2>
     <table style="margin-bottom:20px;">
         <tr><td><b>Mata Pelajaran</b></td><td>:</td><td><?= $detail->nama_matapelajaran ?></td></tr>

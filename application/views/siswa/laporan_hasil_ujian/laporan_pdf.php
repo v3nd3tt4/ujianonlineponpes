@@ -7,8 +7,23 @@
 	<style>
 		body {
 			font-family: Arial, sans-serif;
-			margin: 20px;
+			margin: 0;
+			padding: 20px;
 			font-size: 12px;
+		}
+
+		.kop-container {
+			width: 100%;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		.kop-image {
+			width: 100%;
+			max-width: 800px;
+			height: auto;
+			max-height: 120px;
+			object-fit: contain;
 		}
 
 		.header {
@@ -102,6 +117,23 @@
 </head>
 
 <body>
+	<!-- Kop Surat -->
+	<div class="kop-container">
+		<?php 
+		$kop_path = FCPATH . 'assets/kop.png';
+		if (file_exists($kop_path)): 
+		?>
+			<img src="<?= base_url('assets/kop.png') ?>" class="kop-image" alt="Kop Surat">
+		<?php else: ?>
+			<!-- Fallback jika file tidak ditemukan -->
+			<div style="text-align: center; padding: 20px; border: 1px solid #ccc; background: #f9f9f9;">
+				<h3 style="margin: 0; color: #666;">PONDOK PESANTREN YATIM PIATU DAN DHUAFA</h3>
+				<h4 style="margin: 5px 0; color: #888;">TAHFIDZUL QUR'AN "RIYADHUS SHOLIHIN"</h4>
+				<p style="margin: 5px 0; color: #999; font-size: 12px;">Jl. Dr. Harun II, Gg. Hi Agus Salim Komplek Villa Mas Kel. Kota Baru, Kec. Tanjung Karang Timur, B.Lampung</p>
+			</div>
+		<?php endif; ?>
+	</div>
+	
 	<div class="header">
 		<h2>LAPORAN HASIL UJIAN SISWA</h2>
 		<h3>Sistem Ujian Online Pondok Pesantren</h3>
