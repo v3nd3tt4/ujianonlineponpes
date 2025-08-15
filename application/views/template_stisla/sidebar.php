@@ -149,7 +149,7 @@
 				<li class="<?= $link == 'siswa/profile' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>User/profile"><i class="fas fa-user"></i> <span>Profile</span></a></li>
 				<li class="<?= $link == 'siswa/kelas' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>User/kelas"><i class="fas fa-users"></i> <span>Kelas</span></a></li>
 				<li class="<?= $link == 'siswa/ujianonline' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>User/ujianonline"><i class="fas fa-pencil-alt"></i> <span>Ujian Online</span></a></li>
-				<li class="<?= $link == 'siswa/laporan_hasil_ujian' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>user/laporan_hasil_ujian"><i class="fas fa-window-restore"></i> <span>Laporan Hasil Ujian</span></a></li>
+				<li class="<?= $link == 'siswa/laporan_hasil_ujian' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>User/laporan_hasil_ujian"><i class="fas fa-window-restore"></i> <span>Laporan Hasil Ujian</span></a></li>
 			<?php } ?>
 		</ul>
 
