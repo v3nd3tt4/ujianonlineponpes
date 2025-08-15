@@ -38,7 +38,7 @@
 					<div class="card-header d-flex justify-content-between">
 						<h4>Data Peserta Ujian Online</h4>
 						<div>
-							<a href="<?= base_url('UjianOnline') ?>" class="btn btn-secondary">
+							<a href="<?= base_url('Ujianonline') ?>" class="btn btn-secondary">
 								<i class="fa fa-arrow-left"></i> Kembali
 							</a>
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#scanModal">
