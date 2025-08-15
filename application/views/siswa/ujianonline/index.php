@@ -149,11 +149,11 @@
 
 												<td>
 													<?php if ($j->status_ujian == 'sedang'): ?>
-														<a href="<?= base_url('user/ujianonline/kerjakan/' . $j->id) ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Kerjakan Ujian</a>
+														<a href="<?= base_url('User/Ujianonline/kerjakan/' . $j->id) ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Kerjakan Ujian</a>
 													<?php elseif ($j->status_ujian == 'selesai'): ?>
 														<button class="btn btn-success btn-sm" disabled><i class="fa fa-check"></i> Ujian Selesai</button>
 													<?php else: ?>
-														<a href="<?= base_url('user/ujianonline/mulai/' . $j->id) ?>" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Mulai Ujian</a>
+														<a href="<?= base_url('User/Ujianonline/mulai/' . $j->id) ?>" class="btn btn-primary btn-sm"><i class="fa fa-play"></i> Mulai Ujian</a>
 													<?php endif; ?>
 												</td>
 											</tr>
