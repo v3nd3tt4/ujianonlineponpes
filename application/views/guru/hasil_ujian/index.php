@@ -12,7 +12,7 @@
 							<i class="fas fa-info-circle"></i>
 							Silahkan pilih Mata Pelajaran Dan Kelas yang anda ampu
 						</div>
-						<form action="<?= base_url('guru/hasil_ujian/cetak_pdf') ?>" method="post" target="_blank">
+						<form action="<?= base_url('Guru/hasil_ujian/cetak_pdf') ?>" method="post" target="_blank">
 
 							<div class="form-group">
 								<label for="">Matapelajaran: </label>
