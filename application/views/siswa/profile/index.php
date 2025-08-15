@@ -45,7 +45,7 @@
 							</div>
 						<?php endif; */ ?>
 
-						<form id="form-profile" action="<?= site_url('user/profile/edit/' . $siswa->id) ?>" method="post" enctype="multipart/form-data">
+						<form id="form-profile" action="<?= site_url('User/Profile/edit/' . $siswa->id) ?>" method="post" enctype="multipart/form-data">
 							
 							<!-- Foto Profil -->
 							<div class="text-center mb-4">
