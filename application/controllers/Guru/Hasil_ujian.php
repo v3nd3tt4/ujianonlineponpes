@@ -98,7 +98,7 @@ class Hasil_ujian extends CI_Controller
 		];
 
 		// Render HTML
-		$html = $this->load->view('Guru/hasil_ujian/laporan_hasil_ujian', $data, true);
+		$html = $this->load->view('Guru/Hasil_ujian/laporan_hasil_ujian', $data, true);
 
 		// PDF
 		require_once FCPATH . 'vendor/autoload.php';
