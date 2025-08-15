@@ -77,7 +77,7 @@
 				<div class="col-lg-4 col-md-6 col-sm-6 col-12">
 					<div class="card card-statistic-1 position-relative">
 						<?php if ($this->session->userdata('rule') == 'admin' || $this->session->userdata('rule') == 'kepala sekolah'): ?>
-							<a href="<?= site_url('Admin/TahunAkademik/Index') ?>" class="position-absolute eye-statistik">
+							<a href="<?= site_url('Admin/Tahunakademik/Index') ?>" class="position-absolute eye-statistik">
 								<i class="far fa-eye"></i>
 							</a>
 						<?php endif; ?>
