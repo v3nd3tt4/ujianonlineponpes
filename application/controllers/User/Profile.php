@@ -42,7 +42,7 @@ class Profile extends CI_Controller
 		$this->_rules_edit($id);
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('error', 'Terjadi kesalahan dalam validasi data. Silakan periksa kembali inputan Anda.');
-			redirect('user/profile');
+			redirect('User/Profile');
 		} else {
 			try {
 				$data = $this->_get_posted_data();
@@ -74,7 +74,7 @@ class Profile extends CI_Controller
 						}
 					} else {
 						$this->session->set_flashdata('error', 'Gagal mengupload foto: ' . $this->upload->display_errors('', ''));
-						redirect('user/profile');
+						redirect('User/Profile');
 					}
 				}
 				
@@ -100,7 +100,7 @@ class Profile extends CI_Controller
 				log_message('error', 'Profile update error: ' . $e->getMessage());
 			}
 			
-			redirect('user/profile');
+			redirect('User/Profile');
 		}
 	}
 
