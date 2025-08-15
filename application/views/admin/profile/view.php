@@ -6,7 +6,7 @@
 	<?php if (isset($validation_errors) && $validation_errors): ?>
 		<div class="alert alert-danger"><?php echo $validation_errors; ?></div>
 	<?php endif; ?>
-	<form method="post" action="<?php echo site_url('admin/profile/edit/' . $pegawai->id); ?>">
+	<form method="post" action="<?php echo site_url('Admin/profile/edit/' . $pegawai->id); ?>">
 		<input type="hidden" name="id" value="<?php echo $pegawai->id; ?>">
 		<div class="form-group">
 			<label>Nama <span class="text-danger">*</span></label>

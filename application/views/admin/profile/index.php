@@ -19,7 +19,7 @@
 
 					<div class="card-body">
 
-						<form id="form-profile" action="<?= site_url('admin/profile/edit/' . $pegawai->id) ?>" method="post" enctype="multipart/form-data">
+						<form id="form-profile" action="<?= site_url('Admin/profile/edit/' . $pegawai->id) ?>" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="id" id="id" value="<?= htmlspecialchars($pegawai->id) ?>">
 							
 							<!-- Foto Profil -->
