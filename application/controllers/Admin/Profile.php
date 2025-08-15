@@ -30,7 +30,7 @@ class Profile extends CI_Controller
 			'page' => 'admin/profile/index',
 			'script' => 'admin/profile/script',
 			'pegawai' => $pegawai,
-			'link' => 'admin/profile'
+			'link' => 'Admin/profile'
 		);
 		$this->load->view('template_stisla/wrapper', $data);
 	}
@@ -43,7 +43,7 @@ class Profile extends CI_Controller
 		$this->_rules_edit($id);
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('error', 'Terjadi kesalahan dalam validasi data. Silakan periksa kembali inputan Anda.');
-			redirect('admin/profile');
+			redirect('Admin/profile');
 		} else {
 			try {
 				$data = $this->_get_posted_data();
@@ -75,7 +75,7 @@ class Profile extends CI_Controller
 						}
 					} else {
 						$this->session->set_flashdata('error', 'Gagal mengupload foto: ' . $this->upload->display_errors('', ''));
-						redirect('admin/profile');
+						redirect('Admin/profile');
 					}
 				}
 
@@ -99,7 +99,7 @@ class Profile extends CI_Controller
 				$this->session->set_flashdata('error', 'Terjadi kesalahan sistem. Silakan coba lagi atau hubungi administrator.');
 				log_message('error', 'Profile update error: ' . $e->getMessage());
 			}
-			redirect('admin/profile');
+			redirect('Admin/profile');
 		}
 	}
 

@@ -35,7 +35,7 @@
 			) { ?>
 
 				<li class="menu-header">Master Data</li>
-				<li class="<?= $link == 'admin/profile' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>Admin/Profile"><i class="fas fa-user"></i> <span>Profile</span></a></li>
+				<li class="<?= $link == 'Admin/profile' ? 'active' : '' ?>"><a class="nav-link" href="<?= base_url() ?>Admin/profile"><i class="fas fa-user"></i> <span>Profile</span></a></li>
 
 				<?php
 				if (

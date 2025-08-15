@@ -56,6 +56,6 @@
 			<input type="text" class="form-control" value="<?php echo $pegawai->updated_at; ?>" readonly>
 		</div>
 		<button type="submit" class="btn btn-success">Simpan</button>
-		<a href="<?php echo site_url('admin/profile'); ?>" class="btn btn-secondary">Batal</a>
+		<a href="<?php echo site_url('Admin/profile'); ?>" class="btn btn-secondary">Batal</a>
 	</form>
 </div>
