@@ -64,7 +64,7 @@ class Ujianonline extends CI_Controller
 				'status' => 'sedang'
 			]);
 		}
-		redirect('user/ujianonline/kerjakan/' . $jadwal_ujian_id);
+		redirect('User/ujianonline/kerjakan/' . $jadwal_ujian_id);
 	}
 
 	public function kerjakan($jadwal_ujian_id)
@@ -131,6 +131,6 @@ class Ujianonline extends CI_Controller
 			'kkm' => $kkm,
 			'status' => $status
 		]);
-		redirect('user/ujianonline');
+		redirect('User/ujianonline');
 	}
 }

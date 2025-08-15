@@ -349,7 +349,7 @@
 								<?php if (!empty($soal)): ?>
 								<?php endif; ?>
 
-								<form method="post" action="<?= base_url('user/ujianonline/submit_jawaban/' . $jadwal->id) ?>" id="form-ujian">
+								<form method="post" action="<?= base_url('User/Ujianonline/submit_jawaban/' . $jadwal->id) ?>" id="form-ujian">
 									<input type="hidden" name="banksoal_id" value="<?= $jadwal->banksoal_id ?>">
 									<?php if (empty($soal)): ?>
 										<div class="alert alert-warning">Soal belum tersedia.</div>
