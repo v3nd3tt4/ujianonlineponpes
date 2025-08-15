@@ -34,7 +34,7 @@
 												<td><?= htmlspecialchars($k->nama_kelas); ?></td>
 												<td><?= htmlspecialchars($k->tahun_akademik); ?></td>
 												<td>
-													<a href="<?= site_url('guru/kelas/daftar_siswa/' . $k->kelasrombel_id) ?>" class="btn btn-primary btn-sm">
+													<a href="<?= site_url('Guru/kelas/daftar_siswa/' . $k->kelasrombel_id) ?>" class="btn btn-primary btn-sm">
 														<i class="fas fa-eye"></i> Lihat Siswa
 													</a>
 												</td>

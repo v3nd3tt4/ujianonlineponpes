@@ -6,7 +6,7 @@
 					Daftar Siswa - <?= htmlspecialchars($kelas->nama_kelas) ?> (<?= htmlspecialchars($kelas->tahun) ?> - <?= htmlspecialchars($kelas->semester) ?>)
 				</h1>
 			</div>
-			<a href="<?= site_url('guru/kelas') ?>" class="btn btn-primary">
+			<a href="<?= site_url('Guru/kelas') ?>" class="btn btn-primary">
 				<i class="fas fa-arrow-left"></i> Kembali
 			</a>
 		</div>
