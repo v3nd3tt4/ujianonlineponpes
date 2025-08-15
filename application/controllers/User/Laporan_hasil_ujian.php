@@ -52,7 +52,7 @@ class Laporan_hasil_ujian extends CI_Controller
 
 		if (!$kelas_id) {
 			echo '<script>alert("Silahkan pilih kelas terlebih dahulu")</script>';
-			echo '<script>window.location.href="' . base_url('user/laporan_hasil_ujian') . '";</script>';
+			echo '<script>window.location.href="' . base_url('User/laporan_hasil_ujian') . '";</script>';
 			return;
 		}
 

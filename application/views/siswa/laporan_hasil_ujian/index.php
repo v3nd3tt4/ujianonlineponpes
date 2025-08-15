@@ -14,7 +14,7 @@
                                 <div class="alert alert-info">
                                     Menampilkan laporan hasil ujian yang sudah anda kerjakan, silahkan pilih terlebih dahulu kelas
                                 </div>
-                                <form action="<?= base_url('user/laporan_hasil_ujian/cetak_pdf') ?>" method="post" target="_blank">
+                                <form action="<?= base_url('User/laporan_hasil_ujian/cetak_pdf') ?>" method="post" target="_blank">
                                     <div class="form-group">
                                         <label for="">Kelas Anda:</label>
                                         <select name="kelasrombel_id" id="" class="form-control" required>
