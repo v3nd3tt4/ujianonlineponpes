@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
-    # RewriteCond %{HTTPS} off
-    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     #RewriteBase /your_project/
 
     #Removes access to the system folder by users.
