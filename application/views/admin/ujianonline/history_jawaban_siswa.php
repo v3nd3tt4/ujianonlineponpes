@@ -38,7 +38,7 @@
 					<div class="card-header d-flex justify-content-between">
 						<h4>History Jawaban Siswa</h4>
 						<div>
-							<a href="<?= base_url('UjianOnline') ?>" class="btn btn-secondary">
+							<a href="<?= base_url('Ujianonline') ?>" class="btn btn-secondary">
 								<i class="fa fa-arrow-left"></i> Kembali
 							</a>
 						</div>
