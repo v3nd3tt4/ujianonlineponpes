@@ -16,7 +16,7 @@ $(document).ready(function() {
             });
 
             $.ajax({
-                url: '<?= base_url("guru/presensi_ujian/get_kelas_by_mapel") ?>',
+                url: '<?= base_url("Guru/Presensi_ujian/get_kelas_by_mapel") ?>',
                 type: 'POST',
                 data: {matapelajaran_id: matapelajaran_id},
                 dataType: 'json',
