@@ -3,32 +3,32 @@
 	<section class="section">
 		<div class="section-body">
 
-			<?php if ($this->session->flashdata('hasil_ujian')): 
+			<?php if ($this->session->flashdata('hasil_ujian')):
 				$hasil = $this->session->flashdata('hasil_ujian'); ?>
-			<div class="row justify-content-center mb-4" id="hasil-ujian-card-row">
-				<div class="col-md-6">
-					<div class="card shadow border-<?= $hasil['status'] == 'Lulus' ? 'success' : 'danger' ?> position-relative">
-						<button type="button" class="close position-absolute" style="right:18px;top:18px;font-size:2em;z-index:2;" aria-label="Close" onclick="document.getElementById('hasil-ujian-card-row').style.display='none';">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<div class="card-body text-center">
-							<h4 class="mb-3">Hasil Ujian Anda</h4>
-							<div style="font-size:2.5em; font-weight:bold; color:<?= $hasil['status'] == 'Lulus' ? '#28a745' : '#dc3545' ?>;">
-								<?= $hasil['nilai'] ?>
+				<div class="row justify-content-center mb-4" id="hasil-ujian-card-row">
+					<div class="col-md-6">
+						<div class="card shadow border-<?= $hasil['status'] == 'Lulus' ? 'success' : 'danger' ?> position-relative">
+							<button type="button" class="close position-absolute" style="right:18px;top:18px;font-size:2em;z-index:2;" aria-label="Close" onclick="document.getElementById('hasil-ujian-card-row').style.display='none';">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<div class="card-body text-center">
+								<h4 class="mb-3">Hasil Ujian Anda</h4>
+								<div style="font-size:2.5em; font-weight:bold; color:<?= $hasil['status'] == 'Lulus' ? '#28a745' : '#dc3545' ?>;">
+									<?= $hasil['nilai'] ?>
+								</div>
+								<div class="mb-2">Nilai KKM: <span style="font-weight:bold; color:#007bff;"><?= $hasil['kkm'] ?></span></div>
+								<div class="mb-3">
+									<?php if ($hasil['status'] == 'Lulus'): ?>
+										<span class="badge badge-success" style="font-size:1.1em; padding:10px 20px;">Lulus 🎉</span>
+									<?php else: ?>
+										<span class="badge badge-danger" style="font-size:1.1em; padding:10px 20px;">Remedial 😢</span>
+									<?php endif; ?>
+								</div>
+								<p class="text-muted mb-0">Silakan hubungi guru jika ingin melakukan remedial atau konsultasi nilai.</p>
 							</div>
-							<div class="mb-2">Nilai KKM: <span style="font-weight:bold; color:#007bff;"><?= $hasil['kkm'] ?></span></div>
-							<div class="mb-3">
-								<?php if ($hasil['status'] == 'Lulus'): ?>
-									<span class="badge badge-success" style="font-size:1.1em; padding:10px 20px;">Lulus 🎉</span>
-								<?php else: ?>
-									<span class="badge badge-danger" style="font-size:1.1em; padding:10px 20px;">Remedial 😢</span>
-								<?php endif; ?>
-							</div>
-							<p class="text-muted mb-0">Silakan hubungi guru jika ingin melakukan remedial atau konsultasi nilai.</p>
 						</div>
 					</div>
 				</div>
-			</div>
 			<?php endif; ?>
 
 			<div class="card">
@@ -38,6 +38,10 @@
 					</div>
 
 					<div class="card-body">
+						<p class="text-dark font-weight-bold bg-light p-3 mb-4" style="font-size: 1.2em; border-radius: 5px;">
+							Jika nilai dibawah KKM <span class="text-danger">(60)</span>, maka siswa wajib melakukan remedial.
+							<br>Silakan hubungi guru untuk jadwal remedial.
+						</p>
 						<?php if (empty($jadwal)): ?>
 							<div class="alert alert-info d-flex align-items-center" role="alert" style="font-size: 1.1em; padding: 20px;">
 								<i class="fa fa-info-circle mr-3" style="font-size: 2em;"></i>
@@ -111,6 +115,7 @@
 																$benar++;
 															}
 														}
+
 														echo $benar;
 													else:
 														echo '-';
@@ -141,6 +146,7 @@
 													}
 													?>
 												</td>
+
 												<td>
 													<?php if ($j->status_ujian == 'sedang'): ?>
 														<a href="<?= base_url('user/ujianonline/kerjakan/' . $j->id) ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Kerjakan Ujian</a>

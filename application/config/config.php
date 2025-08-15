@@ -28,13 +28,14 @@ date_default_timezone_set('Asia/Jakarta');
 
 
 $protocol = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$base_url = $protocol . "://" . $_SERVER['HTTP_HOST']."/";
+$base_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . "/";
 
 // VHOST
+$config['base_url'] = "https://ujianonlineponpes.site/";
 // $config['base_url'] = $base_url;
 
 // ARIF URL
-$config['base_url'] = 'http://localhost/ujianonlineponpes/';
+// $config['base_url'] = 'http://localhost/ujianonlineponpes/';
 
 /*
 |--------------------------------------------------------------------------
@@ -395,10 +396,11 @@ $config['encryption_key'] = 'mbtrika';
 // $config['sess_time_to_update'] = 300;
 // $config['sess_regenerate_destroy'] = FALSE;
 
-$config['sess_driver'] = 'database';
+$config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = 'ci_sessions';
+$config['sess_save_path'] = sys_get_temp_dir();
+// $config['sess_save_path'] = 'ci_sessions';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
