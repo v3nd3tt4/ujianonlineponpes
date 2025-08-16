@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitaf41f84393de63255409b12fc5f54c90
+class ComposerStaticInit7003e24f4ba0657061b4081df877b159
 {
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -16,6 +16,11 @@ class ComposerStaticInitaf41f84393de63255409b12fc5f54c90
         's' => 
         array (
             'setasign\\Fpdi\\' => 14,
+        ),
+        'c' => 
+        array (
+            'chillerlan\\Settings\\' => 20,
+            'chillerlan\\QRCode\\' => 18,
         ),
         'P' => 
         array (
@@ -29,10 +34,19 @@ class ComposerStaticInitaf41f84393de63255409b12fc5f54c90
             'Mpdf\\PsrHttpMessageShim\\' => 24,
             'Mpdf\\' => 5,
         ),
+        'E' => 
+        array (
+            'Endroid\\QrCode\\' => 15,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
+            'DASPRiD\\Enum\\' => 13,
+        ),
+        'B' => 
+        array (
+            'BaconQrCode\\' => 12,
         ),
     );
 
@@ -40,6 +54,14 @@ class ComposerStaticInitaf41f84393de63255409b12fc5f54c90
         'setasign\\Fpdi\\' => 
         array (
             0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
+        'chillerlan\\Settings\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-settings-container/src',
+        ),
+        'chillerlan\\QRCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
         ),
         'Psr\\Log\\' => 
         array (
@@ -65,6 +87,10 @@ class ComposerStaticInitaf41f84393de63255409b12fc5f54c90
         array (
             0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
         ),
+        'Endroid\\QrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/endroid/qr-code/src',
+        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -72,6 +98,14 @@ class ComposerStaticInitaf41f84393de63255409b12fc5f54c90
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'DASPRiD\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
+        'BaconQrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
         ),
     );
 
@@ -721,10 +755,10 @@ class ComposerStaticInitaf41f84393de63255409b12fc5f54c90
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitaf41f84393de63255409b12fc5f54c90::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitaf41f84393de63255409b12fc5f54c90::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitaf41f84393de63255409b12fc5f54c90::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitaf41f84393de63255409b12fc5f54c90::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7003e24f4ba0657061b4081df877b159::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7003e24f4ba0657061b4081df877b159::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit7003e24f4ba0657061b4081df877b159::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit7003e24f4ba0657061b4081df877b159::$classMap;
 
         }, null, ClassLoader::class);
     }
