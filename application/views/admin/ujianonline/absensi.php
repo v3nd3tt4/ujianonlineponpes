@@ -49,7 +49,7 @@
 
 					<div class="card-body">
 
-						<div class="d-flex justify-content-between align-items-center p-2 bg-primary rounded">
+						<div class="d-flex justify-content-between align-items-center p-2 bg-primary rounded mb-4">
 							<div class="text-white">
 								<i class="fa fa-info-circle"></i>
 								Cetak kartu ujian untuk semua siswa pada jadwal ini.
