@@ -253,24 +253,24 @@
 
 <!-- Modal Preview Soal -->
 <div class="modal fade" id="modalPreviewSoal" tabindex="-1" role="dialog" aria-labelledby="modalPreviewSoalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<form method="post" action="<?= site_url('banksoal/import_soal'); ?>">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="modalPreviewSoalLabel">Preview Soal</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<input type="hidden" name="banksoal_id" value="<?= $banksoal->id ?>">
-					<div id="preview-area"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan ke Database</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="modal-dialog modal-xl" role="document"> <!-- Ubah ke modal-xl untuk lebih luas -->
+        <form method="post" action="<?= site_url('banksoal/import_soal'); ?>">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPreviewSoalLabel">Preview Soal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="max-height: 75vh; overflow-y: auto; max-width: 100%;">
+                    <input type="hidden" name="banksoal_id" value="<?= $banksoal->id ?>">
+                    <div id="preview-area"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan ke Database</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
