@@ -31,11 +31,11 @@ $protocol = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" :
 // $base_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . "/";
 
 // VHOST
-$config['base_url'] = "https://ujianonlineponpes.site";
+// $config['base_url'] = "https://ujianonlineponpes.site";
 // $config['base_url'] = $base_url;
 
 // ARIF URL
-// $config['base_url'] = 'http://localhost/ujianonlineponpes/';
+$config['base_url'] = 'http://localhost/ujianonlineponpes/';
 
 /*
 |--------------------------------------------------------------------------

@@ -76,15 +76,15 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	
-	// 'hostname' => 'localhost',
-	// 'username' => 'root',
-	// 'password' => 'lupaLagi',
-	// 'database' => 'db_ujianonlineponpes',
-
 	'hostname' => 'localhost',
-	'username' => 'u470549711_ponpes',
-	'password' => 'Ponpes123!',
-	'database' => 'u470549711_ponpes',
+	'username' => 'root',
+	'password' => 'lupaLagi',
+	'database' => 'db_ujianonlineponpes',
+
+	// 'hostname' => 'localhost',
+	// 'username' => 'u470549711_ponpes',
+	// 'password' => 'Ponpes123!',
+	// 'database' => 'u470549711_ponpes',
 
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

@@ -46,6 +46,7 @@ class Ujianonline extends CI_Controller
             ORDER BY ju.tanggal_ujian DESC, ju.jam_mulai ASC
         ")->result();
 
+
 		$this->load->view('template_stisla/wrapper', $data);
 	}
 
@@ -63,6 +64,7 @@ class Ujianonline extends CI_Controller
                 ju.*,
                 mp.nama_matapelajaran,
                 kr.id as kelasrombel_id,
+				kr.tahunakademik_id as tahunakademik_id,
                 k.nama_kelas,
                 ta.tahun,
                 ta.semester
@@ -279,5 +281,407 @@ class Ujianonline extends CI_Controller
 			'link' => 'ujianonline'
 		);
 		$this->load->view('template_stisla/wrapper', $data);
+	}
+
+	// versi hard-code
+	public function cetak_kartu_ujian_multiple_code($kelas_id = null, $tahun_akademik_id = null)
+	{
+		// Ambil parameter filter
+		if (!$kelas_id || !$tahun_akademik_id) {
+			echo '<script>alert("Parameter kelas dan tahun akademik harus diisi")</script>';
+			echo '<script>window.location.href="' . base_url() . 'admin/siswa";</script>';
+			return;
+		}
+
+		// Query untuk mendapatkan semua siswa berdasarkan filter
+		$this->db->select('tb_siswa.*, tb_kelasrombel.id as kelas_id, tb_kelas.nama_kelas, tb_tahunakademik.tahun, tb_tahunakademik.semester');
+		$this->db->from('tb_siswa');
+		$this->db->join('tb_kelassiswa', 'tb_siswa.id = tb_kelassiswa.siswa_id', 'inner');
+		$this->db->join('tb_kelasrombel', 'tb_kelassiswa.kelasrombel_id = tb_kelasrombel.id', 'inner');
+		$this->db->join('tb_kelas', 'tb_kelasrombel.kelas_id = tb_kelas.id', 'inner');
+		$this->db->join('tb_tahunakademik', 'tb_kelasrombel.tahunakademik_id = tb_tahunakademik.id', 'inner');
+		$this->db->where('tb_kelasrombel.id', $kelas_id);
+		$this->db->where('tb_tahunakademik.id', $tahun_akademik_id);
+		$this->db->order_by('tb_siswa.nama', 'ASC');
+
+		$siswa_list = $this->db->get()->result();
+
+		if (empty($siswa_list)) {
+			echo '<script>alert("Tidak ada siswa ditemukan")</script>';
+			echo '<script>window.location.href="' . base_url('Ujianonline') . '";</script>';
+			return;
+		}
+
+		// Generate QR Code untuk setiap siswa
+		require_once FCPATH . 'vendor/autoload.php';
+
+		// Initialize mPDF
+		$mpdf = new \Mpdf\Mpdf([
+			'format' => 'A4',
+			'margin_left' => 5,
+			'margin_right' => 5,
+			'margin_top' => 5,
+			'margin_bottom' => 5,
+		]);
+
+		$qr_code_generator = new \chillerlan\QRCode\QRCode();
+
+		// Definisikan jumlah siswa per batch (sesuaikan dengan kebutuhan)
+		$batch_size = 20; // Proses 20 siswa per batch
+		$total_siswa = count($siswa_list);
+		$total_batches = ceil($total_siswa / $batch_size);
+
+		// CSS yang akan digunakan
+		$css = $this->getCSSForKartuUjian();
+
+		for ($batch = 0; $batch < $total_batches; $batch++) {
+			$start_index = $batch * $batch_size;
+			$end_index = min(($batch + 1) * $batch_size, $total_siswa);
+
+			// Ambil siswa untuk batch ini
+			$current_batch = array_slice($siswa_list, $start_index, $end_index - $start_index);
+
+			// Prepare data untuk batch ini
+			$siswa_data = [];
+			foreach ($current_batch as $siswa) {
+				$qr_data = json_encode([
+					"nis" => $siswa->nis,
+					"id" => $siswa->id,
+					"nama" => $siswa->nama,
+				]);
+
+				$qr_code_image = $qr_code_generator->render($qr_data);
+
+				$siswa_data[] = [
+					'detail_siswa' => $siswa,
+					'qr_code_data' => $qr_data,
+					'qr_code_image' => $qr_code_image,
+				];
+			}
+
+			// Generate HTML untuk batch ini
+			$html_content = $this->generateKartuHTML($siswa_data, $siswa_list[0]);
+
+			// Jika batch pertama, tulis CSS + HTML
+			if ($batch === 0) {
+				$mpdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+				$mpdf->WriteHTML($html_content, \Mpdf\HTMLParserMode::HTML_BODY);
+			} else {
+				// Untuk batch selanjutnya, tambah page break dan tulis HTML
+				$mpdf->AddPage();
+				$mpdf->WriteHTML($html_content, \Mpdf\HTMLParserMode::HTML_BODY);
+			}
+		}
+
+		$mpdf->SetDisplayMode('fullpage');
+
+		$filename = 'kartu_ujian_' . $siswa_list[0]->nama_kelas . '_' . date('Ymd_His') . '.pdf';
+		$mpdf->Output($filename, 'I'); // 'I' untuk tampil di browser, 'D' untuk download
+	}
+
+	private function getCSSForKartuUjian()
+	{
+		return '
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+				border: 0;
+			}
+
+			body {
+				font-family: Arial, sans-serif;
+				font-size: 9px;
+				margin: 0;
+				padding: 0;
+				background: #f9f9f9;
+			}
+
+			.page-container {
+				width: 100%;
+			}
+
+			.kartu-wrapper {
+				width: 47%;
+				float: left;
+				padding: 10px;
+			}
+
+			.kartu-ujian {
+				width: 95mm;
+				height: 35mm;
+				border: 1px solid #0066cc;
+				border-radius: 3px;
+				padding: 2mm;
+				box-sizing: border-box;
+				background: #fff;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.header {
+				text-align: center;
+				margin-bottom: 2mm;
+				border-bottom: 1px solid #0066cc;
+				padding-bottom: 1mm;
+			}
+
+			.title {
+				font-size: 11px;
+				font-weight: bold;
+				color: #0066cc;
+				margin: 0;
+			}
+
+			.subtitle {
+				font-size: 7px;
+				color: #666;
+				margin: 0;
+			}
+
+			.content {
+				width: 100%;
+				overflow: hidden;
+				margin-top: 2mm;
+			}
+
+			.left-section {
+				width: 64.5%;
+				float: left;
+			}
+
+			.right-section {
+				width: 34.5%;
+				float: right;
+				text-align: center;
+			}
+
+			.info-table {
+				width: 100%;
+				font-size: 10px;
+			}
+
+			.info-label {
+				font-weight: bold;
+				color: #333;
+				width: 20mm;
+				white-space: nowrap;
+				font-size: 9px;
+			}
+
+			.info-colon {
+				width: 3mm;
+				color: #333;
+				text-align: center;
+				font-weight: normal;
+				font-size: 9px;
+			}
+
+			.info-value {
+				color: #000;
+				white-space: nowrap;
+				font-size: 9px;
+			}
+
+			.qr-placeholder {
+				width: 25mm;
+				height: 25mm;
+				border: 1px dashed #ccc;
+				display: block;
+				margin: 0 auto;
+				background: #f9f9f9;
+				line-height: 25mm;
+				text-align: center;
+				font-size: 6px;
+				color: #999;
+			}
+
+			.qr-text {
+				font-size: 6px;
+				margin-top: 1mm;
+				color: #666;
+				font-style: italic;
+			}
+
+			.footer {
+				font-size: 6px;
+				color: #666;
+				text-align: center;
+				border-top: 1px solid #ddd;
+				padding-top: 1mm;
+				margin-top: 2mm;
+				clear: both;
+			}
+
+			.clearfix::after {
+				content: "";
+				display: table;
+				clear: both;
+			}
+		</style>';
+	}
+
+
+	private function getJenisKelamin($siswa)
+	{
+		if (isset($siswa->jenis_kelamin)) {
+			return ($siswa->jenis_kelamin === 'L') ? 'Laki-laki' : 'Perempuan';
+		}
+		return '-';
+	}
+
+	private function getTempaTanggalLahir($siswa)
+	{
+		$tempat = isset($siswa->tempat_lahir) ? htmlspecialchars($siswa->tempat_lahir) : '-';
+		$tanggal = '-';
+
+		if (isset($siswa->tanggal_lahir) && !empty($siswa->tanggal_lahir)) {
+			$tanggal = date('d/m/Y', strtotime($siswa->tanggal_lahir));
+		}
+
+		return $tempat . ', ' . $tanggal;
+	}
+
+	private function generateKartuHTML($siswa_data, $info_kelas)
+	{
+		$html = '<div class="page-container clearfix">';
+
+		foreach ($siswa_data as $data) {
+			$siswa = $data['detail_siswa'];
+
+			$html .= '
+				<div class="kartu-wrapper">
+					<div class="kartu-ujian">
+						<div class="header">
+							<h3 class="title">KARTU UJIAN SISWA</h3>
+							<p class="subtitle">Tahun Akademik ' . $info_kelas->tahun . ' - Semester ' . $info_kelas->semester . '</p>
+						</div>
+						
+						<div class="content">
+							<div class="left-section">
+								<table class="info-table">
+									<tr>
+										<td class="info-label">NIS</td>
+										<td class="info-colon">:</td>
+										<td class="info-value">' . htmlspecialchars($siswa->nis) . '</td>
+									</tr>
+									<tr>
+										<td class="info-label">Nama</td>
+										<td class="info-colon">:</td>
+										<td class="info-value">' . htmlspecialchars($siswa->nama) . '</td>
+									</tr>
+									<tr>
+										<td class="info-label">L/P</td>
+										<td class="info-colon">:</td>
+										<td class="info-value">' . $this->getJenisKelamin($siswa) . '</td>
+									</tr>
+									<tr>
+										<td class="info-label">TTL</td>
+										<td class="info-colon">:</td>
+										<td class="info-value">' . $this->getTempaTanggalLahir($siswa) . '</td>
+									</tr>
+									<tr>
+										<td class="info-label">Kelas</td>
+										<td class="info-colon">:</td>
+										<td class="info-value">' . htmlspecialchars($info_kelas->nama_kelas) . '</td>
+									</tr>
+								</table>
+								
+							</div>
+							
+							<div class="right-section">
+								<img src="' . $data['qr_code_image'] . '" alt="QR Code" width="65%" style="max-width:200px;">
+								<div class="qr-text">Scan untuk verifikasi</div>
+							</div>
+						</div>
+						
+						<div class="footer">
+							Kartu Ujian Siswa di Cetak pada: ' . date('d/m/Y H:i:s') . '
+						</div>
+					</div>
+				</div>';
+		}
+
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	// versi view
+	public function cetak_kartu_ujian_multiple($kelas_id = null, $tahun_akademik_id = null)
+	{
+
+		// Ambil parameter filter
+		if (!$kelas_id || !$tahun_akademik_id) {
+			echo '<script>alert("Parameter kelas dan tahun akademik harus diisi")</script>';
+			echo '<script>window.location.href="' . base_url() . 'admin/siswa";</script>';
+			return;
+		}
+
+		// Query untuk mendapatkan semua siswa berdasarkan filter
+		$this->db->select('tb_siswa.*, tb_kelasrombel.id as kelas_id, tb_kelas.nama_kelas, tb_tahunakademik.tahun, tb_tahunakademik.semester');
+		$this->db->from('tb_siswa');
+		$this->db->join('tb_kelassiswa', 'tb_siswa.id = tb_kelassiswa.siswa_id', 'inner');
+		$this->db->join('tb_kelasrombel', 'tb_kelassiswa.kelasrombel_id = tb_kelasrombel.id', 'inner');
+		$this->db->join('tb_kelas', 'tb_kelasrombel.kelas_id = tb_kelas.id', 'inner');
+		$this->db->join('tb_tahunakademik', 'tb_kelasrombel.tahunakademik_id = tb_tahunakademik.id', 'inner');
+		$this->db->where('tb_kelasrombel.id', $kelas_id);
+		$this->db->where('tb_tahunakademik.id', $tahun_akademik_id);
+		$this->db->order_by('tb_siswa.nama', 'ASC');
+
+		$siswa_list = $this->db->get()->result();
+
+		if (empty($siswa_list)) {
+			echo '<script>alert("Tidak ada siswa ditemukan")</script>';
+			echo '<script>window.location.href="' . base_url('Ujianonline') . '";</script>';
+			return;
+		}
+
+		// Generate QR Code untuk setiap siswa
+		require_once FCPATH . 'vendor/autoload.php';
+		$qr_code_generator = new \chillerlan\QRCode\QRCode();
+
+		// Prepare data untuk semua siswa
+		$siswa_data = [];
+		foreach ($siswa_list as $siswa) {
+			$qr_data = json_encode([
+				"nis" => $siswa->nis,
+				"id" => $siswa->id,
+				"nama" => $siswa->nama,
+			]);
+
+			$qr_code_image = $qr_code_generator->render($qr_data);
+
+			$siswa_data[] = [
+				'detail_siswa' => $siswa,
+				'qr_code_data' => $qr_data,
+				'qr_code_image' => $qr_code_image,
+			];
+		}
+
+		$data = [
+			'siswa_data' => $siswa_data,
+			'tanggal_cetak' => date('d/m/Y H:i:s'),
+			'info_kelas' => $siswa_list[0] // Ambil info kelas dari siswa pertama
+		];
+
+		// Render HTML untuk PDF
+		$html = $this->load->view('ujianonline/kartu_ujian_multiple', $data, true);
+
+		// Generate PDF dengan ukuran F4 (210mm x 330mm)
+		$mpdf = new \Mpdf\Mpdf([
+			'format' => 'A4', // Ukuran F4
+			'margin_left' => 5,
+			'margin_right' => 5,
+			'margin_top' => 5,
+			'margin_bottom' => 5,
+		]);
+
+		$mpdf->WriteHTML($html);
+		$mpdf->SetDisplayMode('fullpage');
+
+		$filename = 'kartu_ujian_' . $siswa_list[0]->nama_kelas . '_' . date('Ymd_His') . '.pdf';
+		$mpdf->Output($filename, 'I'); // 'I' untuk tampil di browser, 'D' untuk download
 	}
 }

@@ -48,6 +48,19 @@
 					</div>
 
 					<div class="card-body">
+
+						<div class="d-flex justify-content-between align-items-center p-2 bg-primary rounded">
+							<div class="text-white">
+								<i class="fa fa-info-circle"></i>
+								Cetak kartu ujian untuk semua siswa pada jadwal ini.
+							</div>
+							<a href="<?= base_url('Ujianonline/cetak_kartu_ujian_multiple/' . $jadwal->kelasrombel_id . '/' . $jadwal->tahunakademik_id) ?>"
+								class="btn btn-danger btn-sm" target="_blank">
+								<i class="fa fa-print"></i> Cetak Kartu Ujian Multiple
+							</a>
+						</div>
+
+
 						<div class="row">
 							<div class="col-md-12">
 								<div class="table-responsive">
@@ -90,7 +103,7 @@
 						<hr>
 
 						<div class="table-responsive">
-							<table id="datatables-example" class="table table-striped table-bordered table-hover" width="100%" cellspacing="0">
+							<table class="table table-striped table-bordered table-hover dataTables" width="100%" cellspacing="0">
 								<thead>
 									<tr>
 										<th width="5%">No</th>

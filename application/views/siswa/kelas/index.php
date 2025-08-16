@@ -40,9 +40,12 @@
 												<td><?= htmlspecialchars($kelas->wali_kelas) ?></td>
 												<td><?= htmlspecialchars($kelas->keterangan) ?></td>
 												<td>
-													<button class="btn btn-primary btn-sm" onclick="showQRCode('<?= $this->session->userdata('nis') ?>', '<?= $this->session->userdata('id_user') ?>', '<?= htmlspecialchars($this->session->userdata('nama')) ?>')">
-														<i class="fa fa-qrcode"></i> Kartu Ujian
+													<button class="btn btn-warning btn-sm" onclick="showQRCode('<?= $this->session->userdata('nis') ?>', '<?= $this->session->userdata('id_user') ?>', '<?= htmlspecialchars($this->session->userdata('nama')) ?>')">
+														<i class="fa fa-qrcode"></i> QR Kartu Ujian
 													</button>
+													<a href="<?= base_url('User/kelas/cetak_kartu_ujian') ?>" class="btn btn-primary btn-sm" target="_blank">
+														<i class="fa fa-print"></i> Cetak Kartu Ujian
+													</a>
 												</td>
 											</tr>
 										<?php endforeach; ?>
@@ -129,6 +132,45 @@
 				</button>
 			</div>
 
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Pilihan Cetak -->
+<div class="modal fade" id="kartujianModal" tabindex="-1" role="dialog" aria-labelledby="kartujianModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="kartujianModalLabel">Cetak Kartu Ujian</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body text-center">
+				<div class="mb-3">
+					<i class="fa fa-id-card" style="font-size: 48px; color: #0066cc;"></i>
+				</div>
+				<p>Pilih format cetak kartu ujian:</p>
+
+				<div class="d-grid gap-2">
+					<a href="<?= base_url('User/kelas/cetak_kartu_ujian') ?>" target="_blank" class="btn btn-primary">
+						<i class="fa fa-id-card"></i> Ukuran Kartu (85x54mm)
+					</a>
+					<a href="<?= base_url('User/kelas/cetak_kartu_ujian_a4') ?>" target="_blank" class="btn btn-success">
+						<i class="fa fa-file-pdf-o"></i> Format A4 (2 Kartu + Backup)
+					</a>
+				</div>
+
+				<div class="alert alert-info mt-3 p-2" role="alert" style="font-size: 12px;">
+					<strong>Info:</strong> Kartu dilengkapi QR Code untuk verifikasi kehadiran ujian.
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+					<i class="fa fa-times"></i> Tutup
+				</button>
+			</div>
 		</div>
 	</div>
 </div>

@@ -203,4 +203,72 @@ class Kelas extends CI_Controller
 		readfile($qr_url);
 		exit;
 	}
+
+	public function cetak_kartu_ujian()
+	{
+		$siswa_id = $this->session->userdata('id_user');
+		$nis = $this->session->userdata('nis');
+		$nama = $this->session->userdata('nama');
+
+
+		if (!$siswa_id || !$nis || !$nama) {
+			echo '<script>alert("Data siswa tidak lengkap")</script>';
+			echo '<script>window.location.href="' . base_url() . '";</script>';
+			return;
+		}
+
+		// Query detail siswa lengkap
+		$this->db->select('tb_siswa.*, tb_kelasrombel.id as kelas_id, tb_kelas.nama_kelas, tb_tahunakademik.tahun, tb_tahunakademik.semester');
+		$this->db->from('tb_siswa');
+		$this->db->join('tb_kelassiswa', 'tb_siswa.id = tb_kelassiswa.siswa_id', 'left');
+		$this->db->join('tb_kelasrombel', 'tb_kelassiswa.kelasrombel_id = tb_kelasrombel.id', 'left');
+		$this->db->join('tb_kelas', 'tb_kelasrombel.kelas_id = tb_kelas.id', 'left');
+		$this->db->join('tb_tahunakademik', 'tb_kelasrombel.tahunakademik_id = tb_tahunakademik.id', 'left');
+		$this->db->where('tb_siswa.id', $siswa_id);
+		$detail_siswa = $this->db->get()->row();
+
+		if (!$detail_siswa) {
+			echo '<script>alert("Data siswa tidak ditemukan")</script>';
+			echo '<script>window.location.href="' . base_url() . '";</script>';
+			return;
+		}
+
+		// Create QR code data
+		$qr_data = json_encode([
+			"nis" => $nis,
+			"id" => $siswa_id,
+			"nama" => $nama,
+		]);
+
+		// Generate QR Code menggunakan library QR Code
+		require_once FCPATH . 'vendor/autoload.php';
+
+		// Generate QR Code image
+		$qr_code_generator = new \chillerlan\QRCode\QRCode();
+		$qr_code_image = $qr_code_generator->render($qr_data);
+
+		$data = [
+			'detail_siswa' => $detail_siswa,
+			'qr_code_data' => $qr_data,
+			'qr_code_image' => $qr_code_image,
+			'tanggal_cetak' => date('d/m/Y H:i:s')
+		];
+
+		// Render HTML untuk PDF
+		$html = $this->load->view('siswa/kartu_ujian/kartu_ujian', $data, true);
+
+		// Generate PDF
+		$mpdf = new \Mpdf\Mpdf([
+			'format' => [85, 50], // Ukuran kartu credit card (85mm x 54mm)
+			'margin_left' => 5,
+			'margin_right' => 5,
+			'margin_top' => 5,
+			'margin_bottom' => 5,
+		]);
+
+		$mpdf->WriteHTML($html);
+		$mpdf->SetDisplayMode('fullpage');
+		$filename = 'kartu_ujian_' . $nis . '_' . date('Ymd_His') . '.pdf';
+		$mpdf->Output($filename, 'I'); // 'I' untuk tampil di browser, 'D' untuk download
+	}
 }
